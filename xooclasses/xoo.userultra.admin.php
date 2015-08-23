@@ -1,159 +1,159 @@
 <?php
-class XooUserAdmin extends XooUserUltraCommon 
+class XooUserAdmin extends XooUserUltraCommon
 {
 
 	var $options;
 	var $wp_all_pages = false;
 	var $userultra_default_options;
 	var $valid_c;
-	
+
 	var $notifications_email = array();
 
 	function __construct() {
-	
+
 		/* Plugin slug and version */
 		$this->slug = 'userultra';
 		//$this->plugin_data = get_plugin_data( xoousers_path . 'xoousers.php', false, false);
 		//$this->version = $this->plugin_data['Version'];
-		
-		$this->set_default_email_messages();				
-		$this->update_default_option_ini();		
+
+		$this->set_default_email_messages();
+		$this->update_default_option_ini();
 		$this->set_font_awesome();
-		
-		
+
+
 		add_action('admin_menu', array(&$this, 'add_menu'), 9);
-	
+
 		add_action('admin_enqueue_scripts', array(&$this, 'add_styles'), 9);
 		add_action('admin_head', array(&$this, 'admin_head'), 9 );
 		add_action('admin_init', array(&$this, 'admin_init'), 9);
 		add_action('admin_init', array(&$this, 'do_valid_checks'), 9);
 		add_action( 'admin_init', array( &$this, 'uultra_vv_c_de_b' ), 9);
-		
+
 		add_action( 'wp_ajax_save_fields_settings', array( &$this, 'save_fields_settings' ));
-		
-		
+
+
 		add_action( 'wp_ajax_add_new_custom_profile_field', array( &$this, 'add_new_custom_profile_field' ));
 		add_action( 'wp_ajax_delete_profile_field', array( &$this, 'delete_profile_field' ));
 		add_action( 'wp_ajax_sort_fileds_list', array( &$this, 'sort_fileds_list' ));
-		
+
 		//user to get all fields
 		add_action( 'wp_ajax_uultra_reload_custom_fields_set', array( &$this, 'uultra_reload_custom_fields_set' ));
-		
+
 		//used to edit a field
-		add_action( 'wp_ajax_uultra_reload_field_to_edit', array( &$this, 'uultra_reload_field_to_edit' ));	
-		
+		add_action( 'wp_ajax_uultra_reload_field_to_edit', array( &$this, 'uultra_reload_field_to_edit' ));
+
 		add_action( 'wp_ajax_uultra_vv_c_de_a', array( &$this, 'uultra_vv_c_de_a' ));
-		add_action( 'wp_ajax_custom_fields_reset', array( &$this, 'custom_fields_reset' ));			
+		add_action( 'wp_ajax_custom_fields_reset', array( &$this, 'custom_fields_reset' ));
 		add_action( 'wp_ajax_create_uploader_folder', array( &$this, 'create_uploader_folder' ));
-		
-		
+
+
 	}
-	
-	function admin_init() 
+
+	function admin_init()
 	{
-		
+
 		$this->tabs = array(
 		    'main' => __('Dashboard','xoousers'),
 			'fields' => __('Fields','xoousers'),
-			'settings' => __('Settings','xoousers'),			
+			'settings' => __('Settings','xoousers'),
 			'membership' => __('Membership','xoousers'),
 			'users' => __('Users','xoousers'),
-			'orders' => __('Orders','xoousers'),			
+			'orders' => __('Orders','xoousers'),
 			'import' => __('Sync & Import','xoousers'),
-			'customizer' => __('Appearance & Customization', 'xoousers'),			
-			'mail' => __('Notifications','xoousers'),			
+			'customizer' => __('Appearance & Customization', 'xoousers'),
+			'mail' => __('Notifications','xoousers'),
 			'permalinks' => __('Permalinks','xoousers'),
 			'gateway' => __('Gateways','xoousers'),
 			'help' => __('Doc','xoousers'),
 		);
-		
-		$this->default_tab = 'main';		
-		
+
+		$this->default_tab = 'main';
+
 		$this->tabs_membership = array(
 		    'main' => __('Membership Plans','xoousers'),
-			
+
 		);
 		$this->default_tab_membership = 'main';
-		
-		
+
+
 	}
-	
-	public function update_default_option_ini () 
+
+	public function update_default_option_ini ()
 	{
-		$this->options = get_option('userultra_options');		
+		$this->options = get_option('userultra_options');
 		$this->userultra_set_default_options();
-		
-		if (!get_option('userultra_options')) 
+
+		if (!get_option('userultra_options'))
 		{
-			
+
 			update_option('userultra_options', $this->userultra_default_options );
 		}
-		
-		if (!get_option('userultra_pro_active')) 
+
+		if (!get_option('userultra_pro_active'))
 		{
-			
+
 			update_option('userultra_pro_active', true);
-		}	
-		
-		
+		}
+
+
 	}
-	
-		
-	public function custom_fields_reset () 
+
+
+	public function custom_fields_reset ()
 	{
-		
+
 		if($_POST["p_confirm"]=="yes")
-		{			
-			
-			//multi fields		
+		{
+
+			//multi fields
 			$custom_form = $_POST["uultra_custom_form"];
-			
+
 			if($custom_form!="")
 			{
-				$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-				//$fields = get_option($custom_form);			
+				$custom_form = 'usersultra_profile_fields_'.$custom_form;
+				//$fields = get_option($custom_form);
 				$fields_set_to_update =$custom_form;
-				
+
 			}else{
-				
+
 				//$fields = get_option('usersultra_profile_fields');
 				$fields_set_to_update ='usersultra_profile_fields';
-			
-			}
-			
-			update_option($fields_set_to_update, NULL);
-		
-		
-		
-		}
-		
-		
-	}
-	
 
-	
-	
-	
-	public function uultra_vv_c_de_a () 
-	{		
+			}
+
+			update_option($fields_set_to_update, NULL);
+
+
+
+		}
+
+
+	}
+
+
+
+
+
+	public function uultra_vv_c_de_a ()
+	{
 		global $xoouserultra, $wpdb ;
-		
-		 
+
+
 		 require_once(ABSPATH . 'wp-includes/class-http.php');
 		 require_once(ABSPATH . 'wp-includes/ms-functions.php');
 
-		
-		$p = $_POST["p_s_le"];		
-		
+
+		$p = $_POST["p_s_le"];
+
 		//validate ulr
-		
-		$domain = $_SERVER['SERVER_NAME'];		
+
+		$domain = $_SERVER['SERVER_NAME'];
 		$server_add = $_SERVER['SERVER_ADDR'];
-		
-		
-		$url = uultraxoousers_pro_url."check_l_p.php";	
-		
-		
+
+
+		$url = uultraxoousers_pro_url."check_l_p.php";
+
+
 		$response = wp_remote_post(
             $url,
             array(
@@ -162,33 +162,33 @@ class XooUserAdmin extends XooUserUltraCommon
                     'server_ip'     => $server_add,
                     'sial_key' => $p,
 					'action' => 'validate',
-					
+
                 )
             )
         );
 
-		
-		
+
+
 		$response = json_decode($response["body"]);
-		
-		$message =$response->{'message'}; 
-		$result =$response->{'result'}; 
+
+		$message =$response->{'message'};
+		$result =$response->{'result'};
 		$expiration =$response->{'expiration'};
 		$serial =$response->{'serial'};
-		
+
 		//validate
-		
+
 		if ( is_multisite() ) // See if being activated on the entire network or one blog
-		{		
-			
-	 
+		{
+
+
 			// Get this so we can switch back to it later
 			$current_blog = $wpdb->blogid;
 			// For storing the list of activated blogs
 			$activated = array();
-			
+
 			// Get all blogs in the network and activate plugin on each one
-			
+
 			$args = array(
 				'network_id' => $wpdb->siteid,
 				'public'     => null,
@@ -199,101 +199,101 @@ class XooUserAdmin extends XooUserUltraCommon
 				'limit'      => 100,
 				'offset'     => 0,
 			);
-			$blog_ids = wp_get_sites( $args ); 
+			$blog_ids = wp_get_sites( $args );
 		   // print_r($blog_ids);
-		
-		
+
+
 			foreach ($blog_ids as $key => $blog)
 			{
 				$blog_id = $blog["blog_id"];
 
-				switch_to_blog($blog_id);				
-				
+				switch_to_blog($blog_id);
+
 				if($result =="OK")
 				{
 					update_option('uultra_c_key',$serial );
 					update_option('uultra_c_expiration',$expiration );
-					
+
 					$html = '<div class="user-ultra-success">'. __("Congratulations!. Your copy has been validated", 'xoousers').'</div>';
-				
+
 				}elseif($result =="EXP"){
-					
+
 					update_option('uultra_c_key',"" );
 					update_option('uultra_c_expiration',$expiration );
-					
+
 					$html = '<div class="user-ultra-error">'. __("We are sorry the serial key you have used has expired", 'xoousers').'</div>';
-				
+
 				}elseif($result =="NO"){
-					
+
 					update_option('uultra_c_key',"" );
 					update_option('uultra_c_expiration',$expiration );
-					
+
 					$html = '<div class="user-ultra-error">'. __("We are sorry your serial key is not valid", 'xoousers').'</div>';
-				
+
 				}
-				
-				
+
+
 			} //end for each
-			
+
 			//echo "current blog : " . $current_blog;
 			// Switch back to the current blog
-			switch_to_blog($current_blog); 
-			
-			
+			switch_to_blog($current_blog);
+
+
 		}else{
-			
+
 			//this is not a multisite
-			
+
 			if($result =="OK")
 			{
 				update_option('uultra_c_key',$serial );
 				update_option('uultra_c_expiration',$expiration );
-				
+
 				$html = '<div class="user-ultra-success">'. __("Congratulations!. Your copy has been validated", 'xoousers').'</div>';
-			
+
 			}elseif($result =="EXP"){
-				
+
 				update_option('uultra_c_key',"" );
 				update_option('uultra_c_expiration',$expiration );
-				
+
 				$html = '<div class="user-ultra-error">'. __("We are sorry the serial key you have used has expired", 'xoousers').'</div>';
-			
+
 			}elseif($result =="NO"){
-				
+
 				update_option('uultra_c_key',"" );
 				update_option('uultra_c_expiration',$expiration );
-				
+
 				$html = '<div class="user-ultra-error">'. __("We are sorry your serial key is not valid", 'xoousers').'</div>';
-			
+
 			}
-			
-			
-			
-		
+
+
+
+
 		}
-		
+
 		//
 		echo "Domain: " .$domain;
-		echo $html;		 
-		
-		
+		echo $html;
+
+
 		die();
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	function get_pending_verify_requests_count()
 	{
 		$count = 0;
-		
+
 		// verification status
 		$pending = get_option('userultra_verify_requests');
 		if (is_array($pending) && count($pending) > 0){
 			$count = count($pending);
 		}
-		
+
 		// waiting email approve
 		$users = get_users(array(
 			'meta_key'     => '_account_status',
@@ -303,7 +303,7 @@ class XooUserAdmin extends XooUserUltraCommon
 		if (isset($users)) {
 			$count += count($users);
 		}
-		
+
 		// waiting admin approve
 		$users = get_users(array(
 			'meta_key'     => '_account_status',
@@ -313,21 +313,21 @@ class XooUserAdmin extends XooUserUltraCommon
 		if (isset($users)) {
 			$count += count($users);
 		}
-		
+
 		if ($count > 0){
 			return '<span class="upadmin-bubble-new">'.$count.'</span>';
 		}
 	}
-	
+
 	function get_pending_verify_requests_count_only(){
 		$count = 0;
-		
+
 		// verification status
 		$pending = get_option('userultra_verify_requests');
 		if (is_array($pending) && count($pending) > 0){
 			$count = count($pending);
 		}
-		
+
 		// waiting email approve
 		$users = get_users(array(
 			'meta_key'     => '_account_status',
@@ -337,7 +337,7 @@ class XooUserAdmin extends XooUserUltraCommon
 		if (isset($users)) {
 			$count += count($users);
 		}
-		
+
 		// waiting admin approve
 		$users = get_users(array(
 			'meta_key'     => '_account_status',
@@ -347,32 +347,32 @@ class XooUserAdmin extends XooUserUltraCommon
 		if (isset($users)) {
 			$count += count($users);
 		}
-		
+
 		if ($count > 0){
 			return $count;
 		}
 	}
-	
-	
-	public function uultra_vv_c_de_b () 
-	{		
+
+
+	public function uultra_vv_c_de_b ()
+	{
 		/*global $xoouserultra , $wpdb;
-		
+
 		 require_once(ABSPATH . 'wp-includes/class-http.php');
-		
+
 		$p = get_option('uultra_c_key');
-		
+
 		//validate ulr
-		
-		$domain = $_SERVER['SERVER_NAME'];		
+
+		$domain = $_SERVER['SERVER_NAME'];
 		$server_add = $_SERVER['SERVER_ADDR'];
-		
-		$action = "validate";		
-		
-		$url = uultraxoousers_pro_url."check_l_p.php";		
+
+		$action = "validate";
+
+		$url = uultraxoousers_pro_url."check_l_p.php";
 		$req = "key=$p&d=$domain&server_ip=$server_add&action=$action";
-		
-		
+
+
 		$response = wp_remote_post(
             $url,
             array(
@@ -381,35 +381,35 @@ class XooUserAdmin extends XooUserUltraCommon
                     'server_ip'     => $server_add,
                     'sial_key' => $p,
 					'action' => 'validate',
-					
+
                 )
             )
         );
-				
+
 		//print_r($response);
-		
+
 		$response = json_decode($response["body"]);
-		
-		
-		$message =$response->{'message'}; 
-		$result =$response->{'result'}; 
+
+
+		$message =$response->{'message'};
+		$result =$response->{'result'};
 		$expiration =$response->{'expiration'};
 		$serial =$response->{'serial'};
 
 		//validate
-		
-		
+
+
 		if ( is_multisite() ) // See if being activated on the entire network or one blog
-		{		
-			
-	 
+		{
+
+
 			// Get this so we can switch back to it later
 			$current_blog = $wpdb->blogid;
 			// For storing the list of activated blogs
 			$activated = array();
-			
+
 			// Get all blogs in the network and activate plugin on each one
-			
+
 			$args = array(
 				'network_id' => $wpdb->siteid,
 				'public'     => null,
@@ -420,81 +420,81 @@ class XooUserAdmin extends XooUserUltraCommon
 				'limit'      => 100,
 				'offset'     => 0,
 			);
-			$blog_ids = wp_get_sites( $args ); 
-		
-		
+			$blog_ids = wp_get_sites( $args );
+
+
 			foreach ($blog_ids as $key => $blog)
 			{
 				$blog_id = $blog["blog_id"];
 
-				switch_to_blog($blog_id);				
-				
+				switch_to_blog($blog_id);
+
 				if($result =="OK")
 				{
 					update_option('uultra_c_key',$serial );
 					update_option('uultra_c_expiration',$expiration );
-					
-					
-				
+
+
+
 				}elseif($result =="EXP"){
-					
+
 					//update_option('uultra_c_key',"" );
 					update_option('uultra_c_expiration',$expiration );
-				
-				
+
+
 				}elseif($result =="NO"){
-					
+
 					update_option('uultra_c_key',"" );
 					update_option('uultra_c_expiration',$expiration );
-					
-					
-				
+
+
+
 				}
-				
-				
+
+
 			} //end for each
-			
+
 			//echo "current blog : " . $current_blog;
 			// Switch back to the current blog
-			switch_to_blog($current_blog); 
-			
-			
+			switch_to_blog($current_blog);
+
+
 		}else{
-			
+
 			//this is not a multisite
-			
+
 			if($result =="OK")
 			{
 				update_option('uultra_c_key',$serial );
 				update_option('uultra_c_expiration',$expiration );
-				
-			
+
+
 			}elseif($result =="EXP"){
-				
+
 				//update_option('uultra_c_key',"" );
 				update_option('uultra_c_expiration',$expiration );
-								
-			
+
+
 			}elseif($result =="NO"){
-				
+
 				update_option('uultra_c_key',"" );
 				update_option('uultra_c_expiration',$expiration );
-				
-				
-			
+
+
+
 			}
-			
-			
-			
-		
+
+
+
+
 		} */
-		
-		
-		
-		
+
+
+
+
 	}
-	
-	
+
+
 	function admin_head(){
 		$screen = get_current_screen();
 		$slug = $this->slug;
@@ -508,71 +508,71 @@ class XooUserAdmin extends XooUserUltraCommon
 
 	function add_styles()
 	{
-	
+
 		wp_register_style('userultra_admin', xoousers_url.'admin/css/userlutra.admin.css');
-		wp_enqueue_style('userultra_admin');			
-			
+		wp_enqueue_style('userultra_admin');
+
 		wp_register_script('userultra_chosen', xoousers_url . 'admin/scripts/admin-chosen.js');
 		wp_enqueue_script('userultra_chosen');
-		
-		//color picker		
-		 wp_enqueue_style( 'wp-color-picker' );		 
-		 wp_register_script( 'userultra_color_picker', xoousers_url.'admin/scripts/color-picker-js.js', array( 
+
+		//color picker
+		 wp_enqueue_style( 'wp-color-picker' );
+		 wp_register_script( 'userultra_color_picker', xoousers_url.'admin/scripts/color-picker-js.js', array(
 			'wp-color-picker'
 		) );
 		wp_enqueue_script( 'userultra_color_picker' );
-		
-		
-		wp_register_script( 'userultra_admin', xoousers_url.'admin/scripts/admin.js', array( 
+
+
+		wp_register_script( 'userultra_admin', xoousers_url.'admin/scripts/admin.js', array(
 			'jquery','jquery-ui-core','jquery-ui-draggable','jquery-ui-droppable',	'jquery-ui-sortable', 'jquery-ui-tabs'	), null );
 		wp_enqueue_script( 'userultra_admin' );
-		
-		
+
+
 		/* Font Awesome */
 		wp_register_style( 'xoouserultra_font_awesome', xoousers_url.'css/css/font-awesome.min.css');
 		wp_enqueue_style('xoouserultra_font_awesome');
-		
-		/*google graph*/		
+
+		/*google graph*/
 		wp_register_script('userultra_jsgooglapli', 'https://www.google.com/jsapi');
 		wp_enqueue_script('userultra_jsgooglapli');
-		
+
 		//
-		
+
   		// Add the styles first, in the <head> (last parameter false, true = bottom of page!)
 		wp_enqueue_style('qtip', xoousers_url.'js/qtip/jquery.qtip.min.css' , null, false, false);
-		
+
 		// Using imagesLoaded? Do this.
 		wp_enqueue_script('imagesloaded',  xoousers_url.'js/qtip/imagesloaded.pkgd.min.js' , null, false, true);
-		wp_enqueue_script('qtip',  xoousers_url.'js/qtip/jquery.qtip.min.js', array('jquery', 'imagesloaded'), false, true);		
-				
-		
+		wp_enqueue_script('qtip',  xoousers_url.'js/qtip/jquery.qtip.min.js', array('jquery', 'imagesloaded'), false, true);
+
+
 	}
-	
-	function add_menu() 
+
+	function add_menu()
 	{
 		global $xoouserultra ;
-	
+
 		$pending_count = $xoouserultra->userpanel->get_pending_activation_count();
 		$pending_title = esc_attr( sprintf(__( '%d new manual activation requests','xoousers'), $pending_count ) );
 		if ($pending_count > 0)
 		{
 			$menu_label = sprintf( __( 'Users Ultra %s','xoousers' ), "<span class='update-plugins count-$pending_count' title='$pending_title'><span class='update-count'>" . number_format_i18n($pending_count) . "</span></span>" );
-			
+
 		} else {
-			
+
 			$menu_label = __('Users Ultra','xoousers');
 		}
-		
+
 		add_menu_page( __('Users Ultra','xoousers'), $menu_label, 'manage_options', $this->slug, array(&$this, 'admin_page'), xoousers_url .'admin/images/small_logo_16x16.png', '159.140');
-		
+
 		//
-		
+
 		do_action('userultra_admin_menu_hook');
-		
-			
+
+
 	}
-	
-	function admin_tabs_membership( $current = null ) 
+
+	function admin_tabs_membership( $current = null )
 	{
 			$tabs = $this->tabs;
 			$links = array();
@@ -611,62 +611,62 @@ class XooUserAdmin extends XooUserUltraCommon
 				echo $link;
 	}
 
-	
-	
+
+
 	function do_action(){
 		global $userultra;
-				
-		
+
+
 	}
-	
+
 	public function do_valid_checks()
 	{
-		
+
 		global $xoouserultra ;
-		
+
 		$va = get_option('uultra_c_key');
 		if($va=="")
 		{
 			//
 			$this->valid_c = "no";
-		
+
 		}
-	
-	
+
+
 	}
-	
-	
+
+
 	function reset() {
 		update_option('userultra', $this->userultra_default_options() );
 		$this->options = array_merge( $this->options, $his->userultra_default_options() );
 		echo '<div class="updated"><p><strong>'.__('Settings are reset to default.','xoousers').'</strong></p></div>';
 	}
-	
-	
+
+
 	function woo_sync() {
 		userultra_admin_woo_sync();
 		echo '<div class="updated"><p><strong>'.__('WooCommerce fields have been added.','xoousers').'</strong></p></div>';
 	}
-	
+
 	function woo_sync_del(){
 		userultra_admin_woo_sync_erase();
 		echo '<div class="updated"><p><strong>'.__('WooCommerce fields have been removed.','xoousers').'</strong></p></div>';
 	}
-	
-	
-	
+
+
+
 	/* set a global option */
 	function userultra_set_option($option, $newvalue)
 	{
-		$settings = get_option('userultra_options');		
+		$settings = get_option('userultra_options');
 		$settings[$option] = $newvalue;
 		update_option('userultra_options', $settings);
 	}
-	
+
 	/* default options */
 	function userultra_set_default_options()
 	{
-	
+
 		$this->userultra_default_options = array(
 						'html_user_login_message' => __('Please log in to view / edit your profile.','xoousers'),
 						'html_login_to_view' => __('Please log in to view user profiles.','xoousers'),
@@ -680,12 +680,12 @@ class XooUserAdmin extends XooUserUltraCommon
 						'hide_admin_bar' => '1',
 						'uultra_loggedin_activated' => '0',
 						'registration_rules' => '1',
-						
+
 						'media_avatar_width' => '190',
 						'media_avatar_height' => '190',
-						
-						
-						
+
+
+
 						'media_photo_mini_width' => '80',
 						'media_photo_mini_height' => '80',
 						'media_photo_thumb_width' => '350',
@@ -693,38 +693,38 @@ class XooUserAdmin extends XooUserUltraCommon
 						'media_photo_large_width' => '700',
 						'media_photo_large_height' => '800',
 						'media_uploading_folder' => 'wp-content/usersultramedia',
-						
+
 						'uultra_groups_post_title' => __('No rights!','xoousers'),
 						'uultra_groups_post_content' => __('Sorry you have no rights to view this post!','xoousers'),
-						'uultra_groups_post_comment_content' => __('Sorry no rights to view comments!','xoousers'), 
-						
+						'uultra_groups_post_comment_content' => __('Sorry no rights to view comments!','xoousers'),
+
 						'uultra_groups_page_title' => __('No rights!','xoousers'),
 						'uultra_groups_page_content' => __('Sorry you have no rights to view this page!','xoousers'),
 						'uultra_groups_page_comment_content' => __('Sorry no rights to view comments!','xoousers'),
-						
+
 						'uultra_loggedin_post_title' => __('No rights!','xoousers'),
 						'uultra_loggedin_post_content' => __('Sorry you have to be logged in to view this post!','xoousers'),
-						'uultra_loggedin_post_comment_content' => __('Sorry no rights to view comments!','xoousers'), 						
+						'uultra_loggedin_post_comment_content' => __('Sorry no rights to view comments!','xoousers'),
 						'uultra_loggedin_page_title' => __('No rights!','xoousers'),
 						'uultra_loggedin_page_content' => __('Sorry you have to be logged in to view this page!','xoousers'),
-						'uultra_loggedin_page_comment_content' => __('Sorry no rights to view comments!','xoousers'), 
-						
+						'uultra_loggedin_page_comment_content' => __('Sorry no rights to view comments!','xoousers'),
+
 						'uultra_front_publisher_default_amount' => '9999',
 						'uultra_front_publisher_default_status' => 'pending',
 						'uultra_front_publisher_allows_category' =>  'yes',
-						'uultra_front_publisher_default_category' => '',	
+						'uultra_front_publisher_default_category' => '',
 						'uultra_front_publisher_post_type_label_singular' => __('Post','xoousers'),
-						'uultra_front_publisher_post_type_label_plural' => __('Posts','xoousers'),								
-						
-						'usersultra_my_account_slug' => 'myaccount',						
+						'uultra_front_publisher_post_type_label_plural' => __('Posts','xoousers'),
+
+						'usersultra_my_account_slug' => 'myaccount',
 						'usersultra_slug' => 'profile',
 						'usersultra_login_slug' => 'login',
 						'usersultra_registration_slug' => 'registration',
-						'usersultra_directory_slug' => 'directory',	
-						'mailchimp_text' => __('Subscribe to receive our periodic email updates','xoousers'),	
-						'uultra_password_lenght' => '7',						
-														
-										
+						'usersultra_directory_slug' => 'directory',
+						'mailchimp_text' => __('Subscribe to receive our periodic email updates','xoousers'),
+						'uultra_password_lenght' => '7',
+
+
 						'login_page_id' => '0',
 						'registration_page_id' => '0',
 						'redirect_backend_profile' => '0',
@@ -732,52 +732,52 @@ class XooUserAdmin extends XooUserUltraCommon
 						'redirect_registration_when_social' => '0',
 						'redirect_backend_login' => '0',
 						'paid_membership_currency' => 'USD',
-						'paid_membership_symbol' => '$',						
+						'paid_membership_symbol' => '$',
 						'uurofile_setting_display_photos' => 'public',
-						
+
 						'html_private_content' => __('User registration is currently not allowed.','xoousers'),
-						'messaging_welcome_email_client' => $this->get_email_template('new_account'),						
+						'messaging_welcome_email_client' => $this->get_email_template('new_account'),
 						'messaging_welcome_email_client_admin' => $this->get_email_template('new_account_noti_admin'),
-						
+
 						'messaging_paid_email_admin' => $this->get_email_template('new_account_noti_admin_paid'),
-						
-						'account_upgrade_email_client' => $this->get_email_template('account_upgrading_user'),						
+
+						'account_upgrade_email_client' => $this->get_email_template('account_upgrading_user'),
 						'account_upgrade_email_admin' => $this->get_email_template('account_upgrading_admin'),
-						
+
 						'messaging_welcome_email_with_activation_client' => $this->get_email_template('new_account_activation_link'),
 						'messaging_welcome_email_with_activation_admin' => $this->get_email_template('new_account_activation_link_admin'),
-						
+
 						'messaging_admin_moderation_user' => $this->get_email_template('new_account_admin_moderation'),
 						'messaging_admin_moderation_admin' => $this->get_email_template('new_account_admin_moderation_admin'),
-						
-						
+
+
 						'messaging_re_send_activation_link' => $this->get_email_template('messaging_re_send_activation_link'),
-						
-						
+
+
 						'account_verified_sucess_message_body' => $this->get_email_template('account_verified_sucess_message_body'),
-						
+
 						'message_friend_request' => $this->get_email_template('message_friend_request'),
-						
+
 						'messaging_welcome_email_admin' => __($this->get_email_template('new_account_admin'),'xoousers'),
 						'messaging_user_pm' => __($this->get_email_template('private_message_noti'),'xoousers'),
 						'messaging_user_pm_from_admin' => $this->get_email_template('private_message_noti_from_adm'),
 						'reset_lik_message_body' => __($this->get_email_template('reset_lik_message_body'),'xoousers'),
 						'password_reset_confirmation' => $this->get_email_template('password_reset_confirmation'),
-						
+
 						'admin_account_active_message_body' => __($this->get_email_template('admin_account_active_message_body'),'xoousers'),
 						'admin_account_deny_message_body' => $this->get_email_template('admin_account_deny_message_body'),
-						
+
 						'messaging_send_from_name' => __('Users Ultra Plugin','xoousers'),
-						
-						
+
+
 				);
-		
+
 	}
-	
+
 	public function set_default_email_messages()
 	{
 		$line_break = "\r\n";
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("Thanks for registering. Your account is now active.","xoousers") .  $line_break.$line_break;
 		$email_body .= __("To login please visit the following URL:","xoousers") .  $line_break.$line_break;
@@ -788,7 +788,7 @@ class XooUserAdmin extends XooUserUltraCommon
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account'] = $email_body;
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("Your password has been reset.","xoousers") .  $line_break.$line_break;
 		$email_body .= __("To login please visit the following URL:","xoousers") .  $line_break.$line_break;
@@ -799,37 +799,37 @@ class XooUserAdmin extends XooUserUltraCommon
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['password_reset_confirmation'] = $email_body;
-		
-		
-				
-		//notify admin new registration		
+
+
+
+		//notify admin new registration
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("A new user has been registered.","xoousers") .  $line_break.$line_break;
-		
+
 		$email_body .= __('Account e-mail: {{userultra_user_email}}','xoousers') . $line_break;
 		$email_body .= __('Account username: {{userultra_user_name}}','xoousers') . $line_break;
 		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account_noti_admin'] = $email_body;
-		
-		//notify admin new paid registration		
+
+		//notify admin new paid registration
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("A new paid user has been registered.","xoousers") .  $line_break.$line_break;
-		
+
 		$email_body .= __('Account e-mail: {{userultra_user_email}}','xoousers') . $line_break;
 		$email_body .= __('Account username: {{userultra_user_name}}','xoousers') . $line_break;
 		$email_body .= __('Package: {{userultra_user_package}}','xoousers') . $line_break;
 		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account_noti_admin_paid'] = $email_body;
-		
+
 		//upgrading client
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("Thanks for upgrading your account.","xoousers") .  $line_break.$line_break;
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['account_upgrading_user'] = $email_body;
-		
+
 		//upgrading admin
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("One if your users has just upgraded his/her account.","xoousers") .  $line_break.$line_break;
@@ -838,10 +838,10 @@ class XooUserAdmin extends XooUserUltraCommon
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['account_upgrading_admin'] = $email_body;
-		
-			
-		
-		
+
+
+
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("Thanks for registering. Your account needs activation.","xoousers") .  $line_break.$line_break;
 		$email_body .= __("Please click on the link below to activate your account:","xoousers") .  $line_break.$line_break;
@@ -849,114 +849,114 @@ class XooUserAdmin extends XooUserUltraCommon
 		$email_body .= __('Your account e-mail: {{userultra_user_email}}','xoousers') . $line_break;
 		$email_body .= __('Your account username: {{userultra_user_name}}','xoousers') . $line_break;
 		$email_body .= __('Your account password: {{userultra_pass}}','xoousers') . $line_break.$line_break;
-		
+
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account_activation_link'] = $email_body;
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("We are re-sending you the activation link.","xoousers") .  $line_break.$line_break;
 		$email_body .= __("Please click on the link below to activate your account:","xoousers") .  $line_break.$line_break;
 		$email_body .= "{{user_ultra_activation_url}}" . $line_break.$line_break;
-	
+
 		$email_body .= __('If you have any problems, please contact us at {{userultra_admin_email}}.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['messaging_re_send_activation_link'] = $email_body;
-		
+
 		//admin
 		$email_body = __('Hi Admin,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("An account needs activation.","xoousers") .  $line_break.$line_break;		
+		$email_body .= __("An account needs activation.","xoousers") .  $line_break.$line_break;
 		$email_body .= __('Account e-mail: {{userultra_user_email}}','xoousers') . $line_break;
 		$email_body .= __('Account username: {{userultra_user_name}}','xoousers') . $line_break;
 		$email_body .= __('Please login to your admin to activate the account.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
-	    $this->notifications_email['new_account_activation_link_admin'] = $email_body;	
-		
+	    $this->notifications_email['new_account_activation_link_admin'] = $email_body;
+
 		//admin manually approved --06-20-2014
 		$email_body = __('Hi Admin,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("An account needs approval.","xoousers") .  $line_break.$line_break;		
+		$email_body .= __("An account needs approval.","xoousers") .  $line_break.$line_break;
 		$email_body .= __('Account e-mail: {{userultra_user_email}}','xoousers') . $line_break;
 		$email_body .= __('Account username: {{userultra_user_name}}','xoousers') . $line_break;
 		$email_body .= __('Please login to your admin to activate the account.','xoousers') . $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account_admin_moderation_admin'] = $email_body;
-		
+
 		//client manually approved --06-20-2014
 		$email_body = __('Hi {{userultra_user_name}},' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("Your account will be reviewed by the admin soon.","xoousers") .  $line_break.$line_break;		
+		$email_body .= __("Your account will be reviewed by the admin soon.","xoousers") .  $line_break.$line_break;
 		$email_body .= __('Best Regards!','xoousers');
 	    $this->notifications_email['new_account_admin_moderation'] = $email_body;
-		
-		
+
+
 		$email_body = __('Hi,',"xoousers") . $line_break.$line_break;
 		$email_body .= __("{{userultra_user_name}} has just created a new account at {{user_ultra_blog_name}}.","xoousers") . $line_break.$line_break;
 		$email_body .= __("You can check his profile via the following link:","xoousers") .$line_break;
 		$email_body .= "{{userl_ultra_login_url}}" .$line_break.$line_break;
-		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;		
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
+		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
 	    $this->notifications_email['new_account_admin'] = $email_body;
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("{{userultra_user_name}} has just sent you a new private message at {{user_ultra_blog_name}}.","xoousers") . $line_break.$line_break;
-		
+
 		$email_body .= __("Subject: {{userultra_pm_subject}}","xoousers") . $line_break;
 		$email_body .=__("Message: {{userultra_pm_message}}","xoousers") . $line_break;
-		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;		
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
+		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
 	    $this->notifications_email['private_message_noti'] = $email_body;
-		
+
 		//private message from admin
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
 		$email_body .= __("{{userultra_user_name}} has just sent you a new private message at {{user_ultra_blog_name}}.","xoousers") . $line_break.$line_break;
-		
+
 		$email_body .= __("Subject: {{userultra_pm_subject}}","xoousers") . $line_break;
 		$email_body .=__("Message: {{userultra_pm_message}}","xoousers") . $line_break;
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
 	    $this->notifications_email['private_message_noti_from_adm'] = $email_body;
-		
-		
+
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("You have a new friend request at {{user_ultra_blog_name}}.","xoousers") . $line_break.$line_break;				
-				
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
+		$email_body .= __("You have a new friend request at {{user_ultra_blog_name}}.","xoousers") . $line_break.$line_break;
+
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
 	    $this->notifications_email['message_friend_request'] = $email_body;
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("Please use the following link to reset your password.","xoousers") . $line_break.$line_break;			
+		$email_body .= __("Please use the following link to reset your password.","xoousers") . $line_break.$line_break;
 		$email_body .= "{{userultra_reset_link}}".$line_break.$line_break;
-		$email_body .= __('If you did not request a new password delete this email.','xoousers'). $line_break.$line_break;		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
-	    $this->notifications_email['reset_lik_message_body'] = $email_body;	
-		
+		$email_body .= __('If you did not request a new password delete this email.','xoousers'). $line_break.$line_break;		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
+	    $this->notifications_email['reset_lik_message_body'] = $email_body;
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("Your account has been activated.","xoousers") . $line_break.$line_break;	
-		$email_body .= __('Please use the link below to get in your account.','xoousers'). $line_break.$line_break;	
-		$email_body .=   "{{userl_ultra_login_url}}".$line_break.$line_break;	
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
+		$email_body .= __("Your account has been activated.","xoousers") . $line_break.$line_break;
+		$email_body .= __('Please use the link below to get in your account.','xoousers'). $line_break.$line_break;
+		$email_body .=   "{{userl_ultra_login_url}}".$line_break.$line_break;
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
 	    $this->notifications_email['admin_account_active_message_body'] = $email_body;
-		
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("Your account has been verified.","xoousers") . $line_break.$line_break;	
-		$email_body .= __('Please use the link below to get in your account.','xoousers'). $line_break.$line_break;	
-		$email_body .=   "{{userl_ultra_login_url}}".$line_break.$line_break;	
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
-	    $this->notifications_email['account_verified_sucess_message_body'] = $email_body;	
-		
+		$email_body .= __("Your account has been verified.","xoousers") . $line_break.$line_break;
+		$email_body .= __('Please use the link below to get in your account.','xoousers'). $line_break.$line_break;
+		$email_body .=   "{{userl_ultra_login_url}}".$line_break.$line_break;
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
+	    $this->notifications_email['account_verified_sucess_message_body'] = $email_body;
+
 		$email_body = __('Hi,' ,"xoousers") . $line_break.$line_break;
-		$email_body .= __("We're sorry but your account has not been approved.","xoousers") . $line_break.$line_break;	
-		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;	
-		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;		
-	    $this->notifications_email['admin_account_deny_message_body'] = $email_body;		
-		
-	
+		$email_body .= __("We're sorry but your account has not been approved.","xoousers") . $line_break.$line_break;
+		$email_body .= __('This is an automated notification. No further action is needed.','xoousers'). $line_break.$line_break;
+		$email_body .= __('Best Regards!','xoousers') . $line_break.$line_break;
+	    $this->notifications_email['admin_account_deny_message_body'] = $email_body;
+
+
 	}
-	
+
 	public function get_email_template($key)
 	{
 		return $this->notifications_email[$key];
-	
+
 	}
-	
+
 	public function set_font_awesome()
 	{
 		        /* Store icons in array */
@@ -984,134 +984,134 @@ class XooUserAdmin extends XooUserUltraCommon
                 'google-plus','google-plus-sign','sign-blank'
         );
         asort($this->fontawesome);
-		
-	
-	
+
+
+
 	}
-	
-		
-	
-	/*This Function Change the Profile Fields Order when drag/drop */	
-	public function sort_fileds_list() 
+
+
+
+	/*This Function Change the Profile Fields Order when drag/drop */
+	public function sort_fileds_list()
 	{
 		global $wpdb;
-	
+
 		$order = explode(',', $_POST['order']);
 		$counter = 0;
 		$new_pos = 10;
-		
-		//multi fields		
+
+		//multi fields
 		$custom_form = $_POST["uultra_custom_form"];
-		
+
 		if($custom_form!="")
 		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-			$fields = get_option($custom_form);			
+			$custom_form = 'usersultra_profile_fields_'.$custom_form;
+			$fields = get_option($custom_form);
 			$fields_set_to_update =$custom_form;
-			
+
 		}else{
-			
+
 			$fields = get_option('usersultra_profile_fields');
 			$fields_set_to_update ='usersultra_profile_fields';
-		
+
 		}
-		
+
 		$new_fields = array();
-		
+
 		$fields_temp = $fields;
 		ksort($fields);
-		
-		foreach ($fields as $field) 
+
+		foreach ($fields as $field)
 		{
-			
-			$fields_temp[$order[$counter]]["position"] = $new_pos;			
-			$new_fields[$new_pos] = $fields_temp[$order[$counter]];				
+
+			$fields_temp[$order[$counter]]["position"] = $new_pos;
+			$new_fields[$new_pos] = $fields_temp[$order[$counter]];
 			$counter++;
 			$new_pos=$new_pos+10;
 		}
-		
-		ksort($new_fields);		
-		
-		
-		update_option($fields_set_to_update, $new_fields);		
+
+		ksort($new_fields);
+
+
+		update_option($fields_set_to_update, $new_fields);
 		die(1);
-		
+
     }
 	/*  delete profile field */
-    public function delete_profile_field() 
-	{						
-		
+    public function delete_profile_field()
+	{
+
 		if($_POST['_item']!= "")
 		{
 			//$fields = get_option('usersultra_profile_fields');
-			
-			//multi fields		
+
+			//multi fields
 			$custom_form = $_POST["uultra_custom_form"];
-			
+
 			if($custom_form!="")
 			{
-				$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-				$fields = get_option($custom_form);			
+				$custom_form = 'usersultra_profile_fields_'.$custom_form;
+				$fields = get_option($custom_form);
 				$fields_set_to_update =$custom_form;
-				
+
 			}else{
-				
+
 				$fields = get_option('usersultra_profile_fields');
 				$fields_set_to_update ='usersultra_profile_fields';
-			
+
 			}
-			
+
 			$pos = $_POST['_item'];
-			
+
 			unset($fields[$pos]);
-			
+
 			ksort($fields);
 			print_r($fields);
 			update_option($fields_set_to_update, $fields);
-			
-		
+
+
 		}
-	
+
 	}
-	
-	
+
+
 	 /* create new custom profile field */
-    public function add_new_custom_profile_field() 
-	{				
-		
-		
+    public function add_new_custom_profile_field()
+	{
+
+
 		if($_POST['_meta']!= "")
 		{
 			$meta = $_POST['_meta'];
-		
+
 		}else{
-			
+
 			$meta = $_POST['_meta_custom'];
 		}
-		
+
 		//if custom fields
-		
-		
-		//multi fields		
+
+
+		//multi fields
 		$custom_form = $_POST["uultra_custom_form"];
-		
+
 		if($custom_form!="")
 		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-			$fields = get_option($custom_form);			
+			$custom_form = 'usersultra_profile_fields_'.$custom_form;
+			$fields = get_option($custom_form);
 			$fields_set_to_update =$custom_form;
-			
+
 		}else{
-			
+
 			$fields = get_option('usersultra_profile_fields');
 			$fields_set_to_update ='usersultra_profile_fields';
-		
+
 		}
-		
-		$min = min(array_keys($fields)); 
-		
+
+		$min = min(array_keys($fields));
+
 		$pos = $min-1;
-		
+
 		$fields[$pos] =array(
 			  'position' => $pos,
 				'icon' => filter_var($_POST['_icon']),
@@ -1123,77 +1123,77 @@ class XooUserAdmin extends XooUserUltraCommon
 				'tooltip' => filter_var($_POST['_tooltip']),
 				'help_text' => filter_var($_POST['_help_text']),
 				'social' =>  filter_var($_POST['_social']),
-				'is_a_link' =>  filter_var($_POST['_is_a_link']),				
+				'is_a_link' =>  filter_var($_POST['_is_a_link']),
 				'can_edit' => filter_var($_POST['_can_edit']),
 				'allow_html' => filter_var($_POST['_allow_html']),
-				'can_hide' => filter_var($_POST['_can_hide']),				
+				'can_hide' => filter_var($_POST['_can_hide']),
 				'private' => filter_var($_POST['_private']),
 				'required' => filter_var($_POST['_required']),
 				'show_in_register' => filter_var($_POST['_show_in_register']),
 				'show_in_widget' => filter_var($_POST['_show_in_widget']),
-				'predefined_options' => filter_var($_POST['_predefined_options']),				
-				'choices' => filter_var($_POST['_choices']),												
+				'predefined_options' => filter_var($_POST['_predefined_options']),
+				'choices' => filter_var($_POST['_choices']),
 				'deleted' => 0,
 				'show_to_user_role' => $_POST['_show_to_user_role'],
                 'edit_by_user_role' => $_POST['_edit_by_user_role']
 
 			);
-			
+
 			// Save user roles which has permission for view and edit the field
             if (isset($_POST['_show_to_user_role_list']) )
 			{
-                    $fields[$pos]['show_to_user_role_list'] = $_POST['_show_to_user_role_list'];					
+                    $fields[$pos]['show_to_user_role_list'] = $_POST['_show_to_user_role_list'];
             }
-           
-		   if (isset($_POST['_edit_by_user_role_list']) ) 
+
+		   if (isset($_POST['_edit_by_user_role_list']) )
 		   {
                     $fields[$pos]['edit_by_user_role_list'] = $_POST['_edit_by_user_role_list'];
            }
-				
-			
+
+
 			ksort($fields);
 			print_r($fields);
-			
-		   update_option($fields_set_to_update, $fields);         
+
+		   update_option($fields_set_to_update, $fields);
 
 
     }
-	
+
 
 
     // save form
-    public function save_fields_settings() 
-	{		
-		
+    public function save_fields_settings()
+	{
+
 		$pos = filter_var($_POST['pos']);
-		
+
 		if($_POST['_meta']!= "")
 		{
 			$meta = $_POST['_meta'];
-		
+
 		}else{
-			
+
 			$meta = $_POST['_meta_custom'];
 		}
-		
+
 		//if custom fields
-		
-		//multi fields		
+
+		//multi fields
 		$custom_form = $_POST["uultra_custom_form"];
-		
+
 		if($custom_form!="")
 		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-			$fields = get_option($custom_form);			
+			$custom_form = 'usersultra_profile_fields_'.$custom_form;
+			$fields = get_option($custom_form);
 			$fields_set_to_update =$custom_form;
-			
+
 		}else{
-			
+
 			$fields = get_option('usersultra_profile_fields');
 			$fields_set_to_update ='usersultra_profile_fields';
-		
+
 		}
-		
+
 		$fields[$pos] =array(
 			  'position' => $pos,
 				'icon' => $_POST['_icon'],
@@ -1208,91 +1208,91 @@ class XooUserAdmin extends XooUserUltraCommon
 				'is_a_link' =>  filter_var($_POST['_is_a_link']),
 				'can_edit' => filter_var($_POST['_can_edit']),
 				'allow_html' => filter_var($_POST['_allow_html']),
-				'can_hide' => filter_var($_POST['_can_hide']),				
+				'can_hide' => filter_var($_POST['_can_hide']),
 				'private' => filter_var($_POST['_private']),
 				'required' => filter_var($_POST['_required']),
 				'show_in_register' => filter_var($_POST['_show_in_register']),
 				'show_in_widget' => filter_var($_POST['_show_in_widget']),
-				'predefined_options' => filter_var($_POST['_predefined_options']),				
-				'choices' => filter_var($_POST['_choices']),												
+				'predefined_options' => filter_var($_POST['_predefined_options']),
+				'choices' => filter_var($_POST['_choices']),
 				'deleted' => 0,
 				'show_to_user_role' => $_POST['_show_to_user_role'],
                 'edit_by_user_role' => $_POST['_edit_by_user_role']
 			);
-			
-			
+
+
 			// Save user roles which has permission for view and edit the field
             if (isset($_POST['_show_to_user_role_list']) )
 			{
-                    $fields[$pos]['show_to_user_role_list'] = $_POST['_show_to_user_role_list'];					
+                    $fields[$pos]['show_to_user_role_list'] = $_POST['_show_to_user_role_list'];
             }
-           
-		   if (isset($_POST['_edit_by_user_role_list']) ) 
+
+		   if (isset($_POST['_edit_by_user_role_list']) )
 		   {
                     $fields[$pos]['edit_by_user_role_list'] = $_POST['_edit_by_user_role_list'];
            }
-			
-			
-			
+
+
+
 			print_r($fields);
-			
+
 		    update_option($fields_set_to_update , $fields);
-		
-         
+
+
 
 
     }
-	
+
 	/*This load a custom field to be edited Implemented on 08-08-2014*/
-	function uultra_reload_field_to_edit()	
+	function uultra_reload_field_to_edit()
 	{
 		global $xoouserultra;
-		
+
 		//get field
 		$pos = $_POST["pos"];
-		
-		
-		//multi fields		
+
+
+		//multi fields
 		$custom_form = $_POST["uultra_custom_form"];
-		
+
 		if($custom_form!="")
 		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;		
-			$fields = get_option($custom_form);			
+			$custom_form = 'usersultra_profile_fields_'.$custom_form;
+			$fields = get_option($custom_form);
 			$fields_set_to_update =$custom_form;
-			
+
 		}else{
-			
+
 			$fields = get_option('usersultra_profile_fields');
 			$fields_set_to_update ='usersultra_profile_fields';
-		
+
 		}
-		
+
 		$array = $fields[$pos];
-		
-		
+
+
 		extract($array); $i++;
 
 		if(!isset($required))
 		       $required = 0;
 
 		    if(!isset($fonticon))
-		        $fonticon = '';				
-				
+		        $fonticon = '';
+
 			if ($type == 'seperator' || $type == 'separator') {
-			   
+
 				$class = "separator";
 				$class_title = "";
 			} else {
-			  
+
 				$class = "profile-field";
 				$class_title = "profile-field";
 			}
-		
-		
+
+
 		?>
-		
-		
+
+
 
 				<p>
 					<label for="uultra_<?php echo $pos; ?>_position"><?php _e('Position','xoousers'); ?>
@@ -1315,8 +1315,8 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('You can create a separator or a usermeta (profile field)','xoousers'); ?>"></i>
-				</p> 
-				
+				</p>
+
 				<?php if ($type != 'separator') { ?>
 
 				<p class="uultra-inputtype">
@@ -1370,9 +1370,9 @@ class XooUserAdmin extends XooUserUltraCommon
 						title="<?php _e('Enter a custom meta key for this profile field if do not want to use a predefined meta field above. It is recommended to only use alphanumeric characters and underscores, for example my_custom_meta is a proper meta key.','xoousers'); ?>"></i>
 				</p> <?php } ?>
 
-				
-                
-                
+
+
+
                 <p>
 					<label for="uultra_<?php echo $pos; ?>_name"><?php _e('Label / Name','xoousers'); ?>
 					</label> <input name="uultra_<?php echo $pos; ?>_name" type="text"
@@ -1380,7 +1380,7 @@ class XooUserAdmin extends XooUserUltraCommon
 					<i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Enter the label / name of this field as you want it to appear in front-end (Profile edit/view)','xoousers'); ?>"></i>
 				</p>
-                
+
                 <p>
 					<label for="uultra_<?php echo $pos; ?>_ccap"><?php _e('Custom Capabilities','xoousers'); ?>
 					</label> <input name="uultra_<?php echo $pos; ?>_ccap" type="text"
@@ -1391,7 +1391,7 @@ class XooUserAdmin extends XooUserUltraCommon
 
 			<?php if ($type != 'separator' ) { ?>
 
-				
+
 				<p>
 					<label for="uultra_<?php echo $pos; ?>_tooltip"><?php _e('Tooltip Text','xoousers'); ?>
 					</label> <input name="uultra_<?php echo $pos; ?>_tooltip" type="text"
@@ -1399,19 +1399,19 @@ class XooUserAdmin extends XooUserUltraCommon
 						value="<?php echo $tooltip; ?>" /> <i
 						class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('A tooltip text can be useful for social buttons on profile header.','xoousers'); ?>"></i>
-				</p> 
-                
+				</p>
+
                <p>
-               
+
                <label for="uultra_<?php echo $pos; ?>_help_text"><?php _e('Help Text','xoousers'); ?>
                 </label><br />
                     <textarea class="uultra-help-text" id="uultra_<?php echo $pos; ?>_help_text" name="uultra_<?php echo $pos; ?>_help_text" title="<?php _e('A help text can be useful for provide information about the field.','xoousers'); ?>" ><?php echo $help_text; ?></textarea>
                     <i class="uultra-icon-question-sign uultra-tooltip2"
                                 title="<?php _e('Show this help text under the profile field.','xoousers'); ?>"></i>
-                              
-               </p> 
-				
-				
+
+               </p>
+
+
 				<?php if ($field != 'password') { ?>
 				<p>
 					<label for="uultra_<?php echo $pos; ?>_social"><?php _e('This field is social','xoousers'); ?>
@@ -1425,10 +1425,10 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('A social field can show a button with your social profile in the head of your profile. Such as Facebook page, Twitter, etc.','xoousers'); ?>"></i>
-				</p> <?php } ?> 
-                
-                
-                <?php 
+				</p> <?php } ?>
+
+
+                <?php
 				if(!isset($is_a_link))
 				    $is_a_link = '0';
 				?>
@@ -1444,10 +1444,10 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('This is a link type field','xoousers'); ?>"></i>
-				</p> 
-                
-				
-				<?php 
+				</p>
+
+
+				<?php
 				if(!isset($can_edit))
 				    $can_edit = '1';
 				?>
@@ -1463,9 +1463,9 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Users can edit this profile field or not.','xoousers'); ?>"></i>
-				</p> 
-				
-				<?php if (!isset($array['allow_html'])) { 
+				</p>
+
+				<?php if (!isset($array['allow_html'])) {
 				    $allow_html = 0;
 				} ?>
 				<p>
@@ -1480,8 +1480,8 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('If yes, users will be able to write HTML code in this field.','xoousers'); ?>"></i>
-				</p> <?php if ($private != 1) { 
-				     
+				</p> <?php if ($private != 1) {
+
 				    if(!isset($can_hide))
 				        $can_hide = '0';
 				    ?>
@@ -1497,7 +1497,7 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Allow users to hide this profile field from public viewing or not. Selecting No will cause the field to always be publicly visible if you have public viewing of profiles enabled. Selecting Yes will give the user a choice if the field should be publicly visible or not. Private fields are not affected by this option.','xoousers'); ?>"></i>
-				</p> <?php } ?> <?php 
+				</p> <?php } ?> <?php
 				if(!isset($private))
 				    $private = '0';
 				?>
@@ -1513,7 +1513,7 @@ class XooUserAdmin extends XooUserUltraCommon
 						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Make this field Private. Only admins can see private fields.','xoousers'); ?>"></i>
-				</p> <?php 
+				</p> <?php
 				if(!isset($required))
 				    $required = '0';
 				?>
@@ -1550,7 +1550,7 @@ class XooUserAdmin extends XooUserUltraCommon
 				{
 				    if(!isset($show_in_register))
 				        $show_in_register= 0;
-						
+
 					 if(!isset($show_in_widget))
 				        $show_in_widget= 0;
 				    ?>
@@ -1567,10 +1567,10 @@ class XooUserAdmin extends XooUserUltraCommon
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Show this profile field on the registration form','xoousers'); ?>"></i>
 				</p>
-                
+
                  <p>
 					<label for="uultra_<?php echo $pos; ?>_show_in_widget"><?php _e('Show on Widget','xoousers'); ?>
-					</label> 
+					</label>
                     <select name="uultra_<?php echo $pos; ?>_show_in_widget"
 						id="uultra_<?php echo $pos; ?>_show_in_widget">
 						<option value="0" <?php selected(0, $show_in_widget); ?> >
@@ -1582,13 +1582,13 @@ class XooUserAdmin extends XooUserUltraCommon
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Show this profile field on the user profiles','xoousers'); ?>"></i>
 				</p>
-                
-                
-                 <p>                
-                
+
+
+                 <p>
+
     			<label for="uultra_<?php echo $pos; ?>_show_to_user_role"><?php _e('Display by User Role','xoousers'); ?>
         		</label>
-                
+
                 <br />
         		<select name="uultra_<?php echo $pos; ?>_show_to_user_role" id="uultra_<?php echo $pos; ?>_show_to_user_role" class="uultra_show_to_user_role_edit" >
         				<option value="0" <?php selected(0, $show_to_user_role); ?>>
@@ -1599,28 +1599,28 @@ class XooUserAdmin extends XooUserUltraCommon
         				</option>
         		</select> <i class="uultra-icon-question-sign uultra-tooltip2"
         			title="<?php _e('If no, this field will be displayed on profiles of all User Roles. Select yes to display this field only on profiles of specific User Roles.','xoousers'); ?>"></i>
-        		
-            
+
+
             	</p>
-                
+
                  <p style="display:" id="uultra_<?php echo $pos; ?>_show_to_user_role_list_div">
-                 
-                 
+
+
         		<label for="uultra_<?php echo $pos; ?>_show_to_user_role_list"><?php _e('Select User Roles','xoousers'); ?>
         		</label>
                   <br />
-        		<?php 
+        		<?php
         			  $roles = 	$xoouserultra->role->uultra_get_available_user_roles();
-					  
+
 					  //get role list
-					  
+
 					  $curren_role_list = array();
         			  foreach($roles as $role_key => $role_display)
 					  {
 						  $curren_role_list = explode(",",$show_to_user_role_list);
-						  
+
 						  $checked_l = '';
-						  
+
 						  if(in_array($role_key,$curren_role_list)){
 							   $checked_l = 'checked="checked"';
 						  }
@@ -1632,15 +1632,15 @@ class XooUserAdmin extends XooUserUltraCommon
         		?>
         		 <i class="uultra-icon-question-sign uultra-tooltip2"
         			title="<?php _e('This field will only be displayed on users of the selected User Roles.','xoousers'); ?>"></i>
-        		
-                 
+
+
                   </p>
-                  
-                    <p >                
-                
+
+                    <p >
+
     			<label for="uultra_<?php echo $pos; ?>_edit_by_user_role"><?php _e('Editable by Users of Role','xoousers'); ?>
         		</label>
-                
+
                   <br />
         		<select name="uultra_<?php echo $pos; ?>_edit_by_user_role" id="uultra_<?php echo $pos; ?>_edit_by_user_role" class="uultra_edit_by_user_role_edit">
         				<option value="0" <?php selected(0, $edit_by_user_role); ?>>
@@ -1651,30 +1651,30 @@ class XooUserAdmin extends XooUserUltraCommon
         				</option>
         		</select> <i class="uultra-icon-question-sign uultra-tooltip2"
         			title="<?php _e('If yes, available user roles will be displayed for selection.','xoousers'); ?>"></i>
-        		
-            
+
+
             	</p>
-                
-                
+
+
                  <p style="display:" id="uultra_<?php echo $pos; ?>_edit_by_user_role_list_div">
-                 
-                 
+
+
         		<label for="uultra_<?php echo $pos; ?>_show_to_user_role_list"><?php _e('Select User Roles','xoousers'); ?>
         		</label>
-                
+
                   <br />
-        		<?php 
+        		<?php
         			  $roles = 	$xoouserultra->role->uultra_get_available_user_roles('edit');
-					  
+
 					  //get role list
-					  
+
 					  $curren_role_list = array();
         			  foreach($roles as $role_key => $role_display)
 					  {
 						  $curren_role_list = explode(",",$edit_by_user_role_list);
-						  
+
 						  $checked_l = '';
-						  
+
 						  if(in_array($role_key,$curren_role_list)){
 							   $checked_l = 'checked="checked"';
 						  }
@@ -1686,71 +1686,76 @@ class XooUserAdmin extends XooUserUltraCommon
         		?>
         		 <i class="uultra-icon-question-sign uultra-tooltip2"
         			title="<?php _e('This field will only be displayed on users of the selected User Roles.','xoousers'); ?>"></i>
-        		
-                 
+
+
                   </p>
-                
-               
-                
+
+
+
                  <?php } ?>
-                 
+
 			<?php if ($type != 'seperator' || $type != 'separator') { ?>
 
 		  <?php if (in_array($field, array('select','radio','checkbox')))
 				 {
 				    $show_choices = null;
 				} else { $show_choices = 'uultra-hide';
-				
-				
+
+
 				} ?>
 
 				<p class="uultra-choices <?php echo $show_choices; ?>">
 					<label for="uultra_<?php echo $pos; ?>_choices"
 						style="display: block"><?php _e('Available Choices','xoousers'); ?> </label>
 					<textarea name="uultra_<?php echo $pos; ?>_choices" type="text" id="uultra_<?php echo $pos; ?>_choices" class="large-text"><?php if (isset($array['choices'])) echo trim($choices); ?></textarea>
-                    
+
                     <?php
-                    
+
 					if($xoouserultra->uultra_if_windows_server())
 					{
-						echo ' <p>'.__('<strong>PLEASE NOTE: </strong>Enter values separated by commas, example: 1,2,3. The choices will be available for front end user to choose from.').' </p>';					
+						echo ' <p>'.__('<strong>PLEASE NOTE: </strong>Enter values separated by commas, example: 1,2,3. The choices will be available for front end user to choose from.').' </p>';
 					}else{
-						
+
 						echo ' <p>'.__('<strong>PLEASE NOTE:</strong> Enter one choice per line please. The choices will be available for front end user to choose from.').' </p>';
-					
-					
+
+
 					}
-					
+
 					?>
                     <p>
-                    
-                    
+
+
                     </p>
 					<i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('Enter one choice per line please. The choices will be available for front end user to choose from.','xoousers'); ?>"></i>
 				</p> <?php //if (!isset($array['predefined_loop'])) $predefined_loop = 0;
-				
+
 				if (!isset($predefined_options)) $predefined_options = 0;
-				
+
 				 ?>
 
 				<p class="uultra_choices <?php echo $show_choices; ?>">
 					<label for="uultra_<?php echo $pos; ?>_predefined_options" style="display: block"><?php _e('Enable Predefined Choices','xoousers'); ?>
-					</label> 
+					</label>
                     <select name="uultra_<?php echo $pos; ?>_predefined_options"id="uultra_<?php echo $pos; ?>_predefined_options">
 						<option value="0" <?php selected(0, $predefined_options); ?>>
 							<?php _e('None','xoousers'); ?>
 						</option>
+
 						<option value="countries" <?php selected('countries', $predefined_options); ?>>
 							<?php _e('List of Countries','xoousers'); ?>
 						</option>
-                        
+
                         <option value="age" <?php selected('age', $predefined_options); ?>>
 							<?php _e('Age','xoousers'); ?>
 						</option>
-                                 <option value="cities" <?php selected('cities', $predefined_options); ?>>
-                                                        <?php _e('List of Cities','xoousers'); ?>
-                                                </option>
+
+                        <option value="test" <?php selected('prof', $predefined_options); ?>>
+                            <?php _e('List of Prof Categories','xoousers'); ?>
+                        </option>
+                        <option value="regions" <?php selected('regions', $predefined_options); ?>>
+							<?php _e('List of Regions','xoousers'); ?>
+						</option>
 					</select> <i class="uultra-icon-question-sign uultra-tooltip2"
 						title="<?php _e('You can enable a predefined filter for choices. e.g. List of countries It enables country selection in profiles and saves you time to do it on your own.','xoousers'); ?>"></i>
 				</p>
@@ -1759,87 +1764,87 @@ class XooUserAdmin extends XooUserUltraCommon
 
 					<span style="display: block; font-weight: bold; margin: 0 0 10px 0"><?php _e('Field Icon:','xoousers'); ?>&nbsp;&nbsp;
 						<?php if ($icon) { ?>
-                        
+
                         <i class="fa fa-<?php echo $icon; ?>"></i>
-                        
-						<?php } else { 
-						
-						_e('None','xoousers'); 
-						
+
+						<?php } else {
+
+						_e('None','xoousers');
+
 						} ?>
-                        
+
                         &nbsp;&nbsp; <a href="#changeicon"
 						class="button button-secondary uultra-inline-icon-uultra-edit"><?php _e('Change Icon','xoousers'); ?>
 					</a> </span> <label class="uultra-icons">
-                    
+
                     <input type="radio"	name="uultra_<?php echo $pos; ?>_icon" value=""
 						<?php checked('', $fonticon); ?> /> <?php _e('None','xoousers'); ?> </label>
-                        
-                        
-                        
 
-					<?php 
-					
-					foreach($this->fontawesome as $fonticon) { 
-					
-					
+
+
+
+					<?php
+
+					foreach($this->fontawesome as $fonticon) {
+
+
 					?>
-					  
-                      
+
+
                       <label class="uultra-icons"><input type="radio"	name="uultra_<?php echo $pos; ?>_icon" value="<?php echo $fonticon; ?>"
 						<?php checked($fonticon, $icon); ?> />
 
                         <i class="fa fa-<?php echo $fonticon; ?> uultra-tooltip3"
 						title="<?php echo $fonticon; ?>"></i> </label>
-                        
-                        
+
+
 					<?php } //for each ?>
-                    
-                    
+
+
 
 				</p>
-				<div class="clear"></div> 
-				
+				<div class="clear"></div>
+
 				<?php } ?>
 
 
   <div class="user-ultra-success uultra-notification" id="uultra-sucess-fields-<?php echo $pos; ?>"><?php _e('Success ','xoousers'); ?></div>
 				<p>
-                
-               
-                 
-				<input type="button" name="submit"	value="<?php _e('Update','xoousers'); ?>"						class="button button-primary uultra-btn-submit-field"  data-edition="<?php echo $pos; ?>" /> 
+
+
+
+				<input type="button" name="submit"	value="<?php _e('Update','xoousers'); ?>"						class="button button-primary uultra-btn-submit-field"  data-edition="<?php echo $pos; ?>" />
                    <input type="button" value="<?php _e('Cancel','xoousers'); ?>"
 						class="button button-secondary uultra-btn-close-edition-field" data-edition="<?php echo $pos; ?>" />
 				</p>
-                
+
       <?php
-	  
+
 	  die();
-		
+
 	}
-	
-	public function xoousers_create_standard_form_fields ($form_name )	
-	{		
-	
+
+	public function xoousers_create_standard_form_fields ($form_name )
+	{
+
 		/* These are the basic profile fields */
 		$fields_array = array(
-			80 => array( 
+			80 => array(
 			  'position' => '50',
-				'type' => 'separator', 
+				'type' => 'separator',
 				'name' => __('Profile Info','xoousers'),
 				'private' => 0,
 				'show_in_register' => 1,
 				'show_in_widget' => 1,
 				'deleted' => 0
 			),
-			
-			100 => array( 
+
+			100 => array(
 			  'position' => '100',
-				'icon' => 'user', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'first_name', 
+				'icon' => 'user',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'first_name',
 				'name' => __('First Name','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -1849,12 +1854,12 @@ class XooUserAdmin extends XooUserUltraCommon
 				'social' => 0,
 				'deleted' => 0
 			),
-			120 => array( 
+			120 => array(
 			  'position' => '101',
-				'icon' => 0, 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'last_name', 
+				'icon' => 0,
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'last_name',
 				'name' => __('Last Name','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -1864,8 +1869,8 @@ class XooUserAdmin extends XooUserUltraCommon
 				'social' => 0,
 				'deleted' => 0
 			),
-			
-			130 => array( 
+
+			130 => array(
 			  'position' => '130',
 				'icon' => '0',
 				'field' => 'select',
@@ -1880,16 +1885,16 @@ class XooUserAdmin extends XooUserUltraCommon
 				'private' => 0,
 				'social' => 0,
 				'predefined_options' => 'age',
-				'deleted' => 0,				
+				'deleted' => 0,
 				'allow_html' => 0
 			),
-			
-			150 => array( 
+
+			150 => array(
 			  'position' => '150',
-				'icon' => 'user', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'display_name', 
+				'icon' => 'user',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'display_name',
 				'name' => __('Display Name','xoousers'),
 				'can_hide' => 0,
 				'can_edit' => 1,
@@ -1900,7 +1905,7 @@ class XooUserAdmin extends XooUserUltraCommon
 				'required' => 1,
 				'deleted' => 0
 			),
-			170 => array( 
+			170 => array(
 			  'position' => '200',
 				'icon' => 'pencil',
 				'field' => 'textarea',
@@ -1916,7 +1921,7 @@ class XooUserAdmin extends XooUserUltraCommon
 				'deleted' => 0,
 				'allow_html' => 1
 			),
-			190 => array( 
+			190 => array(
 			  'position' => '200',
 				'icon' => 'pencil',
 				'field' => 'textarea',
@@ -1932,7 +1937,7 @@ class XooUserAdmin extends XooUserUltraCommon
 				'deleted' => 0,
 				'allow_html' => 1
 			),
-			200 => array( 
+			200 => array(
 			  'position' => '200',
 				'icon' => '0',
 				'field' => 'select',
@@ -1947,27 +1952,27 @@ class XooUserAdmin extends XooUserUltraCommon
 				'private' => 0,
 				'social' => 0,
 				'predefined_options' => 'countries',
-				'deleted' => 0,				
+				'deleted' => 0,
 				'allow_html' => 0
 			),
-			
-			230 => array( 
+
+			230 => array(
 			  'position' => '250',
-				'type' => 'separator', 
+				'type' => 'separator',
 				'name' => __('Contact Info','xoousers'),
 				'private' => 0,
 				'show_in_register' => 1,
 				'show_in_widget' => 1,
 				'deleted' => 0
 			),
-			
-			
-			430 => array( 
+
+
+			430 => array(
 			  'position' => '400',
-				'icon' => 'link', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'user_url', 
+				'icon' => 'link',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'user_url',
 				'name' => __('Website','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -1978,21 +1983,21 @@ class XooUserAdmin extends XooUserUltraCommon
 				'social' => 0,
 				'deleted' => 0
 			),
-			470 => array( 
+			470 => array(
 			  'position' => '450',
-				'type' => 'separator', 
+				'type' => 'separator',
 				'name' => __('Social Profiles','xoousers'),
 				'private' => 0,
 				'show_in_register' => 1,
 				'show_in_widget' => 0,
 				'deleted' => 0
 			),
-			520 => array( 
+			520 => array(
 			  'position' => '500',
-				'icon' => 'facebook', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'facebook', 
+				'icon' => 'facebook',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'facebook',
 				'name' => __('Facebook','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -2004,12 +2009,12 @@ class XooUserAdmin extends XooUserUltraCommon
 				'tooltip' => __('Connect via Facebook','xoousers'),
 				'deleted' => 0
 			),
-			560 => array( 
+			560 => array(
 			  'position' => '510',
-				'icon' => 'twitter', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'twitter', 
+				'icon' => 'twitter',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'twitter',
 				'name' => __('Twitter Username','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -2021,12 +2026,12 @@ class XooUserAdmin extends XooUserUltraCommon
 				'tooltip' => __('Connect via Twitter','xoousers'),
 				'deleted' => 0
 			),
-			590 => array( 
+			590 => array(
 			  'position' => '520',
-				'icon' => 'google-plus', 
-				'field' => 'text', 
-				'type' => 'usermeta', 
-				'meta' => 'googleplus', 
+				'icon' => 'google-plus',
+				'field' => 'text',
+				'type' => 'usermeta',
+				'meta' => 'googleplus',
 				'name' => __('Google+','xoousers'),
 				'can_hide' => 1,
 				'can_edit' => 1,
@@ -2038,9 +2043,9 @@ class XooUserAdmin extends XooUserUltraCommon
 				'tooltip' => __('Connect via Google+','xoousers'),
 				'deleted' => 0
 			),
-			600 => array( 
+			600 => array(
 			  'position' => '550',
-				'type' => 'separator', 
+				'type' => 'separator',
 				'name' => __('Account Info','xoousers'),
 				'private' => 0,
 				'show_in_register' => 0,
@@ -2074,60 +2079,60 @@ class XooUserAdmin extends XooUserUltraCommon
 				'deleted' => 0
 			)
 		);
-		
+
 		/* Store default profile fields for the first time */
 		if (!get_option($form_name))
 		{
 			if($form_name!="")
 			{
 				update_option($form_name,$fields_array);
-			
+
 			}
-			
-		}	
-		
-		
+
+		}
+
+
 	}
-	
-	/*Loads all field list Implemented on 08-08-2014*/	
-	function uultra_reload_custom_fields_set ()	
+
+	/*Loads all field list Implemented on 08-08-2014*/
+	function uultra_reload_custom_fields_set ()
 	{
-		
+
 		global $xoouserultra;
-		
-		$custom_form = $_POST["uultra_custom_form"];		
-		
+
+		$custom_form = $_POST["uultra_custom_form"];
+
 		if($custom_form!="") //use a custom form
 		{
-			//check if fields have been added			
+			//check if fields have been added
 			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			
+
 			if (!get_option($custom_form)) //we need to create a default field set for this form
 			{
-				
-				$this->xoousers_create_standard_form_fields($custom_form);									
+
+				$this->xoousers_create_standard_form_fields($custom_form);
 				$fields = get_option($custom_form);
-				
+
 			}else{
-				
-				//fields have been added to the custom form.				
+
+				//fields have been added to the custom form.
 				$fields = get_option($custom_form);
-			
-			
+
+
 			}
-			
-		
+
+
 		}else{ //use the default registration from
-			
+
 			$fields = get_option('usersultra_profile_fields');
-			
-		
+
+
 		}
-		
-		ksort($fields);		
-		
+
+		ksort($fields);
+
 		$i = 0;
-		foreach($fields as $pos => $array) 
+		foreach($fields as $pos => $array)
 		{
 		    extract($array); $i++;
 
@@ -2136,73 +2141,73 @@ class XooUserAdmin extends XooUserUltraCommon
 
 		    if(!isset($fonticon))
 		        $fonticon = '';
-				
-				
+
+
 			if ($type == 'seperator' || $type == 'separator') {
-			   
+
 				$class = "separator";
 				$class_title = "";
 			} else {
-			  
+
 				$class = "profile-field";
 				$class_title = "profile-field";
 			}
 		    ?>
-            
+
           <li class="uultra-profile-fields-row <?php echo $class_title?>" id="<?php echo $pos; ?>">
-            
-            
+
+
             <div class="heading_title  <?php echo $class?>">
-            
+
             <h3>
             <?php
-			
+
 			if (isset($array['name']) && $array['name'])
 			{
 			    echo  $array['name'];
 			}
 			?>
-            
+
             <?php
 			if ($type == 'separator') {
-				
+
 			    echo __(' - Separator','xoousers');
-				
+
 			} else {
-				
+
 			    echo __(' - Profile Field','xoousers');
-				
+
 			}
 			?>
-            
+
             </h3>
-            
-            
+
+
               <div class="options-bar">
-             
-                 <p>                
+
+                 <p>
                     <input type="submit" name="submit" value="<?php _e('Edit','xoousers'); ?>"						class="button uultra-btn-edit-field button-primary" data-edition="<?php echo $pos; ?>" /> <input type="button" value="<?php _e('Delete','xoousers'); ?>"	data-field="<?php echo $pos; ?>" class="button button-secondary uultra-delete-profile-field-btn" />
                     </p>
-            
+
              </div>
-            
-            
-          
+
+
+
 
             </div>
-            
-             
+
+
              <div class="user-ultra-success uultra-notification" id="uultra-sucess-delete-fields-<?php echo $pos; ?>"><?php _e('Success! This field has been deleted ','xoousers'); ?></div>
-            
-           
-        
+
+
+
           <!-- edit field -->
-          
+
           <div class="user-ultra-sect-second uultra-fields-edition user-ultra-rounded"  id="uu-edit-fields-bock-<?php echo $pos; ?>">
-        
+
           </div>
-          
-          
+
+
           <!-- edit field end -->
 
        </li>
@@ -2214,18 +2219,18 @@ class XooUserAdmin extends XooUserUltraCommon
 
 
 	<?php
-	
+
 	}
-		
+
 		die();
-		
-	
+
+
 	}
-		
+
 	// update settings
-    function update_settings() 
+    function update_settings()
 	{
-		foreach($_POST as $key => $value) 
+		foreach($_POST as $key => $value)
 		{
             if ($key != 'submit')
 			{
@@ -2233,225 +2238,225 @@ class XooUserAdmin extends XooUserUltraCommon
                 {
                       //$this->userultra_default_options[$key] = stripslashes($value);
                 }else{
-					
+
 					 // $this->userultra_default_options[$key] = esc_attr($value);
                  }
-					
-					//special rule for html 					
+
+					//special rule for html
 					if($key=="uultra_terms_and_conditions_text")
-					{						
+					{
 						//echo "Page : " . $value;
-						$value=stripslashes($value);				 
-						 
-						 
-					} 
-					
-					  
-					
-					$this->userultra_set_option($key, $value) ; 
-					
+						$value=stripslashes($value);
+
+
+					}
+
+
+
+					$this->userultra_set_option($key, $value) ;
+
 					//special setting for page
 					if($key=="xoousersultra_my_account_page")
-					{						
+					{
 						//echo "Page : " . $value;
-						 update_option('xoousersultra_my_account_page',$value);				 
-						 
-						 
-					}  
+						 update_option('xoousersultra_my_account_page',$value);
+
+
+					}
 
             }
         }
-		
+
 		//get checks for each tab
-		
-		
+
+
 		 if ( isset ( $_GET['tab'] ) )
 		 {
-			 
+
 			    $current = $_GET['tab'];
-				
+
           } else {
                 $current = $this->default_tab;
-          }	 
-            
+          }
+
 		$special_with_check = $this->get_special_checks($current);
-         
+
         foreach($special_with_check as $key)
         {
-           
-            
+
+
                 if(!isset($_POST[$key]))
-				{			
+				{
                     $value= '0';
-					
+
 				 } else {
-					 
+
 					  $value= $_POST[$key];
-				}	 	
-         
-			
-			$this->userultra_set_option($key, $value) ;  
-			
-			
-            
+				}
+
+
+			$this->userultra_set_option($key, $value) ;
+
+
+
         }
-         
+
       $this->options = get_option('userultra_options');
 
         echo '<div class="updated"><p><strong>'.__('Settings saved.','xoousers').'</strong></p></div>';
     }
-	
-	public function get_special_checks($tab) 
+
+	public function get_special_checks($tab)
 	{
 		$special_with_check = array();
-		
+
 		if($tab=="settings")
-		{				
-		
+		{
+
 		 $special_with_check = array('hide_admin_bar', 'disable_default_lightbox', 'uultra_loggedin_activated', 'uultra_allow_guest_rating', 'uultra_allow_guest_like','private_message_system','redirect_backend_profile','redirect_backend_registration', 'redirect_registration_when_social','redirect_backend_login', 'social_media_fb_active', 'social_media_linked_active', 'social_media_yahoo', 'social_media_google', 'twitter_connect', 'instagram_connect', 'yammer_connect', 'twitter_autopost','mailchimp_active', 'mailchimp_auto_checked', 'media_allow_photo_uploading', 'membership_display_selected_only', 'uultra_password_1_letter_1_number' , 'uultra_password_one_uppercase' , 'uultra_password_one_lowercase' );
-		 
+
 		}elseif($tab=="gateway"){
-			
+
 			 $special_with_check = array('gateway_paypal_active');
-		
+
 		}elseif($tab=="mail"){
-			
+
 			 $special_with_check = array('uultra_smtp_mailing_return_path', 'uultra_smtp_mailing_html_txt');
-		 
+
 		}
-	
+
 	return  $special_with_check ;
-	
+
 	}
-	
-	function admin_page_membership() 
+
+	function admin_page_membership()
 	{
 		//handle actions
-		
-		
+
+
 		if (isset($_POST['update_settings']))
 		{
             $this->update_settings();
         }
-		
-		
-		
+
+
+
 
 		if (isset($_POST['reset-options'])) {
 			$this->reset();
 		}
-		
-		
-		
+
+
+
 		if (isset($_POST['woosync'])) {
 			$this->woo_sync();
 		}
-		
+
 		if (isset($_POST['woosync_del'])){
 			$this->woo_sync_del();
 		}
-		
+
 	?>
-	
+
 		<div class="wrap <?php echo $this->slug; ?>-admin">
-        
-           
-           
+
+
+
            <h2>USERS ULTRA</h2>
-           
-		
-		            
-            
+
+
+
+
             <h2 class="nav-tab-wrapper"><?php $this->admin_tabs(); ?></h2>
-            
-           
-            
-           
+
+
+
+
 
 			<div class="<?php echo $this->slug; ?>-admin-contain">
-				
+
 				<?php $this->include_tab_content(); ?>
-				
+
 				<div class="clear"></div>
-				
+
 			</div>
-			
+
 		</div>
 
 	<?php }
-	
-	
+
+
 	function include_tab_content() {
 		$screen = get_current_screen();
-		
-		if( strstr($screen->id, $this->slug ) ) 
+
+		if( strstr($screen->id, $this->slug ) )
 		{
-			if ( isset ( $_GET['tab'] ) ) 
+			if ( isset ( $_GET['tab'] ) )
 			{
 				$tab = $_GET['tab'];
 			} else {
 				$tab = $this->default_tab;
 			}
-			
+
 			if($this->valid_c=="")
 			{
 				require_once (xoousers_path.'admin/tabs/'.$tab.'.php');
-			
-			
+
+
 			}else{
-				
+
 				$tab = "licence";
-				
+
 				require_once (xoousers_path.'admin/tabs/'.$tab.'.php');
-				
+
 			}
-			
-			
+
+
 		}
 	}
-	
+
 	function create_uploader_folder ()
 	{
 		global $xoouserultra;
-		
+
 		$mediafolder = true;
-		
+
 		//get folder
 		$media_folder = $xoouserultra->get_option('media_uploading_folder');
 		$path_pics = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
-		
+
 		//wp-content path
-		
+
 		$wp_content_path  = ABSPATH."wp-content/";
 		echo $wp_content_path;
-		
-		if(!is_dir($path_pics)) 
+
+		if(!is_dir($path_pics))
 		{
-			
+
 			$f_perm = substr(decoct(fileperms($wp_content_path)),2,4);
-			
+
 			if($f_perm == 777)
 			{
-				$this->CreateDir($path_pics);				
+				$this->CreateDir($path_pics);
 				chmod($wp_content_path, 0755);
-								
-			
+
+
 			}else{
-				
+
 				chmod($wp_content_path, 0777);
-				$this->CreateDir($path_pics);				
+				$this->CreateDir($path_pics);
 				chmod($wp_content_path, 0755);
-			
-			
+
+
 			}
-			
-					
-			
-			//echo "create: ". $path_pics;							   
+
+
+
+			//echo "create: ". $path_pics;
 		}
-		
+
 	}
-	
+
 	public function CreateDir($root)
 	{
 
@@ -2469,140 +2474,140 @@ class XooUserAdmin extends XooUserUltraCommon
                 }
 
     }
-	
+
 	function checkUploadFolder()
 	{
 		global $xoouserultra;
-		
+
 		$mediafolder = true;
-		
+
 		//get folder
 		$media_folder = $xoouserultra->get_option('media_uploading_folder');
 		$path_pics = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
-		
-		
+
+
 		$html = '';
-		
+
 		if(!is_dir($path_pics))
 		{
 			$mediafolder=false;
-			
+
 			$html .= ' <div ><div class="user-ultra-warning">'.__("Please create '".$media_folder."' folder with 0755 attribute. You can create it automatically by <a href='#' id='uultradmin-create-upload-folder'>clicking here</a>", 'xoousers').'</div></div>';
-			
+
 		}else{
-		
+
 			$f_perm = substr(decoct(fileperms($path_pics)),2,4);
-			
+
 			if($f_perm !=755)
 			{
 				//$mediafolder=false;
-				
-		//		$html .= ' <div ><div class="user-ultra-warning">'.__("Change attributes TO 0755 for  '".$media_folder."' folder.", 'xoousers').'</div></div>';	
-			
+
+		//		$html .= ' <div ><div class="user-ultra-warning">'.__("Change attributes TO 0755 for  '".$media_folder."' folder.", 'xoousers').'</div></div>';
+
 			}
-			
+
 		}
 
-		
+
 		return $html;
-	
-	
+
+
 	}
 
-	
-	
 
 
-	function admin_page() 
+
+
+	function admin_page()
 	{
 		global $xoouserultra;
 		//handle actions
-		
-		
-		
+
+
+
 		if (isset($_POST['update_settings'])) {
             $this->update_settings();
         }
-		
-		
+
+
 		if (isset($_POST['update_uultra_slugs']) && $_POST['update_uultra_slugs']=='uultra_slugs')
 		{
            $xoouserultra->create_rewrite_rules();
            flush_rewrite_rules();
 			echo '<div class="updated"><p><strong>'.__('Rewrite Rules were Saved.','xoousers').'</strong></p></div>';
         }
-		
+
 
 		if (isset($_POST['reset-options'])) {
 			$this->reset();
 		}
-		
-		
-		
+
+
+
 		if (isset($_POST['woosync'])) {
 			$this->woo_sync();
 		}
-		
+
 		if (isset($_POST['woosync_del'])){
 			$this->woo_sync_del();
 		}
-		
+
 	?>
-	
+
 		<div class="wrap <?php echo $this->slug; ?>-admin">
-        
-           
-           
+
+
+
            <h2>USERS ULTRA PRO</h2>
-           
+
            <div id="icon-users" class="icon32"></div>
-			
-		            
-            
+
+
+
             <h2 class="nav-tab-wrapper"><?php $this->admin_tabs(); ?></h2>
-            
-            
+
+
             <?php
 echo $xoouserultra->uultra_new_media_manager_check();
 ?>
-            
-            
+
+
              <?php
 			// echo "VV: " .$this->valid_c ;
 			  if($this->valid_c=="no"){?>
-            
+
             <div class="uuultra-top-noti-admin "><div class="user-ultra-warning"><?php echo __("Please validate your copy. ", 'xoousers')?></div></div>
-            
-            
+
+
             <?php }?>
-            
+
              <?php
-            
+
 			//special settings check
-			
-			/*Check My Account  URL*/			
+
+			/*Check My Account  URL*/
 			if($xoouserultra->login->get_my_account_direct_link_checking()=="")
 			{
 				?>
-                
+
                  <div class="uuultra-top-noti-admin "><div class="user-ultra-warning"><?php echo __("Please make sure that you've set the right My Account Page. Users Ultra couldn't find it and some important features such as password reset, account confirmation won't work properly.", 'xoousers')?> <a href="?page=userultra&tab=permalinks"><?php echo __("Click here to set the My Account Page", 'xoousers')?></a></div></div>
-                
-                <?php	
-			
-			}	
-			
+
+                <?php
+
+			}
+
 			?>
 
 			<div class="<?php echo $this->slug; ?>-admin-contain">
-            
+
               <?php echo $this->checkUploadFolder(); ?>
-				
+
 				<?php $this->include_tab_content(); ?>
-				
+
 				<div class="clear"></div>
-				
+
 			</div>
-			
+
 		</div>
 
 	<?php }
