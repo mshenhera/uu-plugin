@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Users Ultra Pro\n"
 "POT-Creation-Date: 2015-06-11 16:54+0200\n"
-"PO-Revision-Date: 2015-06-11 22:25+0200\n"
+"PO-Revision-Date: 2015-08-23 12:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -1891,19 +1891,19 @@ msgstr ""
 
 #: ../admin/tabs/mail.php:114
 msgid "Username:"
-msgstr ""
+msgstr "Користувач:"
 
 #: ../admin/tabs/mail.php:115 ../admin/tabs/mail.php:116
 msgid "Specify Username."
-msgstr ""
+msgstr "Вкажіть ім’я користувача."
 
 #: ../admin/tabs/mail.php:122
 msgid "Password:"
-msgstr ""
+msgstr "Пароль:"
 
 #: ../admin/tabs/mail.php:123 ../admin/tabs/mail.php:124
 msgid "Input Password."
-msgstr ""
+msgstr "Введіть пароль."
 
 #: ../admin/tabs/mail.php:133
 msgid ""
@@ -2005,7 +2005,7 @@ msgstr ""
 
 #: ../admin/tabs/mail.php:244
 msgid "Password Changed Confirmation"
-msgstr ""
+msgstr "Введіть пароль ще раз."
 
 #: ../admin/tabs/mail.php:245 ../admin/tabs/mail.php:246
 msgid "This message will be sent to the user when the password has been reset."
@@ -2188,7 +2188,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.user.php:1832
 #: ../xooclasses/xoo.userultra.user.php:1900
 msgid "Username"
-msgstr ""
+msgstr "Користувач"
 
 #: ../admin/tabs/main.php:252
 msgid "There are no pending activation users."
@@ -2600,7 +2600,7 @@ msgstr ""
 
 #: ../admin/tabs/permalinks.php:99
 msgid "The Profile Link is built by using the Username"
-msgstr ""
+msgstr "Профіль Посилання побудований за допомогою імені користувача"
 
 #: ../admin/tabs/permalinks.php:103 ../admin/tabs/permalinks.php:104
 msgid ""
@@ -2833,7 +2833,7 @@ msgstr ""
 
 #: ../admin/tabs/settings.php:255 ../admin/tabs/settings.php:256
 msgid "By default a Password must be at least 7 characters long"
-msgstr ""
+msgstr "Пароль має бути довжиною не менше 7 символів"
 
 #: ../admin/tabs/settings.php:263
 msgid "Must contain at least one number and one letter"
@@ -5762,7 +5762,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.class.php:1414
 #: ../xooclasses/xoo.userultra.class.php:1474
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: ../xooclasses/xoo.userultra.class.php:1384
 msgid "Date Picker"
@@ -5771,21 +5771,21 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.class.php:1405
 #: ../xooclasses/xoo.userultra.class.php:1451
 msgid "E-mail"
-msgstr ""
+msgstr "Електронна скринька"
 
 #: ../xooclasses/xoo.userultra.class.php:1417
 msgid ""
 "Password must be at least 7 characters long. To make it stronger, use upper "
 "and lower case letters, numbers and symbols."
-msgstr ""
+msgstr "Пароль має бути довжиною не менше 7 символів. "
 
 #: ../xooclasses/xoo.userultra.class.php:1424
 msgid "Confirm Password"
-msgstr ""
+msgstr "Підтвердіть пароль"
 
 #: ../xooclasses/xoo.userultra.class.php:1427
 msgid "Type your password again."
-msgstr ""
+msgstr "Введіть пароль ще раз."
 
 #: ../xooclasses/xoo.userultra.class.php:1454
 msgid "A password will be e-mailed to you."
@@ -5888,7 +5888,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2498
 msgid "That username is already taken, please try a different one."
-msgstr ""
+msgstr "Ім’я користувача вже існує. Будь ласка, виберіть нове ім’я."
 
 #: ../xooclasses/xoo.userultra.class.php:2499
 msgid ""
@@ -5914,7 +5914,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2600
 msgid " Please enter a username."
-msgstr ""
+msgstr "Будь ласка, введіть ім’я користувача."
 
 #: ../xooclasses/xoo.userultra.class.php:2657
 msgid "Sign up with"
@@ -5922,7 +5922,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2660
 msgid "Fields with (*) are required"
-msgstr ""
+msgstr "Поля, помічені (*), обов’язкові"
 
 #: ../xooclasses/xoo.userultra.class.php:2730
 #: ../xooclasses/xoo.userultra.class.php:2734
@@ -6344,23 +6344,23 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.login.php:204
 msgid "<strong>ERROR:</strong> The username field is empty."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Будь ласка, введіть ім’я користувача."
 
 #: ../xooclasses/xoo.userultra.login.php:212
 msgid "<strong>ERROR:</strong> The password field is empty."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Будь ласка, введіть ваш пароль."
 
 #: ../xooclasses/xoo.userultra.login.php:298
 msgid "<strong>ERROR:</strong> Invalid Username was entered."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Ім’я користувача невірне."
 
 #: ../xooclasses/xoo.userultra.login.php:301
 msgid "<strong>ERROR:</strong> Incorrect password was entered."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Пароль невірний."
 
 #: ../xooclasses/xoo.userultra.login.php:305
 msgid "<strong>ERROR:</strong> Please provide Password."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Будь ласка, введіть ваш пароль."
 
 #: ../xooclasses/xoo.userultra.login.php:323
 msgid "<strong>ERROR:</strong> Your account is not active."
@@ -7128,7 +7128,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.register.php:132
 msgid "<strong>ERROR:</strong> Please type your password."
-msgstr ""
+msgstr "<strong>ПОМИЛКА:</strong> Будь ласка, введіть ваш пароль."
 
 #: ../xooclasses/xoo.userultra.register.php:138
 msgid "<strong>ERROR:</strong> The passwords must be identical"
