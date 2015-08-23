@@ -2554,6 +2554,42 @@ class XooUserUltra
 		    $display .= '<div class="xoouserultra-wrap xoouserultra-registration '.$sidebar_class.'">
 					<div class="xoouserultra-inner">
 						
+						<div class="xoouserultra-head">
+							
+							<div class="xoouserultra-left">
+								<div class="'.$pic_class.'">';
+								
+								if (isset($_POST['xoouserultra-register']) && $_POST['user_email'] != '' ) {
+									//$display .= $this->pic($_POST['user_email'], 50);
+								} else {
+									//$display .= $this->pic('john@doe.com', 50);
+								}
+								
+								$display .= '</div>';
+								
+								$display .= '<div class="xoouserultra-name">
+								
+												<div class="xoouserultra-field-name xoouserultra-field-name-wide">';
+												
+												
+								$display .=  $form_header_text;
+											
+												
+								$display .= '</div>';
+								
+								
+								
+												
+								$display .= '</div>';
+								
+							$display .= '</div>';
+							
+							
+							$display .= '<div class="xoouserultra-right">';								
+							$display .= '</div><div class="xoouserultra-clear"></div>
+							
+						</div>
+						
 						<div class="xoouserultra-main">';
 						
 						
@@ -4216,3 +4252,4 @@ class XooUserUltra
 
 }
 ?>
+
