@@ -1624,50 +1624,50 @@ $html .='<textarea style="height: 40px; overflow: hidden; word-wrap: break-word;
 		//write a message box		
 		$html .= '<div class="uultra-publishContainer" style="clear:both">';
 		
-		 if(is_user_logged_in())
-		 {
-			 //avatar =
-			$html .= '<span class="uultra-u-avatar">'.$xoouserultra->userpanel->get_user_pic( $logged_user_id, 60, 'avatar', $pic_boder_type, 'fixed').'</span>';
-			
-			$text_size_logged_n = 'width: 88%;';      
-			
-		 }
+//		 if(is_user_logged_in())
+//		 {
+//			 //avatar =
+//			$html .= '<span class="uultra-u-avatar">'.$xoouserultra->userpanel->get_user_pic( $logged_user_id, 60, 'avatar', $pic_boder_type, 'fixed').'</span>';
+//			
+//			$text_size_logged_n = 'width: 88%;';      
+//			
+//		 }
 		 
 		
 		
 		 
 		
-	   	 $html .= '<textarea class="uultra-msgTextArea" id="uultra-txtMessage"  style="height: 49px !important; overflow: hidden; word-wrap: break-word; resize: none; '.$text_size_logged_n.' " placeholder="'.__("What's new?","xoousers").'" '.$disable_comments.'></textarea>';
+	//   	 $html .= '<textarea class="uultra-msgTextArea" id="uultra-txtMessage"  style="height: 49px !important; overflow: hidden; word-wrap: break-word; resize: none; '.$text_size_logged_n.' " placeholder="'.__("What's new?","xoousers").'" '.$disable_comments.'></textarea>';
 		
 		
-		$html .='<div class="uultra-tool-bar-option-buttons">';
+	//	$html .='<div class="uultra-tool-bar-option-buttons">';
 		
 		
 		
-		 if(is_user_logged_in() && $photo_sharing_active)
-		 {
-		
-			$html .= '<a href="#" title="'.__("Share Photo", "xoousers").'" class="uultra-site-wide-upload-photo" id="uultra-upload-photo-site-wide"  > <i class="fa fa-camera fa-2"></i> </a> ';			
-		
-		}else{
-			
-			
-		}
-		
-		//the user is not logged in.
-		 if(!is_user_logged_in() )
-		 {
-			 $html .= '<input type="hidden" value="nologgedin" id="uultra-no-logged-flag-btn">';
-			 $html .= '<span id="uultra-not-loggedin-message" class="uultra-wall-logged-in-usage" >'.__("Please login to write a comment ","xoousers").' </span> ';	
-			 
-		 }
-		
-        $html .='<input value="'.__("Share","xoousers").'" class="xoouserultra-button-wall" id="uultra-site-wide-wall-post-commment"  data-id="'.$logged_user_id.'" type="button">
-
-';
-
-
-		 $html .='</div>'; //end write message
+//		 if(is_user_logged_in() && $photo_sharing_active)
+//		 {
+//		
+//			$html .= '<a href="#" title="'.__("Share Photo", "xoousers").'" class="uultra-site-wide-upload-photo" id="uultra-upload-photo-site-wide"  > <i class="fa fa-camera fa-2"></i> </a> ';			
+//		
+//		}else{
+//			
+//			
+//		}
+//		
+//		//the user is not logged in.
+//		 if(!is_user_logged_in() )
+//		 {
+//			 $html .= '<input type="hidden" value="nologgedin" id="uultra-no-logged-flag-btn">';
+//			 $html .= '<span id="uultra-not-loggedin-message" class="uultra-wall-logged-in-usage" >'.__("Please login to write a comment ","xoousers").' </span> ';	
+//			 
+//		 }
+//		
+  //      $html .='<input value="'.__("Share","xoousers").'" class="xoouserultra-button-wall" id="uultra-site-wide-wall-post-commment"  data-id="'.$logged_user_id.'" type="button">
+//
+//';
+//
+//
+//		 $html .='</div>'; //end write message
 		
 			
 		if($photo_sharing_active)
@@ -1696,8 +1696,16 @@ $html .='<textarea style="height: 40px; overflow: hidden; word-wrap: break-word;
 			{
 				
 				$module_active = $this->wall_check_enabled($conversa->comment_module);
-				
-				if($module_active)
+				// mykola
+                // show only posts that belongs to visitors and professionals
+//                print_r($conversa->comment_module . ' [' . var_dump(get_object_vars($conversa)) . ']' . '<br>');
+                $wp_user = new WP_User( $conversa->comment_posted_by_id );
+                $wp_user_roles = $wp_user->roles;
+//var_dump($wp_user_roles);
+//print_r("</br>");
+//print_r($conversa->comment_module);
+//print_r("</br>");
+				if($module_active and $conversa->comment_module == 'post' and $conversa->comment_posted_by_id != 1 and (in_array('visitor', $wp_user_roles) or in_array('professional', $wp_user_roles)))
 				{
 				//echo "flag ";
 				

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Users Ultra Pro\n"
 "POT-Creation-Date: 2015-06-11 16:54+0200\n"
-"PO-Revision-Date: 2015-08-23 15:26+0200\n"
+"PO-Revision-Date: 2015-08-23 21:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -4994,7 +4994,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.activity.php:89
 #: ../xooclasses/xoo.userultra.wall.php:1280
 msgid " wrote a new post "
-msgstr ""
+msgstr "додав нове замовлення"
 
 #: ../xooclasses/xoo.userultra.admin.php:56
 #: ../xooclasses/xoo.userultra.customizer.php:2922
@@ -5624,7 +5624,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.bbpress.php:84
 msgid "read more"
-msgstr ""
+msgstr "прочитати повністю"
 
 #: ../xooclasses/xoo.userultra.bbpress.php:90
 msgid "Views"
@@ -5638,7 +5638,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.wall.php:1757
 #: ../xooclasses/xoo.userultra.wall.php:2004
 msgid "Replies"
-msgstr ""
+msgstr "Коментирі"
 
 #: ../xooclasses/xoo.userultra.captchamodules.php:86
 msgid "Human Check"
