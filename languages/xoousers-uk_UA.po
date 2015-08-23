@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Users Ultra Pro\n"
 "POT-Creation-Date: 2015-06-11 16:54+0200\n"
-"PO-Revision-Date: 2015-08-23 12:59+0200\n"
+"PO-Revision-Date: 2015-08-23 13:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -5910,7 +5910,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2523
 msgid "Sign Up"
-msgstr ""
+msgstr "Реєстрація"
 
 #: ../xooclasses/xoo.userultra.class.php:2600
 msgid " Please enter a username."
@@ -5933,7 +5933,7 @@ msgstr "Поля, помічені (*), обов’язкові"
 #: ../xooclasses/xoo.userultra.class.php:2958
 #: ../xooclasses/xoo.userultra.class.php:3057
 msgid " * This input is required!"
-msgstr ""
+msgstr " * Поле є обов’язковим!"
 
 #: ../xooclasses/xoo.userultra.class.php:3070
 msgid ""
@@ -5943,13 +5943,13 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:3074
 msgid "Type your new password again."
-msgstr ""
+msgstr "Введіть пароль ще раз."
 
 #: ../xooclasses/xoo.userultra.class.php:3093
 #: ../xooclasses/xoo.userultra.user.php:3132
 #: ../xooclasses/xoo.userultra.user.php:3488
 msgid "Hide from Public"
-msgstr ""
+msgstr "Не відображати"
 
 #: ../xooclasses/xoo.userultra.class.php:3118
 #: ../xooclasses/xoo.userultra.role.php:60
