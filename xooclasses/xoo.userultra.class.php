@@ -2261,11 +2261,11 @@ class XooUserUltra
 		
 		
 		//get social sign up methods
-		$display .='<div class="uultra-pro-socialsigunuptions">';
-		$display .= $this->get_social_buttons(__("Sign in with ",'xoousers' ),$args);
-		$display .='</div>';
+		//$display .='<div class="uultra-pro-socialsigunuptions">';
+		//$display .= $this->get_social_buttons(__("Sign in with ",'xoousers' ),$args);
+		//$display .='</div>';
 		
-		$display .='<h2 class="uultra-forms-header">'.__("Sign in with ",'xoousers' ).'</h2>';	
+		//$display .='<h2 class="uultra-forms-header">'.__("Sign in with ",'xoousers' ).'</h2>';	
 
 		foreach($this->login_fields as $key=>$field) 
 		{

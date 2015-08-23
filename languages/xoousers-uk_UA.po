@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Users Ultra Pro\n"
 "POT-Creation-Date: 2015-06-11 16:54+0200\n"
-"PO-Revision-Date: 2015-08-23 13:41+0200\n"
+"PO-Revision-Date: 2015-08-23 15:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -5727,12 +5727,12 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.class.php:2195
 #: ../xooclasses/xoo.userultra.user.php:2470
 msgid "Login"
-msgstr ""
+msgstr "Увійти"
 
 #: ../xooclasses/xoo.userultra.class.php:1280
 #: ../xooclasses/xoo.userultra.shorcodes.php:434
 msgid "Sign up"
-msgstr ""
+msgstr "Реєстрація"
 
 #: ../xooclasses/xoo.userultra.class.php:1377
 msgid "Text"
@@ -5740,7 +5740,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:1378
 msgid "Image Upload"
-msgstr ""
+msgstr "Завантажити зображення"
 
 #: ../xooclasses/xoo.userultra.class.php:1379
 msgid "Textarea"
@@ -5794,7 +5794,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.class.php:1466
 #: ../xooclasses/xoo.userultra.class.php:2423
 msgid "Username or Email"
-msgstr ""
+msgstr "Ім’я користувача аба Електронна Скринька"
 
 #: ../xooclasses/xoo.userultra.class.php:2110
 msgid "Oops! The link is not correct! "
@@ -5802,15 +5802,15 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2149
 msgid "Type New Password:"
-msgstr ""
+msgstr "Введіть Новий Пароль:"
 
 #: ../xooclasses/xoo.userultra.class.php:2158
 msgid "Re-type Password:"
-msgstr ""
+msgstr "Введіть пароль ще раз:"
 
 #: ../xooclasses/xoo.userultra.class.php:2167
 msgid "Reset Password"
-msgstr ""
+msgstr "Оновити Пароль"
 
 #: ../xooclasses/xoo.userultra.class.php:2265
 #: ../xooclasses/xoo.userultra.class.php:2268
@@ -5819,7 +5819,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2356
 msgid "Forgot Password?"
-msgstr ""
+msgstr "Забули Пароль?"
 
 #: ../xooclasses/xoo.userultra.class.php:2367
 #: ../xooclasses/xoo.userultra.class.php:2372
@@ -5829,7 +5829,7 @@ msgstr "Зареєструватись"
 
 #: ../xooclasses/xoo.userultra.class.php:2387
 msgid "Remember me"
-msgstr ""
+msgstr "Запам’ятати мене"
 
 #: ../xooclasses/xoo.userultra.class.php:2393
 msgid "Log In"
