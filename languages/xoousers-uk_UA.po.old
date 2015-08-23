@@ -1,28 +1,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Users Ultra Pro\n"
-"POT-Creation-Date: 2015-06-11 07:52+0200\n"
-"PO-Revision-Date: 2015-06-11 07:52+0200\n"
+"POT-Creation-Date: 2015-06-10 17:09+0200\n"
+"PO-Revision-Date: 2015-06-10 17:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: en_EN\n"
+"Language: uk_UA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.1\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../addons/badges/admin/admin-functions.php:28
 msgid "Add a New Medallion"
-msgstr ""
+msgstr "Додати Новий Медальйон"
 
 #: ../addons/badges/admin/admin-functions.php:30
 msgid "Editing a Medallion"
-msgstr ""
+msgstr "Редагування Медальйона"
 
 #: ../addons/badges/admin/admin.php:27
 msgid "Medallion Fulfillment/Assignment"
@@ -43,12 +44,12 @@ msgstr ""
 #: ../addons/badges/admin/admin.php:107
 #: ../xooclasses/xoo.userultra.admin.php:2306
 msgid "Settings saved."
-msgstr ""
+msgstr "Налаштування збережено."
 
 #: ../addons/badges/admin/admin.php:113
 #: ../xooclasses/xoo.userultra.admin.php:642
 msgid "Settings are reset to default."
-msgstr ""
+msgstr "Повернуто початкові налаштування"
 
 #: ../addons/badges/admin/admin.php:158
 msgid "MEDALLIONS AND FULFILLMENTS "
@@ -79,7 +80,7 @@ msgstr ""
 #: ../addons/badges/admin/panels/achievement.php:12
 #: ../addons/badges/admin/panels/achievement.php:21
 msgid "Required"
-msgstr ""
+msgstr "Обов’язковий"
 
 #: ../addons/badges/admin/panels/achievement.php:13
 #: ../addons/badges/admin/panels/achievement.php:22
@@ -90,7 +91,7 @@ msgstr ""
 #: ../admin/tabs/users.php:214 ../admin/tabs/users_back.php:204
 #: ../xooclasses/xoo.userultra.publisher.php:942
 msgid "Actions"
-msgstr ""
+msgstr "Дії"
 
 #: ../addons/badges/admin/panels/achievement.php:44
 #: ../addons/badges/admin/panels/achievement.php:56
@@ -101,14 +102,14 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.payment.paypal.php:1392
 #: ../xooclasses/xoo.userultra.publisher.php:960
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: ../addons/badges/admin/panels/achievement.php:44
 #: ../addons/badges/admin/panels/achievement.php:56
 #: ../xooclasses/xoo.userultra.customizer.php:148
 #: ../xooclasses/xoo.userultra.customizer.php:173
 msgid "Remove"
-msgstr ""
+msgstr "Видалити"
 
 #: ../addons/badges/admin/panels/manage.php:3
 #, php-format
@@ -143,7 +144,7 @@ msgstr ""
 #: ../addons/badges/admin/panels/manage.php:49
 #: ../addons/messaging/admin/panels/send.php:32
 msgid "Choose..."
-msgstr ""
+msgstr "Обрати…"
 
 #: ../addons/badges/admin/panels/manage.php:57
 msgid "Assign this medallion to individual members by selecting them here."
@@ -163,7 +164,7 @@ msgstr ""
 
 #: ../addons/badges/admin/panels/manage.php:70
 msgid "Comments"
-msgstr ""
+msgstr "Коментарі"
 
 #: ../addons/badges/admin/panels/manage.php:78
 #: ../templates/basic/dashboard.php:430 ../templates/basic/dashboard.php:1071
@@ -172,7 +173,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.customizer.php:2595
 #: ../xooclasses/xoo.userultra.customizer.php:3870
 msgid "Submit"
-msgstr ""
+msgstr "Зберегти"
 
 #: ../addons/badges/admin/panels/user_badges.php:5
 msgid "View/Delete Member Medallions"
@@ -180,11 +181,11 @@ msgstr ""
 
 #: ../addons/badges/admin/panels/user_badges.php:8
 msgid "Find a Member"
-msgstr ""
+msgstr "Знайти Учасника"
 
 #: ../addons/badges/admin/panels/user_badges.php:11
 msgid "Select Member..."
-msgstr ""
+msgstr "Виділити Учасника…"
 
 #: ../addons/badges/admin/panels/user_badges.php:25
 msgid "Find Member Medallions"
@@ -245,7 +246,7 @@ msgstr ""
 #: ../admin/tabs/users.php:93 ../admin/tabs/users_back.php:83
 #: ../xooclasses/xoo.userultra.admin.php:1811
 msgid "Success "
-msgstr ""
+msgstr "Успішно"
 
 #: ../addons/defender/admin/panels/manage.php:14
 msgid "Add New IP "
@@ -274,7 +275,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.user.php:1855
 #: ../xooclasses/xoo.userultra.user.php:1924
 msgid "Confirm"
-msgstr ""
+msgstr "Підтвердити"
 
 #: ../addons/defender/admin/panels/manage.php:41
 msgid " Black List (Rejected IP List) "
@@ -296,7 +297,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.publisher.php:966
 #: ../xooclasses/xoo.userultra.user.php:1923
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #: ../addons/defender/admin/panels/manage.php:84
 msgid "There are no blocked IP numbers yet."
@@ -310,11 +311,11 @@ msgstr ""
 #: ../addons/photocategories/admin/admin.php:89
 #: ../xooclasses/xoo.userultra.payment.paypal.php:1089
 msgid "Name:"
-msgstr ""
+msgstr "Ім’я:"
 
 #: ../addons/forms/admin/admin.php:143
 msgid "Role to Assign:"
-msgstr ""
+msgstr "Визначити Роль:"
 
 #: ../addons/forms/admin/admin.php:147 ../addons/groups/admin/admin.php:603
 #: ../addons/photocategories/admin/admin.php:94
@@ -328,7 +329,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.wall.php:917
 #: ../xooclasses/xoo.userultra.wall.php:982
 msgid "Close"
-msgstr ""
+msgstr "Закрити"
 
 #: ../addons/forms/admin/admin.php:147 ../addons/groups/admin/admin.php:603
 #: ../addons/photocategories/admin/admin.php:94
@@ -336,7 +337,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.photos.php:2012
 #: ../xooclasses/xoo.userultra.photos.php:2184
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"
 
 #: ../addons/forms/admin/admin.php:176
 msgid "Forms Ultra"
@@ -375,11 +376,11 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.customizer.php:1498
 #: ../xooclasses/xoo.userultra.customizer.php:3828
 msgid "Name: "
-msgstr ""
+msgstr "Ім’я:"
 
 #: ../addons/forms/admin/panels/manage.php:29
 msgid "Role to Assign: "
-msgstr ""
+msgstr "Визначити Роль:"
 
 #: ../addons/forms/admin/panels/manage.php:30
 msgid ""
@@ -400,14 +401,14 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.photos.php:1993
 #: ../xooclasses/xoo.userultra.photos.php:2164
 msgid "Name"
-msgstr ""
+msgstr "Ім’я"
 
 #: ../addons/forms/admin/panels/manage.php:60 ../admin/tabs/settings.php:1154
 #: ../admin/tabs/users.php:207 ../admin/tabs/users_back.php:197
 #: ../xooclasses/xoo.userultra.class.php:3124
 #: ../xooclasses/xoo.userultra.user.php:3552
 msgid "Role"
-msgstr ""
+msgstr "Роль"
 
 #: ../addons/forms/admin/panels/manage.php:61
 msgid "Shortcode"
@@ -4619,7 +4620,7 @@ msgstr ""
 
 #: ../admin/tabs/users.php:180 ../admin/tabs/users_back.php:170
 msgid " Users "
-msgstr ""
+msgstr "Майстрів"
 
 #: ../admin/tabs/users.php:204 ../admin/tabs/users_back.php:194
 #: ../xooclasses/xoo.userultra.payment.paypal.php:1361
@@ -4679,7 +4680,7 @@ msgstr ""
 
 #: ../templates/basic/dashboard.php:148
 msgid "My Latest Photos"
-msgstr ""
+msgstr "Мої Останні Фото"
 
 #: ../templates/basic/dashboard.php:179
 #: ../xooclasses/xoo.userultra.customizer.php:543
@@ -4734,7 +4735,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.customizer.php:565
 #: ../xooclasses/xoo.userultra.customizer.php:4471
 msgid "My Galleries"
-msgstr ""
+msgstr "Мої Галереї"
 
 #: ../templates/basic/dashboard.php:405
 msgid "Here you can manage your galleries and photos."
@@ -4761,7 +4762,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.customizer.php:2956
 #: ../xooclasses/xoo.userultra.customizer.php:4464
 msgid "My Photos"
-msgstr ""
+msgstr "Мої Фото"
 
 #: ../templates/basic/dashboard.php:502
 msgid "Here you can manage your photos."
@@ -5488,7 +5489,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.admin.php:1835
 #: ../xooclasses/xoo.userultra.class.php:1484
 msgid "Profile Info"
-msgstr ""
+msgstr "Особисті Дані"
 
 #: ../xooclasses/xoo.userultra.admin.php:1848
 #: ../xooclasses/xoo.userultra.class.php:1498
@@ -5525,7 +5526,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.admin.php:1962
 #: ../xooclasses/xoo.userultra.class.php:1633
 msgid "Contact Info"
-msgstr ""
+msgstr "Контакти"
 
 #: ../xooclasses/xoo.userultra.admin.php:1976
 #: ../xooclasses/xoo.userultra.class.php:1649
@@ -5824,7 +5825,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.class.php:2372
 #: ../xooclasses/xoo.userultra.class.php:3223
 msgid "Register"
-msgstr ""
+msgstr "Зареєструватись"
 
 #: ../xooclasses/xoo.userultra.class.php:2387
 msgid "Remember me"
@@ -5832,7 +5833,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:2393
 msgid "Log In"
-msgstr ""
+msgstr "Увійти"
 
 #: ../xooclasses/xoo.userultra.class.php:2414
 msgid ""
@@ -5975,7 +5976,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.class.php:3404
 msgid "Upload Avatar"
-msgstr ""
+msgstr "Завантажити Аватар"
 
 #: ../xooclasses/xoo.userultra.class.php:3566
 msgid "Connect with "
@@ -5983,103 +5984,103 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.common.php:844
 msgid "Vinnyts'ka"
-msgstr ""
+msgstr "Вінницька"
 
 #: ../xooclasses/xoo.userultra.common.php:845
 msgid "Volyns'ka"
-msgstr ""
+msgstr "Волинська"
 
 #: ../xooclasses/xoo.userultra.common.php:846
 msgid "Dnipropetrovs'ka"
-msgstr ""
+msgstr "Дніпропетровська"
 
 #: ../xooclasses/xoo.userultra.common.php:847
 msgid "Donets'ka"
-msgstr ""
+msgstr "Донецька"
 
 #: ../xooclasses/xoo.userultra.common.php:848
 msgid "Zhytomyrs'ka"
-msgstr ""
+msgstr "Житомирська"
 
 #: ../xooclasses/xoo.userultra.common.php:849
 msgid "Zakarpats'ka"
-msgstr ""
+msgstr "Закарпатська"
 
 #: ../xooclasses/xoo.userultra.common.php:850
 msgid "Zaporiz'ka"
-msgstr ""
+msgstr "Запорізька"
 
 #: ../xooclasses/xoo.userultra.common.php:851
 msgid "Ivano-Frankivs'ka"
-msgstr ""
+msgstr "Івано-Франківська"
 
 #: ../xooclasses/xoo.userultra.common.php:852
 msgid "Kyyivs'ka"
-msgstr ""
+msgstr "Київська"
 
 #: ../xooclasses/xoo.userultra.common.php:853
 msgid "Kirovohrads'ka"
-msgstr ""
+msgstr "Кіровоградська"
 
 #: ../xooclasses/xoo.userultra.common.php:854
 msgid "Krym"
-msgstr ""
+msgstr "Крим"
 
 #: ../xooclasses/xoo.userultra.common.php:855
 msgid "Luhans'ka"
-msgstr ""
+msgstr "Луганська"
 
 #: ../xooclasses/xoo.userultra.common.php:856
 msgid "L'vivs'ka"
-msgstr ""
+msgstr "Львівська"
 
 #: ../xooclasses/xoo.userultra.common.php:857
 msgid "Mykolayivs'ka"
-msgstr ""
+msgstr "Миколаївська"
 
 #: ../xooclasses/xoo.userultra.common.php:858
 msgid "Odes'ka"
-msgstr ""
+msgstr "Одеська"
 
 #: ../xooclasses/xoo.userultra.common.php:859
 msgid "Poltavs'ka"
-msgstr ""
+msgstr "Полтавська"
 
 #: ../xooclasses/xoo.userultra.common.php:860
 msgid "Rivnens'ka"
-msgstr ""
+msgstr "Рівненська"
 
 #: ../xooclasses/xoo.userultra.common.php:861
 msgid "Sums'ka"
-msgstr ""
+msgstr "Сумська"
 
 #: ../xooclasses/xoo.userultra.common.php:862
 msgid "Ternopil's'ka"
-msgstr ""
+msgstr "Тернопільська"
 
 #: ../xooclasses/xoo.userultra.common.php:863
 msgid "Kharkivs'ka"
-msgstr ""
+msgstr "Харківська"
 
 #: ../xooclasses/xoo.userultra.common.php:864
 msgid "Khersons'ka"
-msgstr ""
+msgstr "Херсонська"
 
 #: ../xooclasses/xoo.userultra.common.php:865
 msgid "Khmel'nyts'ka"
-msgstr ""
+msgstr "Хмельницька"
 
 #: ../xooclasses/xoo.userultra.common.php:866
 msgid "Cherkas'ka"
-msgstr ""
+msgstr "Черкаська"
 
 #: ../xooclasses/xoo.userultra.common.php:867
 msgid "Chernihivs'ka"
-msgstr ""
+msgstr "Чернігівська"
 
 #: ../xooclasses/xoo.userultra.common.php:868
 msgid "Chernivets'ka"
-msgstr ""
+msgstr "Чернівецька"
 
 #: ../xooclasses/xoo.userultra.customizer.php:221
 #: ../xooclasses/xoo.userultra.customizer.php:300
@@ -6137,7 +6138,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.customizer.php:576
 #: ../xooclasses/xoo.userultra.customizer.php:4478
 msgid "My Latest Posts"
-msgstr ""
+msgstr "Мої Останні Пости"
 
 #: ../xooclasses/xoo.userultra.customizer.php:587
 #: ../xooclasses/xoo.userultra.customizer.php:2933
@@ -6320,7 +6321,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.user.php:4335
 #: ../xooclasses/xoo.userultra.user.php:5443
 msgid "Logout"
-msgstr ""
+msgstr "Вийти"
 
 #: ../xooclasses/xoo.userultra.customizer.php:3122
 msgid "FOLLOWERS"
@@ -6332,19 +6333,19 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.customizer.php:3144
 msgid "PHOTOS"
-msgstr ""
+msgstr "ФОТО"
 
 #: ../xooclasses/xoo.userultra.customizer.php:3156
 msgid "VIDEOS"
-msgstr ""
+msgstr "ВІДЕО"
 
 #: ../xooclasses/xoo.userultra.customizer.php:3167
 msgid "POSTS"
-msgstr ""
+msgstr "ПОСТИ"
 
 #: ../xooclasses/xoo.userultra.customizer.php:3178
 msgid "FRIENDS"
-msgstr ""
+msgstr "ТОВАРИШІ"
 
 #: ../xooclasses/xoo.userultra.customizer.php:3189
 msgid "TOPICS"
@@ -6474,7 +6475,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.messaging.php:299
 msgid "New Registration"
-msgstr ""
+msgstr "Нова Реєстрація"
 
 #: ../xooclasses/xoo.userultra.messaging.php:333
 #: ../xooclasses/xoo.userultra.messaging.php:399
@@ -6519,7 +6520,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.messaging.php:600
 msgid "Registration "
-msgstr ""
+msgstr "Реєстрація"
 
 #: ../xooclasses/xoo.userultra.messaging.php:631
 #: ../xooclasses/xoo.userultra.messaging.php:662
@@ -6895,7 +6896,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.photos.php:58
 msgid "Add New Gallery"
-msgstr ""
+msgstr "Додати Галерею"
 
 #: ../xooclasses/xoo.userultra.photos.php:59
 msgid "Edit Gallery"
@@ -6932,7 +6933,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.photos.php:464
 #: ../xooclasses/xoo.userultra.user.php:7840
 msgid "Total found: "
-msgstr ""
+msgstr "Усього знайдено:"
 
 #: ../xooclasses/xoo.userultra.photos.php:740
 #: ../xooclasses/xoo.userultra.user.php:7715
@@ -7195,7 +7196,7 @@ msgstr ""
 
 #: ../xooclasses/xoo.userultra.rating.php:280
 msgid "Rating: "
-msgstr ""
+msgstr "Рейтинг:"
 
 #: ../xooclasses/xoo.userultra.register.php:98
 msgid "<strong>ERROR:</strong> Please enter a username."
@@ -7358,7 +7359,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.socials.php:1028
 #: ../xooclasses/xoo.userultra.socials.php:1077
 msgid "Likes"
-msgstr ""
+msgstr "Лайків"
 
 #: ../xooclasses/xoo.userultra.socials.php:988
 #: ../xooclasses/xoo.userultra.socials.php:1029
@@ -7648,7 +7649,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.user.php:4285
 #: ../xooclasses/xoo.userultra.user.php:4289
 msgid "Photos"
-msgstr ""
+msgstr "Фото"
 
 #: ../xooclasses/xoo.userultra.user.php:4386
 msgid "Friend Requests"
@@ -7696,12 +7697,12 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.user.php:5809
 #: ../xooclasses/xoo.userultra.user.php:7227
 msgid "« Previous"
-msgstr ""
+msgstr "« Попередня"
 
 #: ../xooclasses/xoo.userultra.user.php:5810
 #: ../xooclasses/xoo.userultra.user.php:7228
 msgid "Next »"
-msgstr ""
+msgstr "Наступна »"
 
 #: ../xooclasses/xoo.userultra.user.php:5860
 msgid "RECENT EXPORTED USERS"
@@ -7797,12 +7798,12 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.wall.php:1783
 #: ../xooclasses/xoo.userultra.wall.php:2031
 msgid "Edit reply"
-msgstr ""
+msgstr "Редактувати відповідь"
 
 #: ../xooclasses/xoo.userultra.wall.php:1171
 #: ../xooclasses/xoo.userultra.wall.php:2033
 msgid "Delete reply"
-msgstr ""
+msgstr "Видалити вібповідь"
 
 #: ../xooclasses/xoo.userultra.wall.php:1273
 msgid " has registered"
@@ -7851,7 +7852,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.wall.php:1824
 #: ../xooclasses/xoo.userultra.wall.php:2071
 msgid "write a comment ..."
-msgstr ""
+msgstr "написати коментар …"
 
 #: ../xooclasses/xoo.userultra.wall.php:1833
 #: ../xooclasses/xoo.userultra.wall.php:2076
@@ -7861,7 +7862,7 @@ msgstr ""
 #: ../xooclasses/xoo.userultra.wall.php:1836
 #: ../xooclasses/xoo.userultra.wall.php:2079
 msgid "Comment"
-msgstr ""
+msgstr "Коментар"
 
 #: ../xooclasses/xoo.userultra.wall.php:1905
 msgid "Please login to use this feature "
