@@ -21,6 +21,7 @@ class XooShortCode {
 		add_shortcode( 'usersultra_registration', array(&$this,'usersultra_registration_function') );
 		add_shortcode( 'usersultra_my_messages', array(&$this,'usersultra_mymessages_function') );
 		add_shortcode( 'usersultra_my_account', array(&$this,'usersultra_my_account_function') );
+                add_shortcode( 'mc_directory', array(&$this,'mc_directory_function') );
 		add_shortcode( 'usersultra_directory', array(&$this,'usersultra_directory_function') );
 		add_shortcode( 'usersultra_directory_mini', array(&$this,'usersultra_directory_mini_function') );
 		add_shortcode( 'usersultra_searchbox', array(&$this,'usersultra_searchbox') );
@@ -362,6 +363,13 @@ function wp_test_en () {
 
 
 	}
+
+        public function  mc_directory_function ($atts)
+        {
+                global $xoouserultra;
+                return $xoouserultra->show_users_mc_directory( $atts );
+
+        }
 
 	public function  usersultra_directory_mini_function ($atts)
 	{

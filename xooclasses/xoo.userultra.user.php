@@ -1,80 +1,80 @@
 <?php
 class XooUserUser {
 
-	var $messages_process;
+    var $messages_process;
 
-	var $profile_order_field;
+    var $profile_order_field;
 
-	var $profile_role;
-	var $profile_order;
-	var $uultra_args;
-	var $emoticon_list;
+    var $profile_role;
+    var $profile_order;
+    var $uultra_args;
+    var $emoticon_list;
 
-	var $wp_users_fields = array("user_nicename", "user_url", "display_name", "nickname", "first_name", "last_name", "description", "jabber", "aim", "yim");
-
-
-	function __construct()
-	{
-
-		$this->set_emoticons();
-		$this->uultra_replace_default_avatar();
+    var $wp_users_fields = array("user_nicename", "user_url", "display_name", "nickname", "first_name", "last_name", "description", "jabber", "aim", "yim");
 
 
-		add_action('init', array( $this, 'handle_init' ));
+    function __construct()
+    {
 
-		if (isset($_POST['uultra-form-cvs-form-conf']))
-		{
-			/* Let's Update the Profile */
-			$this->process_cvs($_FILES);
-
-		}
-
-		if (isset($_POST['uultra-conf-close-account-post']))
-		{
-			/* Let's Close this Account */
-			add_action('init', array( $this, 'close_user_account' ));
-
-		}
-
-		add_action( 'wp_ajax_refresh_avatar', array( $this, 'refresh_avatar' ));
-		add_action( 'wp_ajax_delete_user_avatar', array( $this, 'delete_user_avatar' ));
-
-		add_action( 'wp_ajax_nopriv_send_reset_link', array( $this, 'send_reset_link' ));
-		add_action( 'wp_ajax_nopriv_confirm_reset_password', array( $this, 'confirm_reset_password' ));
-		add_action( 'wp_ajax_confirm_reset_password', array( $this, 'confirm_reset_password' ));
-		add_action( 'wp_ajax_confirm_reset_password_user', array( $this, 'confirm_reset_password_user' ));
-
-		add_action( 'wp_ajax_confirm_update_email_user', array( $this, 'confirm_update_email_user' ));
-
-		add_action( 'wp_ajax_get_pending_moderation_list', array( $this, 'get_pending_moderation_list' ));
-		add_action( 'wp_ajax_user_approve_pending_account', array( $this, 'user_approve_pending_account' ));
-		add_action( 'wp_ajax_user_resend_activation_link', array( $this, 'user_resend_activation_link' ));
-
-		add_action( 'wp_ajax_user_delete_account', array( $this, 'user_delete_account' ));
-		add_action( 'wp_ajax_get_pending_activation_list', array( $this, 'get_pending_activation_list' ));
-		add_action( 'wp_ajax_get_pending_payment_list', array( $this, 'get_pending_payment_list' ));
-		add_action( 'wp_ajax_user_package_edit_form', array( $this, 'user_package_edit_form' ));
-		add_action( 'wp_ajax_user_package_edit_form_confirm', array( $this, 'user_package_edit_form_confirm' ));
-		add_action( 'wp_ajax_user_status_change_confirm', array( $this, 'user_status_change_confirm' ));
-		add_action( 'wp_ajax_user_customform_change_confirm', array( $this, 'user_customform_change_confirm' ));
-		add_action( 'wp_ajax_user_expiration_edit_form_confirm', array( $this, 'user_expiration_edit_form_confirm' ));
-		add_action( 'wp_ajax_user_see_details_backend', array( $this, 'user_see_submited_details_backend' ));
-
-		add_action( 'wp_ajax_uultra_user_private_user_deletion', array( $this, 'uultra_user_private_user_deletion' ));
-		add_action( 'wp_ajax_uultra_delete_exported_csv_file', array( $this, 'uultra_delete_exported_csv_file' ));
-		add_action( 'wp_ajax_uultra_user_change_role', array( $this, 'uultra_user_change_role' ));
+        $this->set_emoticons();
+        $this->uultra_replace_default_avatar();
 
 
+        add_action('init', array( $this, 'handle_init' ));
 
+        if (isset($_POST['uultra-form-cvs-form-conf']))
+        {
+            /* Let's Update the Profile */
+            $this->process_cvs($_FILES);
 
-		add_action('wp',  array(&$this, 'update_online_users'), 9);
-		add_action( 'wp_ajax_sync_users', array( $this, 'sync_users' ));
-		add_action( 'wp_ajax_uultra_apply_default_layout_common_users', array( $this, 'uultra_apply_default_layout_common_users' ));
-			add_action( 'wp_ajax_uultra_apply_membership_l_users', array( $this, 'uultra_apply_membership_l_users' ));
+        }
+
+        if (isset($_POST['uultra-conf-close-account-post']))
+        {
+            /* Let's Close this Account */
+            add_action('init', array( $this, 'close_user_account' ));
+
+        }
+
+        add_action( 'wp_ajax_refresh_avatar', array( $this, 'refresh_avatar' ));
+        add_action( 'wp_ajax_delete_user_avatar', array( $this, 'delete_user_avatar' ));
+
+        add_action( 'wp_ajax_nopriv_send_reset_link', array( $this, 'send_reset_link' ));
+        add_action( 'wp_ajax_nopriv_confirm_reset_password', array( $this, 'confirm_reset_password' ));
+        add_action( 'wp_ajax_confirm_reset_password', array( $this, 'confirm_reset_password' ));
+        add_action( 'wp_ajax_confirm_reset_password_user', array( $this, 'confirm_reset_password_user' ));
+
+        add_action( 'wp_ajax_confirm_update_email_user', array( $this, 'confirm_update_email_user' ));
+
+        add_action( 'wp_ajax_get_pending_moderation_list', array( $this, 'get_pending_moderation_list' ));
+        add_action( 'wp_ajax_user_approve_pending_account', array( $this, 'user_approve_pending_account' ));
+        add_action( 'wp_ajax_user_resend_activation_link', array( $this, 'user_resend_activation_link' ));
+
+        add_action( 'wp_ajax_user_delete_account', array( $this, 'user_delete_account' ));
+        add_action( 'wp_ajax_get_pending_activation_list', array( $this, 'get_pending_activation_list' ));
+        add_action( 'wp_ajax_get_pending_payment_list', array( $this, 'get_pending_payment_list' ));
+        add_action( 'wp_ajax_user_package_edit_form', array( $this, 'user_package_edit_form' ));
+        add_action( 'wp_ajax_user_package_edit_form_confirm', array( $this, 'user_package_edit_form_confirm' ));
+        add_action( 'wp_ajax_user_status_change_confirm', array( $this, 'user_status_change_confirm' ));
+        add_action( 'wp_ajax_user_customform_change_confirm', array( $this, 'user_customform_change_confirm' ));
+        add_action( 'wp_ajax_user_expiration_edit_form_confirm', array( $this, 'user_expiration_edit_form_confirm' ));
+        add_action( 'wp_ajax_user_see_details_backend', array( $this, 'user_see_submited_details_backend' ));
+
+        add_action( 'wp_ajax_uultra_user_private_user_deletion', array( $this, 'uultra_user_private_user_deletion' ));
+        add_action( 'wp_ajax_uultra_delete_exported_csv_file', array( $this, 'uultra_delete_exported_csv_file' ));
+        add_action( 'wp_ajax_uultra_user_change_role', array( $this, 'uultra_user_change_role' ));
 
 
 
-		$this->method_dect = array(
+
+        add_action('wp',  array(&$this, 'update_online_users'), 9);
+        add_action( 'wp_ajax_sync_users', array( $this, 'sync_users' ));
+        add_action( 'wp_ajax_uultra_apply_default_layout_common_users', array( $this, 'uultra_apply_default_layout_common_users' ));
+            add_action( 'wp_ajax_uultra_apply_membership_l_users', array( $this, 'uultra_apply_membership_l_users' ));
+
+
+
+        $this->method_dect = array(
             'text' => 'text_box',
             'fileupload' => '',
             'textarea' => 'text_box',
@@ -87,2753 +87,2753 @@ class XooUserUser {
 
 
 
-	}
+    }
 
-	function handle_init()
+    function handle_init()
 
-	{
-		if (isset($_POST['xoouserultra-profile-edition-form']))
-		{
-			/* This prepares the array taking values from the POST */
-			$this->prepare( $_POST );
+    {
+        if (isset($_POST['xoouserultra-profile-edition-form']))
+        {
+            /* This prepares the array taking values from the POST */
+            $this->prepare( $_POST );
 
-			/* We validate everthying before updateing the profile */
-			$this->handle();
+            /* We validate everthying before updateing the profile */
+            $this->handle();
 
-			/* Let's Update the Profile */
-			$this->update_me();
+            /* Let's Update the Profile */
+            $this->update_me();
 
-		}
+        }
 
 
-		if (isset($_POST['xoouserultra-profile-edition-form-admin']))
-		{
-			/* This prepares the array taking values from the POST */
-			$this->prepare( $_POST );
+        if (isset($_POST['xoouserultra-profile-edition-form-admin']))
+        {
+            /* This prepares the array taking values from the POST */
+            $this->prepare( $_POST );
 
-			/* We validate everthying before updateing the profile */
-			$this->handle();
+            /* We validate everthying before updateing the profile */
+            $this->handle();
 
-			/* Let's Update the Profile */
-			$this->update_me_admin();
+            /* Let's Update the Profile */
+            $this->update_me_admin();
 
-		}
+        }
 
 
 
-	}
+    }
 
 
-	/******************************************
-	Default WP avatar
-	******************************************/
-	function uultra_replace_default_avatar()
-	{
+    /******************************************
+    Default WP avatar
+    ******************************************/
+    function uultra_replace_default_avatar()
+    {
 
-		global  $xoouserultra;
+        global  $xoouserultra;
 
-		if($this->get_option("uultra_override_avatar") == 'yes')
-		{
-			add_filter('get_avatar', array($this,'uultra_get_avatar'), 99, 5);
+        if($this->get_option("uultra_override_avatar") == 'yes')
+        {
+            add_filter('get_avatar', array($this,'uultra_get_avatar'), 99, 5);
 
-		}
+        }
 
-	}
+    }
 
-	/* get setting */
-	function get_option($option)
-	{
-		$settings = get_option('userultra_options');
-		if (isset($settings[$option]))
-		{
-			return $settings[$option];
+    /* get setting */
+    function get_option($option)
+    {
+        $settings = get_option('userultra_options');
+        if (isset($settings[$option]))
+        {
+            return $settings[$option];
 
-		}else{
+        }else{
 
-		    return '';
-		}
+            return '';
+        }
 
-	}
+    }
 
-	/******************************************
-	Is user online
-	******************************************/
-	function is_user_online($user_id)
-	{
-		$online = get_transient('uultra_users_online');
-		if (isset($online) && is_array($online) && isset($online[$user_id]) )
-			return true;
-		return false;
-	}
+    /******************************************
+    Is user online
+    ******************************************/
+    function is_user_online($user_id)
+    {
+        $online = get_transient('uultra_users_online');
+        if (isset($online) && is_array($online) && isset($online[$user_id]) )
+            return true;
+        return false;
+    }
 
 
 
 
 
-	/******************************************
-	Emoticons list
-	******************************************/
-	function set_emoticons()
-	{
-		$emoticon_list["uultra_yes"] = array("shortocde"=>":yes:");
-		$emoticon_list["uultra_yahoo"] = array("shortocde"=>":yahoo:");
-		$emoticon_list["uultra_wink"] = array("shortocde"=>";-)");
-		$emoticon_list["uultra_whistle3"] = array("shortocde"=>":whistle:");
-		$emoticon_list["uultra_wacko"] = array("shortocde"=>":wacko:");
-		$emoticon_list["uultra_unsure"] = array("shortocde"=>":unsure:");
-		$emoticon_list["uultra_smile"] = array("shortocde"=>":-)");
-		$emoticon_list["uultra_scratch"] = array("shortocde"=>":scratch:");
-		$emoticon_list["uultra_sad"] = array("shortocde"=>":-(");
-		//$emoticon_list["uultra_rose"] = array("shortocde"=>"");
+    /******************************************
+    Emoticons list
+    ******************************************/
+    function set_emoticons()
+    {
+        $emoticon_list["uultra_yes"] = array("shortocde"=>":yes:");
+        $emoticon_list["uultra_yahoo"] = array("shortocde"=>":yahoo:");
+        $emoticon_list["uultra_wink"] = array("shortocde"=>";-)");
+        $emoticon_list["uultra_whistle3"] = array("shortocde"=>":whistle:");
+        $emoticon_list["uultra_wacko"] = array("shortocde"=>":wacko:");
+        $emoticon_list["uultra_unsure"] = array("shortocde"=>":unsure:");
+        $emoticon_list["uultra_smile"] = array("shortocde"=>":-)");
+        $emoticon_list["uultra_scratch"] = array("shortocde"=>":scratch:");
+        $emoticon_list["uultra_sad"] = array("shortocde"=>":-(");
+        //$emoticon_list["uultra_rose"] = array("shortocde"=>"");
 
-		//$emoticon_list["uultra_negative"] = array("shortocde"=>"");
-		//$emoticon_list["uultra_heart"] = array("shortocde"=>"");
-		$emoticon_list["uultra_good"] = array("shortocde"=>":good:");
+        //$emoticon_list["uultra_negative"] = array("shortocde"=>"");
+        //$emoticon_list["uultra_heart"] = array("shortocde"=>"");
+        $emoticon_list["uultra_good"] = array("shortocde"=>":good:");
 
-		$emoticon_list["uultra_cry"] = array("shortocde"=>":cry:");
-		$emoticon_list["uultra_cool"] = array("shortocde"=>"B-)");
-		$emoticon_list["uultra_bye"] = array("shortocde"=>":bye:");
+        $emoticon_list["uultra_cry"] = array("shortocde"=>":cry:");
+        $emoticon_list["uultra_cool"] = array("shortocde"=>"B-)");
+        $emoticon_list["uultra_bye"] = array("shortocde"=>":bye:");
 
-		$this->emoticon_list = $emoticon_list;
+        $this->emoticon_list = $emoticon_list;
 
-	}
+    }
 
-	function get_emoticons($icon)
-	{
-		return $this->emoticon_list[$icon];
+    function get_emoticons($icon)
+    {
+        return $this->emoticon_list[$icon];
 
-	}
+    }
 
-	function parse_emoticons($message)
-	{
-		$icons = $this->emoticon_list;
+    function parse_emoticons($message)
+    {
+        $icons = $this->emoticon_list;
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_yes.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':yes:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_yes.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':yes:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_yahoo.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':yahoo:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_yahoo.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':yahoo:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_wink.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(';-)',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_wink.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(';-)',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_whistle3.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':whistle:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_whistle3.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':whistle:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_wacko.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':wacko:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_wacko.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':wacko:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_unsure.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':unsure:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_unsure.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':unsure:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_smile.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':-)',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_smile.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':-)',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_scratch.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':scratch:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_scratch.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':scratch:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_sad.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':-(',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_sad.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':-(',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_good.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':good:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_good.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':good:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_cry.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':cry:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_cry.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':cry:',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_cool.gif";
-		$html='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace('B-)',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_cool.gif";
+        $html='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace('B-)',$html ,$message);
 
-		$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_bye.gif";
-		$html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
-		$message = str_replace(':bye:',$html ,$message);
+        $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/uultra_bye.gif";
+        $html ='<img src="'.$ico_url.'" class="uultra-emoti-msg-ico">';
+        $message = str_replace(':bye:',$html ,$message);
 
 
-		return $message;
+        return $message;
 
-	}
+    }
 
-	/******************************************
-	Get online users
-	******************************************/
-	function get_online_users()
-	{
-		$online = get_transient('uultra_users_online');
-		if (is_array($online)) {
+    /******************************************
+    Get online users
+    ******************************************/
+    function get_online_users()
+    {
+        $online = get_transient('uultra_users_online');
+        if (is_array($online)) {
 
-			foreach($online as $k=>$t){
-				$include[] = $k;
-			}
+            foreach($online as $k=>$t){
+                $include[] = $k;
+            }
 
-			$query['include'] = $include;
+            $query['include'] = $include;
 
-			$wp_user_query = $this->get_cached_query( $query );
-			if (! empty( $wp_user_query->results )) {
-				return $wp_user_query->results;
-			}
+            $wp_user_query = $this->get_cached_query( $query );
+            if (! empty( $wp_user_query->results )) {
+                return $wp_user_query->results;
+            }
 
-		}
-	}
-	/******************************************
-	Update online users
-	******************************************/
-	function update_online_users()
-	{
-	  if(is_user_logged_in()){
+        }
+    }
+    /******************************************
+    Update online users
+    ******************************************/
+    function update_online_users()
+    {
+      if(is_user_logged_in()){
 
-		if(($logged_in_users = get_transient('uultra_users_online')) === false) $logged_in_users = array();
+        if(($logged_in_users = get_transient('uultra_users_online')) === false) $logged_in_users = array();
 
-		$current_user = wp_get_current_user();
-		$current_user = $current_user->ID;
-		$current_time = current_time('timestamp');
+        $current_user = wp_get_current_user();
+        $current_user = $current_user->ID;
+        $current_time = current_time('timestamp');
 
-		if(!isset($logged_in_users[$current_user]) || ($logged_in_users[$current_user] < ($current_time - (15 * 60) ))){
-		  $logged_in_users[$current_user] = $current_time;
-		  set_transient('uultra_users_online', $logged_in_users, (30 * 60) );
-		}
+        if(!isset($logged_in_users[$current_user]) || ($logged_in_users[$current_user] < ($current_time - (15 * 60) ))){
+          $logged_in_users[$current_user] = $current_time;
+          set_transient('uultra_users_online', $logged_in_users, (30 * 60) );
+        }
 
-	  }
-	}
+      }
+    }
 
 
-	public function close_user_account()
-	{
-		global $wpdb,  $xoouserultra;
+    public function close_user_account()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH. 'wp-admin/includes/user.php' );
-		require_once(ABSPATH. 'wp-admin/includes/ms.php' );
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH. 'wp-admin/includes/user.php' );
+        require_once(ABSPATH. 'wp-admin/includes/ms.php' );
 
-		//close
-		$current_user = wp_get_current_user();
-		$user_id = $current_user->ID;
+        //close
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
 
 
-		if(!is_super_admin( $current_user ))
-		{
+        if(!is_super_admin( $current_user ))
+        {
 
-			wp_delete_user( $current_user->ID );
+            wp_delete_user( $current_user->ID );
 
-			//delete for multisite wpmu
-			if(function_exists('wpmu_delete_user'))
-			{
-				wpmu_delete_user( $user_id );
-			}
+            //delete for multisite wpmu
+            if(function_exists('wpmu_delete_user'))
+            {
+                wpmu_delete_user( $user_id );
+            }
 
-			wp_clear_auth_cookie();
+            wp_clear_auth_cookie();
 
 
-		}
+        }
 
 
-	}
+    }
 
-	public function uultra_user_private_user_deletion()
-	{
-		global $wpdb,  $xoouserultra;
+    public function uultra_user_private_user_deletion()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH. 'wp-admin/includes/user.php' );
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH. 'wp-admin/includes/user.php' );
 
-		$html = '';
+        $html = '';
 
-		//close
-		$current_user = $_POST["user_id"];
+        //close
+        $current_user = $_POST["user_id"];
 
-		if(!is_super_admin( $current_user ))
-		{
-			//delete meta data
-			$sql = 'DELETE FROM ' . $wpdb->prefix . 'usermeta WHERE user_id = "'.$current_user.'" ' ;
-			$wpdb->query( $sql );
+        if(!is_super_admin( $current_user ))
+        {
+            //delete meta data
+            $sql = 'DELETE FROM ' . $wpdb->prefix . 'usermeta WHERE user_id = "'.$current_user.'" ' ;
+            $wpdb->query( $sql );
 
-			//delete media
-			wp_delete_user( $current_user );
+            //delete media
+            wp_delete_user( $current_user );
 
 
-				$html .= '<div class="user-ultra-success">'. __("The user has been removed!", 'xoousers').'</div>';
-		}else{
+                $html .= '<div class="user-ultra-success">'. __("The user has been removed!", 'xoousers').'</div>';
+        }else{
 
-				$html .= '<div class="user-ultra-warning">'. __("We're sorry Users Ultra doesn't delete admin users.", 'xoousers').'</div>';
+                $html .= '<div class="user-ultra-warning">'. __("We're sorry Users Ultra doesn't delete admin users.", 'xoousers').'</div>';
 
-		}
-		echo $html;
-		die();
+        }
+        echo $html;
+        die();
 
-	}
+    }
 
-	function get_all_user_roles ($user_id )
-	{
-		$user = new WP_User( $user_id );
+    function get_all_user_roles ($user_id )
+    {
+        $user = new WP_User( $user_id );
 
-		$html = '';
+        $html = '';
 
-		if ( !empty( $user->roles ) && is_array( $user->roles ) )
-		{
-			foreach ( $user->roles as $role )
-				$html .= $role;
-		}
+        if ( !empty( $user->roles ) && is_array( $user->roles ) )
+        {
+            foreach ( $user->roles as $role )
+                $html .= $role;
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	function uultra_get_all_user_roles_array ($user_id )
-	{
-		$user = new WP_User( $user_id );
+    function uultra_get_all_user_roles_array ($user_id )
+    {
+        $user = new WP_User( $user_id );
 
-		$html = array();;
+        $html = array();;
 
-		if ( !empty( $user->roles ) && is_array( $user->roles ) )
-		{
-			foreach ( $user->roles as $role )
-				$html[]= $role;
-		}
+        if ( !empty( $user->roles ) && is_array( $user->roles ) )
+        {
+            foreach ( $user->roles as $role )
+                $html[]= $role;
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
 
 
 
-	public function show_protected_content($atts, $content)
-	{
-		global  $xoouserultra;
+    public function show_protected_content($atts, $content)
+    {
+        global  $xoouserultra;
 
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-			'display_rule' => 'logged_in_based', //logged_in_based, membership_based, role_based, group_based
-			'roles' => '', //administrator,subscriber
-			'groups' => '', //any group ID
-			'membership_id' => '', // the ID of the membership package separated by commas
-			'custom_message_loggedin' =>'', // custom message
-			'custom_message_capability' =>__("You can't see this content.",'xoousers'), // custom message
-			'ccap' =>'', // custom capabilities
-			'custom_message_membership' =>'', // custom message
-			'custom_message_role' =>'', // custom message
-			'custom_message_group' =>'' // custom message
+            'display_rule' => 'logged_in_based', //logged_in_based, membership_based, role_based, group_based
+            'roles' => '', //administrator,subscriber
+            'groups' => '', //any group ID
+            'membership_id' => '', // the ID of the membership package separated by commas
+            'custom_message_loggedin' =>'', // custom message
+            'custom_message_capability' =>__("You can't see this content.",'xoousers'), // custom message
+            'ccap' =>'', // custom capabilities
+            'custom_message_membership' =>'', // custom message
+            'custom_message_role' =>'', // custom message
+            'custom_message_group' =>'' // custom message
 
 
-		), $atts ) );
+        ), $atts ) );
 
-		$package_list = array();
+        $package_list = array();
 
-		 if($custom_message_loggedin == "")
-		 {
-			$custom_message_loggedin =  __('Content visible only for registered users. ','xoousers');
+         if($custom_message_loggedin == "")
+         {
+            $custom_message_loggedin =  __('Content visible only for registered users. ','xoousers');
 
-		 }elseif($custom_message_loggedin == "_blank"){
+         }elseif($custom_message_loggedin == "_blank"){
 
-			 $custom_message_loggedin =  "";
+             $custom_message_loggedin =  "";
 
-		}
+        }
 
-		 if($membership_id != "")
-		 {
-			 $package_list  = explode(',', $membership_id);
-		 }
+         if($membership_id != "")
+         {
+             $package_list  = explode(',', $membership_id);
+         }
 
 
-		if($display_rule == "logged_in_based")
-		{
-			//logged in based
-			if (!is_user_logged_in() && $custom_message_loggedin != "_blank")
-			{
-				return  '<div class="uupublic-ultra-info">'.$custom_message_loggedin.'</div>';
+        if($display_rule == "logged_in_based")
+        {
+            //logged in based
+            if (!is_user_logged_in() && $custom_message_loggedin != "_blank")
+            {
+                return  '<div class="uupublic-ultra-info">'.$custom_message_loggedin.'</div>';
 
-			} else {
+            } else {
 
-				if($ccap=='')
-				{
-					//the users is logged in then display content
-					return do_shortcode($content);
+                if($ccap=='')
+                {
+                    //the users is logged in then display content
+                    return do_shortcode($content);
 
-				}else{
+                }else{
 
-					//check for especial capabilities
+                    //check for especial capabilities
 
-					$user_id = get_current_user_id();
+                    $user_id = get_current_user_id();
 
-					if($this->check_user_special_capability($user_id, $ccap))
-					{
-						return do_shortcode($content);
+                    if($this->check_user_special_capability($user_id, $ccap))
+                    {
+                        return do_shortcode($content);
 
-					}else{
+                    }else{
 
-						return  '<div class="uupublic-ultra-info">'.$custom_message_capability.'</div>';
+                        return  '<div class="uupublic-ultra-info">'.$custom_message_capability.'</div>';
 
-					}
-				}
+                    }
+                }
 
 
 
-			}
+            }
 
-		}elseif($display_rule == "role_based"){
+        }elseif($display_rule == "role_based"){
 
-			//logged in based
-			if (!is_user_logged_in())
-			{
-				return  '<div class="uupublic-ultra-info">'.$custom_message_role.'</div>';
+            //logged in based
+            if (!is_user_logged_in())
+            {
+                return  '<div class="uupublic-ultra-info">'.$custom_message_role.'</div>';
 
-			} else {
+            } else {
 
-				//the user is logged in
-				$user_id = get_current_user_id();
-				$package = $this->get_user_package($user_id);
+                //the user is logged in
+                $user_id = get_current_user_id();
+                $package = $this->get_user_package($user_id);
 
-				if($this->check_user_content_roles($user_id, $roles))
-				{
-					//the users is logged in then display content
-					return do_shortcode($content);
+                if($this->check_user_content_roles($user_id, $roles))
+                {
+                    //the users is logged in then display content
+                    return do_shortcode($content);
 
-				}else{
+                }else{
 
-					return  '<div class="uupublic-ultra-info">'.$custom_message_role.'</div>';
+                    return  '<div class="uupublic-ultra-info">'.$custom_message_role.'</div>';
 
 
-				}
+                }
 
 
-			}
+            }
 
-		}elseif($display_rule == "group_based"){
+        }elseif($display_rule == "group_based"){
 
-			//logged in based
-			if (!is_user_logged_in())
-			{
-				return  '<div class="uupublic-ultra-info">'.$custom_message_group.'</div>';
+            //logged in based
+            if (!is_user_logged_in())
+            {
+                return  '<div class="uupublic-ultra-info">'.$custom_message_group.'</div>';
 
-			} else {
+            } else {
 
-				//the user is logged in
-				$user_id = get_current_user_id();
-				$package = $this->get_user_package($user_id);
+                //the user is logged in
+                $user_id = get_current_user_id();
+                $package = $this->get_user_package($user_id);
 
-				if($this->check_user_content_groups($user_id, $groups))
-				{
-					//the users is logged in then display content
-					return do_shortcode($content);
+                if($this->check_user_content_groups($user_id, $groups))
+                {
+                    //the users is logged in then display content
+                    return do_shortcode($content);
 
-				}else{
+                }else{
 
-					return  '<div class="uupublic-ultra-info">'.$custom_message_group.'</div>';
+                    return  '<div class="uupublic-ultra-info">'.$custom_message_group.'</div>';
 
 
-				}
+                }
 
 
-			}
+            }
 
 
 
-		}elseif($display_rule == "membership_based"){
+        }elseif($display_rule == "membership_based"){
 
 
-			//check logged in
-			if (!is_user_logged_in() && $custom_message_membership != "_blank")
-			{
-				return  '<div class="uupublic-ultra-info">'.$custom_message_membership.'</div>';
+            //check logged in
+            if (!is_user_logged_in() && $custom_message_membership != "_blank")
+            {
+                return  '<div class="uupublic-ultra-info">'.$custom_message_membership.'</div>';
 
-			} else {
+            } else {
 
-				//the user is logged in
-				$user_id = get_current_user_id();
-				$package = $this->get_user_package($user_id);
+                //the user is logged in
+                $user_id = get_current_user_id();
+                $package = $this->get_user_package($user_id);
 
-				if ( in_array($package , $package_list) )
-				{
-					if($ccap=='')
-					{
-						//the users is logged in then display content
-						return do_shortcode($content);
+                if ( in_array($package , $package_list) )
+                {
+                    if($ccap=='')
+                    {
+                        //the users is logged in then display content
+                        return do_shortcode($content);
 
-					}else{
+                    }else{
 
-						//check for especial capabilities
+                        //check for especial capabilities
 
-						$user_id = get_current_user_id();
-						if($this->check_user_special_capability($user_id, $ccap))
-						{
-							return do_shortcode($content);
+                        $user_id = get_current_user_id();
+                        if($this->check_user_special_capability($user_id, $ccap))
+                        {
+                            return do_shortcode($content);
 
-						}else{
+                        }else{
 
-							return  '<div class="uupublic-ultra-info">'.$custom_message_capability.'</div>';
+                            return  '<div class="uupublic-ultra-info">'.$custom_message_capability.'</div>';
 
-						}
+                        }
 
-					}
+                    }
 
-				}else{
+                }else{
 
-					return  '<div class="uupublic-ultra-info">'.$custom_message_membership.'</div>';
+                    return  '<div class="uupublic-ultra-info">'.$custom_message_membership.'</div>';
 
-				}
+                }
 
-				//the users is logged in then display content
+                //the users is logged in then display content
 
-			}
+            }
 
 
-		}
+        }
 
-	}
+    }
 
 
-	public function check_user_content_groups($user_id, $groups)
-	{
-		global $wpdb,  $xoouserultra, $uultra_group;
-		$groups_that_can_see = array();
-		$groups_that_can_see  = explode(',', $groups);
+    public function check_user_content_groups($user_id, $groups)
+    {
+        global $wpdb,  $xoouserultra, $uultra_group;
+        $groups_that_can_see = array();
+        $groups_that_can_see  = explode(',', $groups);
 
 
-		if(isset($uultra_group))
-		{
+        if(isset($uultra_group))
+        {
 
-			//is this user allowed to see this post.
-			$user_groups =$uultra_group->get_all_user_groups($user_id);
+            //is this user allowed to see this post.
+            $user_groups =$uultra_group->get_all_user_groups($user_id);
 
-			foreach ($groups_that_can_see as $group)
-			{
-				if(in_array($group, $user_groups))
-				{
-					return true; //user belongs to this group
-				}
+            foreach ($groups_that_can_see as $group)
+            {
+                if(in_array($group, $user_groups))
+                {
+                    return true; //user belongs to this group
+                }
 
-			}
+            }
 
-		}
+        }
 
 
-		return false;
+        return false;
 
-	}
+    }
 
-	public function check_user_content_roles($user_id, $roles)
-	{
-		global $wpdb,  $xoouserultra;
-		$roles_that_can_see = array();
-		$roles_that_can_see  = explode(',', $roles);
+    public function check_user_content_roles($user_id, $roles)
+    {
+        global $wpdb,  $xoouserultra;
+        $roles_that_can_see = array();
+        $roles_that_can_see  = explode(',', $roles);
 
-		foreach ($roles_that_can_see as $role)
-		{
+        foreach ($roles_that_can_see as $role)
+        {
 
-			if($this->uultra_is_user_in_role($user_id,$role)) // the selected user
-			{
-				return true;
+            if($this->uultra_is_user_in_role($user_id,$role)) // the selected user
+            {
+                return true;
 
-			}
+            }
 
 
-		}
+        }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	//Check if user can see this content based on special capabilities
-	public function check_user_special_capability($user_id, $ccap)
-	{
-		global $wpdb,  $xoouserultra;
+    //Check if user can see this content based on special capabilities
+    public function check_user_special_capability($user_id, $ccap)
+    {
+        global $wpdb,  $xoouserultra;
 
-				//get user's ccap
-		$user_ccap_list = get_user_meta($user_id, 'ccap', true);
+                //get user's ccap
+        $user_ccap_list = get_user_meta($user_id, 'ccap', true);
 
-		if($user_ccap_list != "")
-		{
-			$user_ccap_array = array();
+        if($user_ccap_list != "")
+        {
+            $user_ccap_array = array();
 
-			$user_ccap_array  = explode(',', $user_ccap_list);
+            $user_ccap_array  = explode(',', $user_ccap_list);
 
-			//check if user can see this content
-			if ( in_array($ccap , $user_ccap_array) )
-			{
-					return true;
+            //check if user can see this content
+            if ( in_array($ccap , $user_ccap_array) )
+            {
+                    return true;
 
-			}else{
-					return  false;
+            }else{
+                    return  false;
 
-			}
+            }
 
-		}else{
+        }else{
 
-			return false;
+            return false;
 
-		}
-	}
+        }
+    }
 
-	public function get_user_package($user_id)
-	{
-		global $wpdb,  $xoouserultra;
+    public function get_user_package($user_id)
+    {
+        global $wpdb,  $xoouserultra;
 
-		return get_user_meta($user_id, 'usersultra_user_package_id', true);
+        return get_user_meta($user_id, 'usersultra_user_package_id', true);
 
-	}
+    }
 
-	public function get_user_account_type_info($user_id)
-	{
-		global $wpdb,  $xoouserultra;
+    public function get_user_account_type_info($user_id)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$result = array();
+        $result = array();
 
-		$current_package_id = get_user_meta($user_id, 'usersultra_user_package_id', true);
+        $current_package_id = get_user_meta($user_id, 'usersultra_user_package_id', true);
 
-		$current_user_package = $xoouserultra->paypal->get_package($current_package_id);
-		$amount = $current_user_package->package_amount;
+        $current_user_package = $xoouserultra->paypal->get_package($current_package_id);
+        $amount = $current_user_package->package_amount;
 
-		if($amount==0)
-		{
-			$result = array('id' =>0, 'name' => __('Free','xoousers'), 'price' => 0, 'creation' => 0 , 'expiraton' => 0);
+        if($amount==0)
+        {
+            $result = array('id' =>0, 'name' => __('Free','xoousers'), 'price' => 0, 'creation' => 0 , 'expiraton' => 0);
 
-		}else{
+        }else{
 
-			$result = array('id' => $current_package_id, 'name' => $current_user_package->package_name, 'price' =>$amount, 'creation' => 0 , 'expiraton' => 0);
+            $result = array('id' => $current_package_id, 'name' => $current_user_package->package_name, 'price' =>$amount, 'creation' => 0 , 'expiraton' => 0);
 
 
-		}
+        }
 
-		return $result;
+        return $result;
 
-	}
+    }
 
-	/*Edit Users See Submited Details*/
-	public function user_see_submited_details_backend ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Edit Users See Submited Details*/
+    public function user_see_submited_details_backend ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		$currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
+        $currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
 
-		$user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"];
 
-		$html .= $this->get_admin_profile_info($user_id);
+        $html .= $this->get_admin_profile_info($user_id);
 
 
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
-	}
+    }
 
-	public function  get_admin_profile_info ($user_id)
-	{
+    public function  get_admin_profile_info ($user_id)
+    {
 
-		$array = get_option('usersultra_profile_fields');
+        $array = get_option('usersultra_profile_fields');
 
-		foreach($array as $key=>$field)
-		{
-		    // Optimized condition and added strict conditions
-		    $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
-		    if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
-		    {
-		        unset($array[$key]);
-		    }
-		}
+        foreach($array as $key=>$field)
+        {
+            // Optimized condition and added strict conditions
+            $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
+            if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
+            {
+                unset($array[$key]);
+            }
+        }
 
 
-		$i_array_end = end($array);
+        $i_array_end = end($array);
 
-		if(isset($i_array_end['position']))
-		{
-		    $array_end = $i_array_end['position'];
-		    if ($array[$array_end]['type'] == 'separator') {
-		        unset($array[$array_end]);
-		    }
-		}
+        if(isset($i_array_end['position']))
+        {
+            $array_end = $i_array_end['position'];
+            if ($array[$array_end]['type'] == 'separator') {
+                unset($array[$array_end]);
+            }
+        }
 
 
-		$html .= '
+        $html .= '
                   <div class="widget-ultra">
                     <h3 class="uultra-basic">Basic Information</h3>
                      <section class="default-bg small-triangle-comfrey"></section>
                      <div class="uultra-table">';
 
 
-		foreach($array as $key => $field)
-		{
+        foreach($array as $key => $field)
+        {
 
-			extract($field);
-
-
-			if(!isset($private))
-			    $private = 0;
-
-			if(!isset($show_in_widget))
-			    $show_in_widget = 1;
+            extract($field);
 
 
+            if(!isset($private))
+                $private = 0;
 
-			/* Fieldset separator */
-			if ( $type == 'separator' && $deleted == 0 )
-			{
-				$html .= '<div class="uultra-profile-seperator">'.$name.'</div>';
-			}
-
-			if ( $type == 'usermeta' && $deleted == 0 )
-			{
-				/* Show the label */
-				if (isset($array[$key]['name']) && $name)
-				{
-					$html .= ' <span class="data-a">'.$name.':</span><span class="data-b">'.$this->get_user_meta_custom( $user_id, $meta).'</span> ';
-				}
-
-			}
+            if(!isset($show_in_widget))
+                $show_in_widget = 1;
 
 
 
-		}
+            /* Fieldset separator */
+            if ( $type == 'separator' && $deleted == 0 )
+            {
+                $html .= '<div class="uultra-profile-seperator">'.$name.'</div>';
+            }
 
-		$html .= '</div>
+            if ( $type == 'usermeta' && $deleted == 0 )
+            {
+                /* Show the label */
+                if (isset($array[$key]['name']) && $name)
+                {
+                    $html .= ' <span class="data-a">'.$name.':</span><span class="data-b">'.$this->get_user_meta_custom( $user_id, $meta).'</span> ';
+                }
+
+            }
+
+
+
+        }
+
+        $html .= '</div>
                    </div>
                  ';
 
-		$html .= '<p>
+        $html .= '<p>
           <a href="#" class="button uultra-user-edit-package-close " data-user="'.$user_id.'">'. __("Cancel","xoousers").'</a>
 
         </p>' ;
-		return $html;
+        return $html;
 
-	}
+    }
 
     /*Edit Users Basic info in Backend*/
-	public function user_package_edit_form ()
-	{
-		global $wpdb,  $xoouserultra;
+    public function user_package_edit_form ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		$currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
+        $currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
 
-		$user_id = $_POST["user_id"];
-
-
-		$html = '<div class="uuultra-users-membership-edition">';
-
-		$html.= '<h2>' .__( 'Packages', 'xoousers' ). '</h2>';
-
-		$packages = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'usersultra_packages  ORDER BY `package_amount` ASC' );
-
-		if ( empty( $packages ) )
-			{
-				$html.= '<p>' .__( 'You have no packages yet.', 'xoousers' ). '</p>';
-
-			}else{
+        $user_id = $_POST["user_id"];
 
 
+        $html = '<div class="uuultra-users-membership-edition">';
 
-				$html .= "<ul>" ;
+        $html.= '<h2>' .__( 'Packages', 'xoousers' ). '</h2>';
 
-				$current_user_package = get_user_meta( $user_id, "usersultra_user_package_id", true);
+        $packages = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'usersultra_packages  ORDER BY `package_amount` ASC' );
 
-				if($current_user_package=="")
-					{
-						$checked = 'checked="checked"';
+        if ( empty( $packages ) )
+            {
+                $html.= '<p>' .__( 'You have no packages yet.', 'xoousers' ). '</p>';
 
-					}
+            }else{
 
-				$n = count( $packages );
-				$num_unread = 0;
 
-				$default_checked = 0;
 
-				$html.= '<li>
+                $html .= "<ul>" ;
 
-					<div class="uultra-package-opt">
+                $current_user_package = get_user_meta( $user_id, "usersultra_user_package_id", true);
 
-					<span class="uultra-package-title">
-					<input type="radio" name="usersultra_package_id_'.$user_id.'" value="" id="package_'.$package->package_id.'"  '.$checked.'/>
+                if($current_user_package=="")
+                    {
+                        $checked = 'checked="checked"';
+
+                    }
+
+                $n = count( $packages );
+                $num_unread = 0;
+
+                $default_checked = 0;
+
+                $html.= '<li>
+
+                    <div class="uultra-package-opt">
+
+                    <span class="uultra-package-title">
+                    <input type="radio" name="usersultra_package_id_'.$user_id.'" value="" id="package_'.$package->package_id.'"  '.$checked.'/>
 
     - '.__("Free Package", "xoousers").'</span>
 
-					</div>
-					<div class="uultra-package-desc">
-					<p>'.__("User will have only basic features", "xoousers").'</p>
-					</div>
+                    </div>
+                    <div class="uultra-package-desc">
+                    <p>'.__("User will have only basic features", "xoousers").'</p>
+                    </div>
 
 
 
-	     </li>';
+         </li>';
 
-				foreach ( $packages as $package )
-				{
-					$checked = '';
+                foreach ( $packages as $package )
+                {
+                    $checked = '';
 
-					if($default_checked==0)
-					{
-						//$checked = 'checked="checked"';
+                    if($default_checked==0)
+                    {
+                        //$checked = 'checked="checked"';
 
-					}
-
-
-
-					if($current_user_package==$package->package_id )
-					{
-						$checked = 'checked="checked"';
-
-					}
+                    }
 
 
-					$html.= '<li>
 
-					<div class="uultra-package-opt">
+                    if($current_user_package==$package->package_id )
+                    {
+                        $checked = 'checked="checked"';
 
-					<span class="uultra-package-title"><input type="radio" name="usersultra_package_id_'.$user_id.'" value="'.$package->package_id.'" id="package_'.$package->package_id.'"  '.$checked.'/>
+                    }
+
+
+                    $html.= '<li>
+
+                    <div class="uultra-package-opt">
+
+                    <span class="uultra-package-title"><input type="radio" name="usersultra_package_id_'.$user_id.'" value="'.$package->package_id.'" id="package_'.$package->package_id.'"  '.$checked.'/>
     - '.$package->package_name.'</span>
 
-					<span class="uultra-package-cost">'.$currency_symbol.$package->package_amount.' </span></div>
-					<div class="uultra-package-desc">
-					<p>'.$package->package_desc.'</p>
-					</div>
+                    <span class="uultra-package-cost">'.$currency_symbol.$package->package_amount.' </span></div>
+                    <div class="uultra-package-desc">
+                    <p>'.$package->package_desc.'</p>
+                    </div>
 
 
 
-	     </li>';
+         </li>';
 
-		 $default_checked++;
+         $default_checked++;
 
 
-				}
+                }
 
-				$html .= "</ul>" ;
+                $html .= "</ul>" ;
 
-				$html .= '<p>
+                $html .= '<p>
           <a href="#" class="button uultra-user-edit-package-close " data-user="'.$user_id.'">'. __("Cancel","xoousers").'</a>
            <a href="#" class="button-primary uultra-user-edit-package-confirm" data-user="'.$user_id.'">'.__('Confirm','xoousers').'</a>
         </p>' ;
 
 
-				$html .= '<p id="uultra-u-package-ed-'.$user_id.'"></p>';
+                $html .= '<p id="uultra-u-package-ed-'.$user_id.'"></p>';
 
 
 
-		}
+        }
 
-		$html .= '</div>' ;
+        $html .= '</div>' ;
 
-		echo $html;
-		 die();
+        echo $html;
+         die();
 
-	}
+    }
 
 
 
 
 
 
-	 /*Edit Users Basic info in Backend*/
-	public function edit_user_package_admin_form ($user_id )
-	{
-		global $wpdb,  $xoouserultra;
+     /*Edit Users Basic info in Backend*/
+    public function edit_user_package_admin_form ($user_id )
+    {
+        global $wpdb,  $xoouserultra;
 
-		$currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
+        $currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
 
 
 
-		$html = '';
+        $html = '';
 
-		$packages = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'usersultra_packages  ORDER BY `package_amount` ASC' );
+        $packages = $wpdb->get_results( 'SELECT * FROM ' . $wpdb->prefix . 'usersultra_packages  ORDER BY `package_amount` ASC' );
 
-		if ( empty( $packages ) )
-			{
-				$html.= '<p>' .__( 'You have no packages yet.', 'xoousers' ). '</p>';
+        if ( empty( $packages ) )
+            {
+                $html.= '<p>' .__( 'You have no packages yet.', 'xoousers' ). '</p>';
 
-			}else{
+            }else{
 
 
-				$html .= '<select class="xoouserultra-input" name="uultra-user-package-edition" id="uultra-user-package-edition" >';
+                $html .= '<select class="xoouserultra-input" name="uultra-user-package-edition" id="uultra-user-package-edition" >';
 
-				$current_user_package = get_user_meta( $user_id, "usersultra_user_package_id", true);
+                $current_user_package = get_user_meta( $user_id, "usersultra_user_package_id", true);
 
-				if($current_user_package=="")
-					{
-						$checked = 'selected="selected"';
+                if($current_user_package=="")
+                    {
+                        $checked = 'selected="selected"';
 
-					}
+                    }
 
-				$n = count( $packages );
-				$num_unread = 0;
+                $n = count( $packages );
+                $num_unread = 0;
 
-				$default_checked = 0;
+                $default_checked = 0;
 
-				 $html .= '<option value="" '.$checked.' >'.__("Free Package", "xoousers").'</option>';
+                 $html .= '<option value="" '.$checked.' >'.__("Free Package", "xoousers").'</option>';
 
 
 
 
 
-				foreach ( $packages as $package )
-				{
-					$checked = '';
+                foreach ( $packages as $package )
+                {
+                    $checked = '';
 
-					if($default_checked==0)
-					{
-						//$checked = 'checked="checked"';
+                    if($default_checked==0)
+                    {
+                        //$checked = 'checked="checked"';
 
-					}
+                    }
 
 
 
-					if($current_user_package==$package->package_id )
-					{
-						$checked = 'selected="selected"';
+                    if($current_user_package==$package->package_id )
+                    {
+                        $checked = 'selected="selected"';
 
-					}
+                    }
 
 
-					  $html .= '<option value="'.$package->package_id.'" '.$checked.' >'.$package->package_name.' - '.$currency_symbol.$package->package_amount.' </option>';
+                      $html .= '<option value="'.$package->package_id.'" '.$checked.' >'.$package->package_name.' - '.$currency_symbol.$package->package_amount.' </option>';
 
 
 
 
-		 $default_checked++;
+         $default_checked++;
 
 
-				}
+                }
 
-				$html .= "</select>" ;
-				$html .= '<a href="#" class="button-primary uultra-user-edit-package-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
-				$html .= '<span id="uultra-package-conf"></span>';
+                $html .= "</select>" ;
+                $html .= '<a href="#" class="button-primary uultra-user-edit-package-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
+                $html .= '<span id="uultra-package-conf"></span>';
 
 
-		}
+        }
 
-	;
+    ;
 
-		return $html;
+        return $html;
 
 
-	}
+    }
 
 
-	/*Update user status*/
-	public function user_customform_change_confirm ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Update user status*/
+    public function user_customform_change_confirm ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$html = "";
+        $html = "";
 
-		$user_id = $_POST["user_id"];
-		$custom_form_id = $_POST["custom_form_id"];
+        $user_id = $_POST["user_id"];
+        $custom_form_id = $_POST["custom_form_id"];
 
-		//update metaquery
-		update_user_meta ($user_id, 'uultra_custom_registration_form', $custom_form_id);
+        //update metaquery
+        update_user_meta ($user_id, 'uultra_custom_registration_form', $custom_form_id);
 
-		$html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's form has been changed ", "xoousers").'</div>';
+        $html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's form has been changed ", "xoousers").'</div>';
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
-	}
+    }
 
-	/*Update user status*/
-	public function user_status_change_confirm ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Update user status*/
+    public function user_status_change_confirm ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
+        $currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
 
-		$html = "";
+        $html = "";
 
-		$user_id = $_POST["user_id"];
-		$status_id = $_POST["status_id"];
+        $user_id = $_POST["user_id"];
+        $status_id = $_POST["status_id"];
 
-		if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
-		{
+        if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
+        {
 
-			$html .='<div class="user-ultra-error">'.__(" ERROR! You can't change the status of an administrator. ", "xoousers").'</div>';
+            $html .='<div class="user-ultra-error">'.__(" ERROR! You can't change the status of an administrator. ", "xoousers").'</div>';
 
 
 
 
-		}else{
+        }else{
 
-			if($status_id!="")
-			{
+            if($status_id!="")
+            {
 
-				//update metaquery
-				update_user_meta ($user_id, 'usersultra_account_status', $status_id);
+                //update metaquery
+                update_user_meta ($user_id, 'usersultra_account_status', $status_id);
 
-				$html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's status has been changed to : ".$status_id."", "xoousers").'</div>';
+                $html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's status has been changed to : ".$status_id."", "xoousers").'</div>';
 
 
-			}
+            }
 
-			//notify user
-			$user = get_user_by('id',$user_id);
+            //notify user
+            $user = get_user_by('id',$user_id);
 
 
 
-		}
+        }
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
-	}
+    }
 
-	/*Edit Users Basic info save changes*/
-	public function user_package_edit_form_confirm ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Edit Users Basic info save changes*/
+    public function user_package_edit_form_confirm ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
+        $currency_symbol =  $xoouserultra->get_option('paid_membership_symbol');
 
-		$html = "";
+        $html = "";
 
-		$user_id = $_POST["user_id"];
-		$package_id = $_POST["package_id"];
+        $user_id = $_POST["user_id"];
+        $package_id = $_POST["package_id"];
 
-		if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
-		{
+        if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
+        {
 
-			$html .='<div class="user-ultra-error">'.__(" ERROR! You can't change the role of an administrator. ", "xoousers").'</div>';
+            $html .='<div class="user-ultra-error">'.__(" ERROR! You can't change the role of an administrator. ", "xoousers").'</div>';
 
-			//assign package
+            //assign package
 
-			if($package_id=="")
-			{
-				 delete_user_meta($user_id, 'usersultra_user_package_id') ;
+            if($package_id=="")
+            {
+                 delete_user_meta($user_id, 'usersultra_user_package_id') ;
 
-			}else{
+            }else{
 
-				 //update metaquery
-				 update_user_meta ($user_id, 'usersultra_user_package_id', $package_id);
+                 //update metaquery
+                 update_user_meta ($user_id, 'usersultra_user_package_id', $package_id);
 
-			}
+            }
 
-			 //create basic widgets
-			 delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
-			 $xoouserultra->customizer->set_default_widgets_layout($user_id,  $package_id);
+             //create basic widgets
+             delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
+             $xoouserultra->customizer->set_default_widgets_layout($user_id,  $package_id);
 
-			$html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's membership plan has been changed ", "xoousers").'</div>';
+            $html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's membership plan has been changed ", "xoousers").'</div>';
 
 
-		}else{
+        }else{
 
-			if($package_id=="")
-			{
-				 delete_user_meta($user_id, 'usersultra_user_package_id') ;
+            if($package_id=="")
+            {
+                 delete_user_meta($user_id, 'usersultra_user_package_id') ;
 
-			}else{
+            }else{
 
-				//update metaquery
-				update_user_meta ($user_id, 'usersultra_user_package_id', $package_id);
+                //update metaquery
+                update_user_meta ($user_id, 'usersultra_user_package_id', $package_id);
 
-				//role settings
-				$package = $xoouserultra->paypal->get_package($package_id);
-				$package_role = $package->package_role;
+                //role settings
+                $package = $xoouserultra->paypal->get_package($package_id);
+                $package_role = $package->package_role;
 
-				//set custom role for this package
-				if($package_role!="")
-				{
-					$user = new WP_User( $user_id );
-					$user->set_role( $package_role );
+                //set custom role for this package
+                if($package_role!="")
+                {
+                    $user = new WP_User( $user_id );
+                    $user->set_role( $package_role );
 
-					$html .='<div class="user-ultra-success">'.__(" SUCCESS! The role has been changed ", "xoousers").'</div>';
+                    $html .='<div class="user-ultra-success">'.__(" SUCCESS! The role has been changed ", "xoousers").'</div>';
 
-				}
+                }
 
 
-			}
+            }
 
-			//get package
-			$package = $xoouserultra->paypal->get_package($package_id);
+            //get package
+            $package = $xoouserultra->paypal->get_package($package_id);
 
-			//notify user
-			$user = get_user_by('id',$user_id);
+            //notify user
+            $user = get_user_by('id',$user_id);
 
-			 //create basic widgets
-			 delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
-			 $xoouserultra->customizer->set_default_widgets_layout($user_id,  $package_id);
+             //create basic widgets
+             delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
+             $xoouserultra->customizer->set_default_widgets_layout($user_id,  $package_id);
 
-			$html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's membership plan has been changed ", "xoousers").'</div>';
+            $html .='<div class="user-ultra-success">'.__(" SUCCESS! The user's membership plan has been changed ", "xoousers").'</div>';
 
 
-		}
+        }
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
-	}
+    }
 
 
-	/*The user change their role*/
-	public function uultra_user_change_role ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*The user change their role*/
+    public function uultra_user_change_role ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
 
-		$user_id = get_current_user_id();
-		$role = $_POST["role"];
+        $user_id = get_current_user_id();
+        $role = $_POST["role"];
 
-		if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
-		{
+        if($this->uultra_is_user_in_role($user_id,'administrator')) // the selected user is an admin
+        {
 
-			$html .='<div class="uupublic-ultra-error">'.__(" ERROR! You can't change the role of an administrator. ", "xoousers").'</div>';
+            $html .='<div class="uupublic-ultra-error">'.__(" ERROR! You can't change the role of an administrator. ", "xoousers").'</div>';
 
-		}else{
+        }else{
 
-			if($role!="" && $xoouserultra->get_option('uultra_roles_actives_backend')=='yes')
-			{
+            if($role!="" && $xoouserultra->get_option('uultra_roles_actives_backend')=='yes')
+            {
 
-				//set custom role for this package
-				if($role!="")
-				{
-					$user = new WP_User( $user_id );
-					$user->set_role( $role );
+                //set custom role for this package
+                if($role!="")
+                {
+                    $user = new WP_User( $user_id );
+                    $user->set_role( $role );
 
-					$html .='<div class="uupublic-ultra-success">'.__(" SUCCESS! The role has been changed ", "xoousers").'</div>';
+                    $html .='<div class="uupublic-ultra-success">'.__(" SUCCESS! The role has been changed ", "xoousers").'</div>';
 
-				}
+                }
 
 
-			}
+            }
 
 
-		}
+        }
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
-	}
+    }
 
 
-	/*Edit user expiration date*/
-	public function user_expiration_edit_form_confirm ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Edit user expiration date*/
+    public function user_expiration_edit_form_confirm ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
 
-		$html = "";
+        $html = "";
 
-		$user_id = $_POST["user_id"];
-		$expiration_id = $_POST["expiration_id"];
+        $user_id = $_POST["user_id"];
+        $expiration_id = $_POST["expiration_id"];
 
-		$error_message = '';
-		$current_date = date("Y-m-d");
+        $error_message = '';
+        $current_date = date("Y-m-d");
 
 
-		if($expiration_id=='')
-		{
-			$error_message .='<div class="user-ultra-error">'.__(" ERROR! Expiration date can't be an empy value. ", "xoousers").'</div>';
+        if($expiration_id=='')
+        {
+            $error_message .='<div class="user-ultra-error">'.__(" ERROR! Expiration date can't be an empy value. ", "xoousers").'</div>';
 
-		}
+        }
 
-		$expiration_id = date("Y-m-d", strtotime($expiration_id));
+        $expiration_id = date("Y-m-d", strtotime($expiration_id));
 
-		if($expiration_id<$current_date)
-		{
-			$error_message .='<div class="user-ultra-error">'.__(" ERROR! Expiration date should be in the future. ", "xoousers").'</div>';
+        if($expiration_id<$current_date)
+        {
+            $error_message .='<div class="user-ultra-error">'.__(" ERROR! Expiration date should be in the future. ", "xoousers").'</div>';
 
-		}
+        }
 
-		if($error_message=='') // the selected user is an admin
-		{
+        if($error_message=='') // the selected user is an admin
+        {
 
 
-				//expiration meta data
-				update_user_meta ($user_id, 'usersultra_membership_expiration', $expiration_id);
+                //expiration meta data
+                update_user_meta ($user_id, 'usersultra_membership_expiration', $expiration_id);
 
-			$html .='<div class="user-ultra-success">'.__(" SUCCESS! The expiration date has been changed ", "xoousers").'</div>';
+            $html .='<div class="user-ultra-success">'.__(" SUCCESS! The expiration date has been changed ", "xoousers").'</div>';
 
 
 
 
-		}else{
+        }else{
 
 
-			$html .=$error_message;
+            $html .=$error_message;
 
 
 
 
 
-		}
+        }
 
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
 
 
 
-	}
+    }
 
-	function uultra_is_user_in_role( $user_id, $role  )
-	{
-		return in_array( $role, $this->uultra_get_all_user_roles_array( $user_id ) );
-	}
+    function uultra_is_user_in_role( $user_id, $role  )
+    {
+        return in_array( $role, $this->uultra_get_all_user_roles_array( $user_id ) );
+    }
 
 
 
-	/*Process uploads*/
-	function process_cvs($array)
-	{
-		global $wpdb,  $xoouserultra;
+    /*Process uploads*/
+    function process_cvs($array)
+    {
+        global $wpdb,  $xoouserultra;
 
-		/* File upload conditions */
-		$this->allowed_extensions = array("csv");
+        /* File upload conditions */
+        $this->allowed_extensions = array("csv");
 
 
-		$send_welcome_email = false;
+        $send_welcome_email = false;
 
-		if(isset($_POST["uultra-send-welcome-email"] ) && $_POST["uultra-send-welcome-email"]==1)
-		{
-			$send_welcome_email = true;
+        if(isset($_POST["uultra-send-welcome-email"] ) && $_POST["uultra-send-welcome-email"]==1)
+        {
+            $send_welcome_email = true;
 
-		}
+        }
 
-		$account_status = "";
+        $account_status = "";
 
-		if(isset($_POST["uultra-activate-account"] ) )
-		{
-			$account_status = $_POST["uultra-activate-account"];
-		}
+        if(isset($_POST["uultra-activate-account"] ) )
+        {
+            $account_status = $_POST["uultra-activate-account"];
+        }
 
 
 
-		if (isset($_FILES))
-		{
-			foreach ($_FILES as $key => $array) {
+        if (isset($_FILES))
+        {
+            foreach ($_FILES as $key => $array) {
 
 
-				extract($array);
+                extract($array);
 
-				$file = $_FILES[$key];
+                $file = $_FILES[$key];
 
-				$info = pathinfo($file['name']);
-				$real_name = $file['name'];
-				$ext = $info['extension'];
-				$ext=strtolower($ext);
+                $info = pathinfo($file['name']);
+                $real_name = $file['name'];
+                $ext = $info['extension'];
+                $ext=strtolower($ext);
 
 
-				if ($name) {
+                if ($name) {
 
 
-					if ( !in_array($ext, $this->allowed_extensions) )
-					{
-						$this->messages_process .= __('The file format is not allowed!','xoousers');
+                    if ( !in_array($ext, $this->allowed_extensions) )
+                    {
+                        $this->messages_process .= __('The file format is not allowed!','xoousers');
 
-					} else {
+                    } else {
 
-						/*Upload file*/
-						$path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
+                        /*Upload file*/
+                        $path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
 
-						$target_path = $path_f.'/import/';
-						// Checking for upload directory, if not exists then new created.
-						if(!is_dir($target_path))
-						    mkdir($target_path, 0755);
+                        $target_path = $path_f.'/import/';
+                        // Checking for upload directory, if not exists then new created.
+                        if(!is_dir($target_path))
+                            mkdir($target_path, 0755);
 
-						$target_path = $target_path . time() . '_'. basename( $name );
-						move_uploaded_file( $tmp_name, $target_path);
+                        $target_path = $target_path . time() . '_'. basename( $name );
+                        move_uploaded_file( $tmp_name, $target_path);
 
 
-						//now that the files is up we have to start the uploading
+                        //now that the files is up we have to start the uploading
 
-						$row = 0;
-						if (($handle = fopen($target_path, "r")) !== FALSE)
-						{
+                        $row = 0;
+                        if (($handle = fopen($target_path, "r")) !== FALSE)
+                        {
 
 
 
-							while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
-							{
-								$num = count($data);
+                            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+                            {
+                                $num = count($data);
 
-								if($row == 0) //these are the headers
-								{
-									$this->messages_process .='<h3>Imported Data</h3>';
-									$this->messages_process .=  '<table class="wp-list-table widefat">
-							<tr><th>Row</th>';
+                                if($row == 0) //these are the headers
+                                {
+                                    $this->messages_process .='<h3>Imported Data</h3>';
+                                    $this->messages_process .=  '<table class="wp-list-table widefat">
+                            <tr><th>Row</th>';
 
-									foreach($data as $element)
-									{
-										$headers[] = $element;
-										$this->messages_process .= '<th>' . $element . '</th>';
+                                    foreach($data as $element)
+                                    {
+                                        $headers[] = $element;
+                                        $this->messages_process .= '<th>' . $element . '</th>';
 
-									}
+                                    }
 
-									$this->messages_process .='</tr>';
+                                    $this->messages_process .='</tr>';
 
-									$columns = count($data);
+                                    $columns = count($data);
 
 
-								}
+                                }
 
-								if($row > 0) //this is not the header then we create the user
-								{
+                                if($row > 0) //this is not the header then we create the user
+                                {
 
-									$this->create_user_import ($data, $headers, $send_welcome_email, $account_status, $row);
-								}
-								$row++;
+                                    $this->create_user_import ($data, $headers, $send_welcome_email, $account_status, $row);
+                                }
+                                $row++;
 
 
-							}
+                            }
 
-							fclose($handle);
+                            fclose($handle);
 
 
-							$this->messages_process .='</table>';
-							$this->messages_process .= '<p> <strong>'.__('--- Finished ---  ', 'xoousers').'</strong></p>';
-						}
+                            $this->messages_process .='</table>';
+                            $this->messages_process .= '<p> <strong>'.__('--- Finished ---  ', 'xoousers').'</strong></p>';
+                        }
 
 
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
-	}
+    }
 
-	public function create_user_import ($user, $headers, $send_welcome_email, $account_status, $count)
-	{
-		global $wpdb,  $xoouserultra;
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+    public function create_user_import ($user, $headers, $send_welcome_email, $account_status, $count)
+    {
+        global $wpdb,  $xoouserultra;
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		//username, email, display name, first name and last name
+        //username, email, display name, first name and last name
 
-		$user_name = $user[0];
-		$email = $user[1];
-		$display_name = $user[2];
-		//metadata
-		$f_name = $user[3];
-		$l_name = $user[4];
+        $user_name = $user[0];
+        $email = $user[1];
+        $display_name = $user[2];
+        //metadata
+        $f_name = $user[3];
+        $l_name = $user[4];
 
-		$columns = count($user);
+        $columns = count($user);
 
-		//print_r($headers);
+        //print_r($headers);
 
-		$user_pass = wp_generate_password( 12, false);
+        $user_pass = wp_generate_password( 12, false);
 
-		/* Create account, update user meta */
-		$sanitized_user_login = sanitize_user($user_name);
+        /* Create account, update user meta */
+        $sanitized_user_login = sanitize_user($user_name);
 
 
 
-		if(!email_exists($email))
-		{
+        if(!email_exists($email))
+        {
 
 
-			/* We create the New user */
-			$user_id = wp_create_user( $sanitized_user_login, $user_pass, $email);
+            /* We create the New user */
+            $user_id = wp_create_user( $sanitized_user_login, $user_pass, $email);
 
-			if ( ! $user_id )
-			{
+            if ( ! $user_id )
+            {
 
-			}else{
+            }else{
 
-				//set account status
-				$xoouserultra->login->user_account_status($user_id);
+                //set account status
+                $xoouserultra->login->user_account_status($user_id);
 
-				$verify_key = $xoouserultra->login->get_unique_verify_account_id();
+                $verify_key = $xoouserultra->login->get_unique_verify_account_id();
 
-				update_user_meta ($user_id, 'display_name', $display_name);
-				update_user_meta ($user_id, 'first_name', $f_name);
-				update_user_meta ($user_id, 'last_name', $l_name);
-				update_user_meta ($user_id, 'xoouser_ultra_very_key', $verify_key);
+                update_user_meta ($user_id, 'display_name', $display_name);
+                update_user_meta ($user_id, 'first_name', $f_name);
+                update_user_meta ($user_id, 'last_name', $l_name);
+                update_user_meta ($user_id, 'xoouser_ultra_very_key', $verify_key);
 
-				///loop through all the extra meta data
-				$xoouserultra->customizer->set_default_widgets_layout($user_id);
+                ///loop through all the extra meta data
+                $xoouserultra->customizer->set_default_widgets_layout($user_id);
 
-				if($columns > 5)
-				{
+                if($columns > 5)
+                {
 
-					for($i=5; $i<$columns; $i++):
-									if(in_array($headers[$i], $this->wp_users_fields))
-										wp_update_user( array( 'ID' => $user_id, $headers[$i] => $user[$i] ) );
-									else
-										update_user_meta($user_id, $headers[$i], $user[$i]);
-					endfor;
+                    for($i=5; $i<$columns; $i++):
+                                    if(in_array($headers[$i], $this->wp_users_fields))
+                                        wp_update_user( array( 'ID' => $user_id, $headers[$i] => $user[$i] ) );
+                                    else
+                                        update_user_meta($user_id, $headers[$i], $user[$i]);
+                    endfor;
 
-							$this->messages_process .=  "<tr><td>" . ($count ) . "</td>";
+                            $this->messages_process .=  "<tr><td>" . ($count ) . "</td>";
 
-							foreach ($user as $element)
-								$this->messages_process .= "<td>$element</td>";
+                            foreach ($user as $element)
+                                $this->messages_process .= "<td>$element</td>";
 
-							$this->messages_process .= "</tr>\n";
+                            $this->messages_process .= "</tr>\n";
 
-							flush();
-				}
+                            flush();
+                }
 
 
 
 
 
 
-				if($send_welcome_email)
-				{
-					//status
+                if($send_welcome_email)
+                {
+                    //status
 
-					if($account_status=="active")
-					{
+                    if($account_status=="active")
+                    {
 
-						update_user_meta ($user_id, 'usersultra_account_status','active');
+                        update_user_meta ($user_id, 'usersultra_account_status','active');
 
-						//automatic activation
-						$xoouserultra->messaging->welcome_email($email, $sanitized_user_login, $user_pass);
+                        //automatic activation
+                        $xoouserultra->messaging->welcome_email($email, $sanitized_user_login, $user_pass);
 
-					}
+                    }
 
-					if($account_status=="pending")
-					{
+                    if($account_status=="pending")
+                    {
 
-						update_user_meta ($user_id, 'usersultra_account_status','pending');
+                        update_user_meta ($user_id, 'usersultra_account_status','pending');
 
-						 //email activation link
+                         //email activation link
 
-						  $web_url =$xoouserultra->login->get_my_account_direct_link();
-						  $pos = strpos("page_id", $web_url);
-						  $unique_key = get_user_meta($user_id, 'xoouser_ultra_very_key', true);
+                          $web_url =$xoouserultra->login->get_my_account_direct_link();
+                          $pos = strpos("page_id", $web_url);
+                          $unique_key = get_user_meta($user_id, 'xoouser_ultra_very_key', true);
 
-						  if ($pos === false) // this is a tweak that applies when not Friendly URL is set.
-						  {
-								//
-								$activation_link = $web_url."&act_link=".$unique_key;
+                          if ($pos === false) // this is a tweak that applies when not Friendly URL is set.
+                          {
+                                //
+                                $activation_link = $web_url."&act_link=".$unique_key;
 
-						  } else {
+                          } else {
 
-							   // found then we're using seo links
-							   $activation_link = $web_url."?act_link=".$unique_key;
+                               // found then we're using seo links
+                               $activation_link = $web_url."?act_link=".$unique_key;
 
-						  }
+                          }
 
-						  //send link to user
-						  $xoouserultra->messaging->welcome_email_with_activation($email, $sanitized_user_login, $user_pass, $activation_link);
+                          //send link to user
+                          $xoouserultra->messaging->welcome_email_with_activation($email, $sanitized_user_login, $user_pass, $activation_link);
 
-					}
+                    }
 
-				}
+                }
 
-			}
+            }
 
-		}else{
-			  //email exists
+        }else{
+              //email exists
 
-		} //end if
+        } //end if
 
-		//echo $this->csvImportResult;
+        //echo $this->csvImportResult;
 
-	}
+    }
 
 
 
-	public function get_user_meta ($meta)
-	{
-		$user_id = get_current_user_id();
-		return get_user_meta( $user_id, $meta, true);
+    public function get_user_meta ($meta)
+    {
+        $user_id = get_current_user_id();
+        return get_user_meta( $user_id, $meta, true);
 
-	}
+    }
 
-	public function get_user_meta_custom ($user_id, $meta)
-	{
-		return get_user_meta( $user_id, $meta, true);
+    public function get_user_meta_custom ($user_id, $meta)
+    {
+        return get_user_meta( $user_id, $meta, true);
 
-	}
+    }
 
-	public function uultra_apply_default_layout_common_users ()
-	{
-		global $wpdb,  $xoouserultra;
+    public function uultra_apply_default_layout_common_users ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_account_status',
-			'meta_value' => 'active',
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_account_status',
+            'meta_value' => 'active',
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
-		$users= $user_query->get_results();
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
+        $users= $user_query->get_results();
 
 
-		$count = 0;
+        $count = 0;
 
-		if (!empty($users))
-		{
+        if (!empty($users))
+        {
 
-			foreach($users as $user)
-			{
+            foreach($users as $user)
+            {
 
-				$user_id = $user->ID;
-				$package_id =get_user_meta($user_id, 'usersultra_user_package_id', true);
+                $user_id = $user->ID;
+                $package_id =get_user_meta($user_id, 'usersultra_user_package_id', true);
 
-				if($package_id=='')
-				{
-					$count++;
-					//udpate widgets
-				    delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
-				    $xoouserultra->customizer->set_default_widgets_layout($user_id);
+                if($package_id=='')
+                {
+                    $count++;
+                    //udpate widgets
+                    delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
+                    $xoouserultra->customizer->set_default_widgets_layout($user_id);
 
-				}
+                }
 
-			}
+            }
 
 
-		}
+        }
 
-		echo "<div class='user-ultra-success'>".__(" DONE! The updating process has been finished. ".$count." users updated ", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success'>".__(" DONE! The updating process has been finished. ".$count." users updated ", 'xoousers')."</div>";
 
-		die();
-	}
+        die();
+    }
 
-	public function uultra_apply_membership_l_users ()
-	{
-		global $wpdb,  $xoouserultra;
+    public function uultra_apply_membership_l_users ()
+    {
+        global $wpdb,  $xoouserultra;
 
 
-		$package_id = $_POST['package_id'];
+        $package_id = $_POST['package_id'];
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_user_package_id',
-			'meta_value' => $package_id,
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_user_package_id',
+            'meta_value' => $package_id,
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
-		$users= $user_query->get_results();
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
+        $users= $user_query->get_results();
 
 
 
 
-		$count = 0;
+        $count = 0;
 
-		if (!empty($users) && $package_id!='')
-		{
+        if (!empty($users) && $package_id!='')
+        {
 
-			foreach($users as $user)
-			{
+            foreach($users as $user)
+            {
 
-				$user_id = $user->ID;
-				$package_id =get_user_meta($user_id, 'usersultra_user_package_id', true);
+                $user_id = $user->ID;
+                $package_id =get_user_meta($user_id, 'usersultra_user_package_id', true);
 
-				if($package_id!='')
-				{
-					$count++;
-					//udpate widgets
-				    delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
-				   $xoouserultra->customizer->set_default_widgets_layout($user_id, $package_id);
+                if($package_id!='')
+                {
+                    $count++;
+                    //udpate widgets
+                    delete_user_meta($user_id, 'uultra_profile_widget_setup') ;
+                   $xoouserultra->customizer->set_default_widgets_layout($user_id, $package_id);
 
 
-				}
+                }
 
-			}
+            }
 
 
-		}
+        }
 
-		echo "<div class='user-ultra-success'>".__(" DONE! The updating process has been finished. ".$count." users updated ", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success'>".__(" DONE! The updating process has been finished. ".$count." users updated ", 'xoousers')."</div>";
 
-		die();
-	}
+        die();
+    }
 
-	public function sync_users ()
-	{
-		global $wpdb,  $xoouserultra;
+    public function sync_users ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		//$sql = 'SELECT ID,display_name FROM ' . $wpdb->prefix . 'users  ' ;
-		//$users = $wpdb->get_results($sql );
+        //$sql = 'SELECT ID,display_name FROM ' . $wpdb->prefix . 'users  ' ;
+        //$users = $wpdb->get_results($sql );
 
-		$users= new WP_User_Query( array ( 'orderby' => 'ID', 'order' => 'DESC' ) );
-		$users= $users->get_results();
+        $users= new WP_User_Query( array ( 'orderby' => 'ID', 'order' => 'DESC' ) );
+        $users= $users->get_results();
 
 
-		$count = 0;
+        $count = 0;
 
-		if (!empty($users))
-		{
+        if (!empty($users))
+        {
 
-			foreach($users as $user)
-			{
-				$count++;
-				$user_id = $user->ID;
-				update_user_meta ($user_id, 'usersultra_account_status', 'active');
-				update_user_meta ($user_id, 'display_name', $user->display_name);
+            foreach($users as $user)
+            {
+                $count++;
+                $user_id = $user->ID;
+                update_user_meta ($user_id, 'usersultra_account_status', 'active');
+                update_user_meta ($user_id, 'display_name', $user->display_name);
 
-				//udpate widgets
-				///loop through all the extra meta data
-				$xoouserultra->customizer->set_default_widgets_layout($user_id);
+                //udpate widgets
+                ///loop through all the extra meta data
+                $xoouserultra->customizer->set_default_widgets_layout($user_id);
 
 
-			}
+            }
 
 
-		}
+        }
 
-		echo "<div class='user-ultra-success'>".__(" SUCCESS! The sync process has been finished. ".$count." users were updated ", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success'>".__(" SUCCESS! The sync process has been finished. ".$count." users were updated ", 'xoousers')."</div>";
 
-		die();
-	}
+        die();
+    }
 
-	/*Get Stats*/
-	public function get_amount_period ($month, $day, $year)
-	{
-		global $wpdb,  $xoouserultra;
+    /*Get Stats*/
+    public function get_amount_period ($month, $day, $year)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$sql = 'SELECT count(*) as total, user_registered, ID FROM ' . $wpdb->prefix . 'users  WHERE ID <> 0  ' ;
+        $sql = 'SELECT count(*) as total, user_registered, ID FROM ' . $wpdb->prefix . 'users  WHERE ID <> 0  ' ;
 
-		if($day!=""){$sql .= " AND DAY(user_registered) = '$day'  ";	}
-		if($month!=""){	$sql .= " AND MONTH(user_registered) = '$month'  ";	}
-		if($year!=""){$sql .= " AND YEAR(user_registered) = '$year'";}
+        if($day!=""){$sql .= " AND DAY(user_registered) = '$day'  ";    }
+        if($month!=""){ $sql .= " AND MONTH(user_registered) = '$month'  "; }
+        if($year!=""){$sql .= " AND YEAR(user_registered) = '$year'";}
 
-		$users = $wpdb->get_results($sql );
+        $users = $wpdb->get_results($sql );
 
-		//echo $sql;
+        //echo $sql;
 
-		$res_total = $xoouserultra->commmonmethods->fetch_result($users);
+        $res_total = $xoouserultra->commmonmethods->fetch_result($users);
 
-		if($res_total->total=="")
-		{
-			return 0;
+        if($res_total->total=="")
+        {
+            return 0;
 
-		}else{
+        }else{
 
-			return $res_total->total;
+            return $res_total->total;
 
-		}
+        }
 
 
 
-	}
+    }
 
-	/*Get Pending Payment*/
-	public function get_pending_payment_list ($howmany)
-	{
+    /*Get Pending Payment*/
+    public function get_pending_payment_list ($howmany)
+    {
 
-		global $wpdb,  $xoouserultra;
+        global $wpdb,  $xoouserultra;
 
-		$pic_boder_type = "";
-		 $pic_size_type="";
+        $pic_boder_type = "";
+         $pic_size_type="";
 
-		$users = $this->get_pending_payment($howmany);
+        $users = $this->get_pending_payment($howmany);
 
-		$html = '<h3>'.__('Pending Payment','xoousers').'</h3>';
+        $html = '<h3>'.__('Pending Payment','xoousers').'</h3>';
 
-		$html .= '<div id="uultra-user-acti-noti"></div>';
+        $html .= '<div id="uultra-user-acti-noti"></div>';
 
-		if (!empty($users))
-		{
+        if (!empty($users))
+        {
 
-			$html .= '<table class="wp-list-table widefat fixed posts table-generic">
-				<thead>
-					<tr>
-						<th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
-						<th style="width:15%;">'.__('Username', 'xoousers').'</th>
+            $html .= '<table class="wp-list-table widefat fixed posts table-generic">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
+                        <th style="width:15%;">'.__('Username', 'xoousers').'</th>
 
-						<th >'.__('Email', 'xoousers').'</th>
-						<th>'.__('Registered', 'xoousers').'</th>
-						<th>'.__('Action', 'xoousers').'</th>
-					</tr>
-				</thead>
+                        <th >'.__('Email', 'xoousers').'</th>
+                        <th>'.__('Registered', 'xoousers').'</th>
+                        <th>'.__('Action', 'xoousers').'</th>
+                    </tr>
+                </thead>
 
-				<tbody>';
+                <tbody>';
 
 
-				foreach($users as $user)
-				{
+                foreach($users as $user)
+                {
 
-					$user_id = $user->ID;
+                    $user_id = $user->ID;
 
-					$html .=' <tr>
-						<td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
-						<td>'.$user->user_login.'</td>
+                    $html .=' <tr>
+                        <td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
+                        <td>'.$user->user_login.'</td>
 
-						<td>'. $user->user_email.'</td>
-						 <td>'.$user->user_registered.'</td>
-					   <td>
-					   <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Deny','xoousers').'					   </a> <a href="#" class="button-primary uultradmin-user-approve" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
-					   </a></td></tr>';
+                        <td>'. $user->user_email.'</td>
+                         <td>'.$user->user_registered.'</td>
+                       <td>
+                       <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Deny','xoousers').'                    </a> <a href="#" class="button-primary uultradmin-user-approve" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
+                       </a></td></tr>';
 
 
 
-				}
+                }
 
-				$html .= '</tbody>
+                $html .= '</tbody>
         </table>';
 
 
-			}else{
+            }else{
 
-			$html .='<p>'.__('There are no pending payment users.','xoousers').'</p>';
-
-
-			}
+            $html .='<p>'.__('There are no pending payment users.','xoousers').'</p>';
 
 
-		echo $html;
-		die();
+            }
 
 
-	}
-
-	/*Get Pending*/
-	public function get_pending_moderation_list ($howmany)
-	{
-
-		global $wpdb,  $xoouserultra;
-
-		$pic_boder_type = "";
-		$pic_size_type = "";
+        echo $html;
+        die();
 
 
-		$users = $this->get_pending_moderation($howmany);
+    }
 
-		$html = '<h3>'.__('Pending Moderation','xoousers').'</h3>';
+    /*Get Pending*/
+    public function get_pending_moderation_list ($howmany)
+    {
 
-		$html .= '<div id="uultra-user-acti-noti"></div>';
+        global $wpdb,  $xoouserultra;
 
-		if (!empty($users))
-		{
-
-			$html .= '<table class="wp-list-table widefat fixed posts table-generic">
-				<thead>
-					<tr>
-						<th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
-						<th style="width:15%;">'.__('Username', 'xoousers').'</th>
-
-						<th >'.__('Email', 'xoousers').'</th>
-						<th>'.__('Registered', 'xoousers').'</th>
-						<th>'.__('Action', 'xoousers').'</th>
-					</tr>
-				</thead>
-
-				<tbody>';
+        $pic_boder_type = "";
+        $pic_size_type = "";
 
 
-				foreach($users as $user)
-				{
+        $users = $this->get_pending_moderation($howmany);
 
-					$user_id = $user->ID;
+        $html = '<h3>'.__('Pending Moderation','xoousers').'</h3>';
 
-					$html .=' <tr>
-						<td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
-						<td>'.$user->user_login.'</td>
+        $html .= '<div id="uultra-user-acti-noti"></div>';
 
-						<td>'. $user->user_email.'</td>
-						 <td>'.$user->user_registered.'</td>
-					   <td>
-					   <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Deny','xoousers').'					   </a> <a href="#" class="button-primary uultradmin-user-approve" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
-					   </a></td></tr>';
+        if (!empty($users))
+        {
+
+            $html .= '<table class="wp-list-table widefat fixed posts table-generic">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
+                        <th style="width:15%;">'.__('Username', 'xoousers').'</th>
+
+                        <th >'.__('Email', 'xoousers').'</th>
+                        <th>'.__('Registered', 'xoousers').'</th>
+                        <th>'.__('Action', 'xoousers').'</th>
+                    </tr>
+                </thead>
+
+                <tbody>';
+
+
+                foreach($users as $user)
+                {
+
+                    $user_id = $user->ID;
+
+                    $html .=' <tr>
+                        <td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
+                        <td>'.$user->user_login.'</td>
+
+                        <td>'. $user->user_email.'</td>
+                         <td>'.$user->user_registered.'</td>
+                       <td>
+                       <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Deny','xoousers').'                    </a> <a href="#" class="button-primary uultradmin-user-approve" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
+                       </a></td></tr>';
 
 
 
-				}
+                }
 
-				$html .= '</tbody>
+                $html .= '</tbody>
         </table>';
 
 
-			}else{
+            }else{
 
-			$html .='<p>'.__('There are no pending moderation users.','xoousers').'</p>';
-
-
-			}
+            $html .='<p>'.__('There are no pending moderation users.','xoousers').'</p>';
 
 
-		echo $html;
-		die();
+            }
 
 
-	}
-
-	/*Get Pending*/
-	public function get_pending_activation_list ($howmany)
-	{
-
-		global $wpdb,  $xoouserultra;
+        echo $html;
+        die();
 
 
-		$users = $this->get_pending_activation($howmany);
+    }
 
-		$html = '<h3>'.__('Pending Confirmation','xoousers').'</h3>';
+    /*Get Pending*/
+    public function get_pending_activation_list ($howmany)
+    {
 
-		$html .= '<div id="uultra-user-acti-pending-noti"></div>';
-
-		if (!empty($users))
-		{
-
-			$html .= '<table class="wp-list-table widefat fixed posts table-generic">
-				<thead>
-					<tr>
-						<th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
-						<th style="width:15%;">'.__('Username', 'xoousers').'</th>
-
-						<th >'.__('Email', 'xoousers').'</th>
-						<th>'.__('Registered', 'xoousers').'</th>
-						<th>'.__('Action', 'xoousers').'</th>
-					</tr>
-				</thead>
-
-				<tbody>';
+        global $wpdb,  $xoouserultra;
 
 
-				foreach($users as $user)
-				{
+        $users = $this->get_pending_activation($howmany);
 
-					$user_id = $user->ID;
+        $html = '<h3>'.__('Pending Confirmation','xoousers').'</h3>';
 
-					$html .=' <tr>
-						<td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
-						<td>'.$user->user_login.'</td>
+        $html .= '<div id="uultra-user-acti-pending-noti"></div>';
 
-						<td>'. $user->user_email.'</td>
-						 <td>'.$user->user_registered.'</td>
-					   <td>
-					   <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Delete','xoousers').'					   </a> <a href="#" class="button-primary uultradmin-user-resend-link" user-id="'.$user_id.'">'.__('Send Link','xoousers').'
-					   </a><a href="#" class="button-primary uultradmin-user-approve-2" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
-					   </a></td></tr>';
+        if (!empty($users))
+        {
+
+            $html .= '<table class="wp-list-table widefat fixed posts table-generic">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">'.__('Avatar', 'xoousers').'</th>
+                        <th style="width:15%;">'.__('Username', 'xoousers').'</th>
+
+                        <th >'.__('Email', 'xoousers').'</th>
+                        <th>'.__('Registered', 'xoousers').'</th>
+                        <th>'.__('Action', 'xoousers').'</th>
+                    </tr>
+                </thead>
+
+                <tbody>';
 
 
-				}
+                foreach($users as $user)
+                {
 
-				$html .= '</tbody>
+                    $user_id = $user->ID;
+
+                    $html .=' <tr>
+                        <td>'.$this->get_user_pic( $user_id, 30, 'avatar', $pic_boder_type, $pic_size_type).'</td>
+                        <td>'.$user->user_login.'</td>
+
+                        <td>'. $user->user_email.'</td>
+                         <td>'.$user->user_registered.'</td>
+                       <td>
+                       <a href="#" class="button uultradmin-user-deny" user-id="'.$user_id.'">'.__('Delete','xoousers').'                      </a> <a href="#" class="button-primary uultradmin-user-resend-link" user-id="'.$user_id.'">'.__('Send Link','xoousers').'
+                       </a><a href="#" class="button-primary uultradmin-user-approve-2" user-id="'.$user_id.'">'.__('Confirm','xoousers').'
+                       </a></td></tr>';
+
+
+                }
+
+                $html .= '</tbody>
         </table>';
 
 
-			}else{
+            }else{
 
-			$html .='<p>'.__('There are no pending confirmation users.','xoousers').'</p>';
+            $html .='<p>'.__('There are no pending confirmation users.','xoousers').'</p>';
 
 
-			}
+            }
 
 
-		echo $html;
-		die();
+        echo $html;
+        die();
 
 
-	}
+    }
 
-	/*Send Activation Link Account*/
-	public function user_send_activation_link ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Send Activation Link Account*/
+    public function user_send_activation_link ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"];
 
-		update_user_meta ($user_id, 'usersultra_account_status', 'active');
+        update_user_meta ($user_id, 'usersultra_account_status', 'active');
 
-		$user = get_user_by( 'id', $user_id );
+        $user = get_user_by( 'id', $user_id );
 
 
 
-		$u_email=$user->user_email;
-		$user_login= $user->user_login;
+        $u_email=$user->user_email;
+        $user_login= $user->user_login;
 
-		//noti user
-		$xoouserultra->messaging->confirm_activation($u_email, $user_login);
+        //noti user
+        $xoouserultra->messaging->confirm_activation($u_email, $user_login);
 
-		echo "<div class='user-ultra-success uultra-notification'>".__("User has been activated", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success uultra-notification'>".__("User has been activated", 'xoousers')."</div>";
 
-		die();
+        die();
 
 
-	}
+    }
 
-	/*Resend link Account*/
-	public function user_resend_activation_link ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Resend link Account*/
+    public function user_resend_activation_link ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"];
 
-		$user = get_user_by( 'id', $user_id );
-		$u_email=$user->user_email;
-		$user_login= $user->user_login;
+        $user = get_user_by( 'id', $user_id );
+        $u_email=$user->user_email;
+        $user_login= $user->user_login;
 
-		//noti user
-		$xoouserultra->login->user_resend_activation_link($user_id, $u_email, $user_login);
+        //noti user
+        $xoouserultra->login->user_resend_activation_link($user_id, $u_email, $user_login);
 
-		echo "<div class='user-ultra-success uultra-notification'>".__("Activation link sent", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success uultra-notification'>".__("Activation link sent", 'xoousers')."</div>";
 
-		die();
+        die();
 
 
-	}
+    }
 
 
 
-	/*Activate Account*/
-	public function user_approve_pending_account ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Activate Account*/
+    public function user_approve_pending_account ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"];
 
-		update_user_meta ($user_id, 'usersultra_account_status', 'active');
+        update_user_meta ($user_id, 'usersultra_account_status', 'active');
 
-		$user = get_user_by( 'id', $user_id );
-		$u_email=$user->user_email;
-		$user_login= $user->user_login;
+        $user = get_user_by( 'id', $user_id );
+        $u_email=$user->user_email;
+        $user_login= $user->user_login;
 
-		//noti user
-		$xoouserultra->messaging->confirm_activation($u_email, $user_login);
+        //noti user
+        $xoouserultra->messaging->confirm_activation($u_email, $user_login);
 
-		echo "<div class='user-ultra-success uultra-notification'>".__("User has been activated", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success uultra-notification'>".__("User has been activated", 'xoousers')."</div>";
 
-		die();
+        die();
 
 
-	}
+    }
 
-	/*Activate Account*/
-	public function user_delete_account ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Activate Account*/
+    public function user_delete_account ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"];
 
-		update_user_meta ($user_id, 'usersultra_account_status', 'deleted');
+        update_user_meta ($user_id, 'usersultra_account_status', 'deleted');
 
-		$user = get_user_by( 'id', $user_id );
+        $user = get_user_by( 'id', $user_id );
 
-		$u_email=$user->user_email;
-		$user_login= $user->user_login;
+        $u_email=$user->user_email;
+        $user_login= $user->user_login;
 
-		//noti user
-		$xoouserultra->messaging->deny_activation($u_email, $user_login);
+        //noti user
+        $xoouserultra->messaging->deny_activation($u_email, $user_login);
 
-		echo "<div class='user-ultra-success uultra-notification'>".__("User has been deleted", 'xoousers')."</div>";
+        echo "<div class='user-ultra-success uultra-notification'>".__("User has been deleted", 'xoousers')."</div>";
 
-		die();
+        die();
 
 
-	}
+    }
 
-		/*Get Pending Payment*/
-	public function get_pending_payment ($howmany)
-	{
-		global $wpdb,  $xoouserultra;
+        /*Get Pending Payment*/
+    public function get_pending_payment ($howmany)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_account_status',
-			'meta_value' => 'pending_payment',
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_account_status',
+            'meta_value' => 'pending_payment',
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
 
-		// Get the results//
-		$users = $user_query->get_results();
-		return $users;
+        // Get the results//
+        $users = $user_query->get_results();
+        return $users;
 
 
-	}
+    }
 
-	/*Get Pending*/
-	public function get_pending_moderation ($howmany)
-	{
-		global $wpdb,  $xoouserultra;
+    /*Get Pending*/
+    public function get_pending_moderation ($howmany)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_account_status',                    //(string) - Custom field key.
-			'meta_value' => 'pending_admin',                  //(string|array) - Custom field value.
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_account_status',                    //(string) - Custom field key.
+            'meta_value' => 'pending_admin',                  //(string|array) - Custom field value.
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
 
-		// Get the results//
-		$users = $user_query->get_results();
-		return $users;
+        // Get the results//
+        $users = $user_query->get_results();
+        return $users;
 
 
-	}
+    }
 
-	/*Get Pending Activation*/
-	public function get_pending_activation ($howmany)
-	{
-		global $wpdb,  $xoouserultra;
+    /*Get Pending Activation*/
+    public function get_pending_activation ($howmany)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_account_status',
-			'meta_value' => 'pending',
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_account_status',
+            'meta_value' => 'pending',
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		$user_query = new WP_User_Query( $args );
-     	$users = $user_query->get_results();
-		return $users;
+        $user_query = new WP_User_Query( $args );
+        $users = $user_query->get_results();
+        return $users;
 
 
-	}
+    }
 
-	/*Get Pending Activation Count*/
-	public function get_pending_activation_count ()
-	{
-		global $wpdb,  $xoouserultra;
+    /*Get Pending Activation Count*/
+    public function get_pending_activation_count ()
+    {
+        global $wpdb,  $xoouserultra;
 
-		$total = 0;
+        $total = 0;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'usersultra_account_status',
-			'meta_value' => 'pending_admin',
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'usersultra_account_status',
+            'meta_value' => 'pending_admin',
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
-		$user_query = new WP_User_Query( $args );
-     	$total = $user_query->get_total() ;
-		return $total;
+            );
+        $user_query = new WP_User_Query( $args );
+        $total = $user_query->get_total() ;
+        return $total;
 
 
-	}
+    }
 
 
-	/* This is the */
-	public function signup_status( $method )
-	{
-		$args = array(
+    /* This is the */
+    public function signup_status( $method )
+    {
+        $args = array(
 
-			'meta_key' => 'xoouser_ultra_social_signup',                    //(string) - Custom field key.
-			'meta_value' => $method,                  //(string|array) - Custom field value.
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'xoouser_ultra_social_signup',                    //(string) - Custom field key.
+            'meta_value' => $method,                  //(string|array) - Custom field value.
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
 
-		$total = $user_query->get_total();
-		return $total;
-		// Output results
+        $total = $user_query->get_total();
+        return $total;
+        // Output results
 
 
-	}
+    }
 
-	public function confirm_reset_password_user()
-	{
-		global $wpdb,  $xoouserultra, $wp_rewrite;
+    public function confirm_reset_password_user()
+    {
+        global $wpdb,  $xoouserultra, $wp_rewrite;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/general-template.php');
-		require_once(ABSPATH . 'wp-includes/link-template.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/general-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$wp_rewrite = new WP_Rewrite();
+        $wp_rewrite = new WP_Rewrite();
 
-		$user_id = get_current_user_id();
+        $user_id = get_current_user_id();
 
-		//check redir
-		//$account_page_id = get_option('xoousersultra_my_account_page');
-		$account_page_id = $xoouserultra->get_option('login_page_id');
+        //check redir
+        //$account_page_id = get_option('xoousersultra_my_account_page');
+        $account_page_id = $xoouserultra->get_option('login_page_id');
 
 
-		$my_account_url = get_permalink($account_page_id);
+        $my_account_url = get_permalink($account_page_id);
 
 
-		$PASSWORD_LENGHT =7;
+        $PASSWORD_LENGHT =7;
 
-		$password1 = $_POST['p1'];
-		$password2 = $_POST['p2'];
+        $password1 = $_POST['p1'];
+        $password2 = $_POST['p2'];
 
-		$html = '';
-		$validation = '';
+        $html = '';
+        $validation = '';
 
-		//check password
+        //check password
 
-		if($password1!=$password2)
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password must be identical ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if($password1!=$password2)
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password must be identical ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
-		if(strlen($password1)<$PASSWORD_LENGHT)
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password should contain at least 7 alphanumeric characters ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if(strlen($password1)<$PASSWORD_LENGHT)
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password should contain at least 7 alphanumeric characters ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
 
-		if($validation=="" )
-		{
+        if($validation=="" )
+        {
 
-			if($user_id >0 )
-			{
-					//echo "user id: ". $user_id;
-					$user = get_userdata($user_id);
-					//print_r($user);
-					$user_id = $user->ID;
-					$user_email = $user->user_email;
-					$user_login = $user->user_login;
+            if($user_id >0 )
+            {
+                    //echo "user id: ". $user_id;
+                    $user = get_userdata($user_id);
+                    //print_r($user);
+                    $user_id = $user->ID;
+                    $user_email = $user->user_email;
+                    $user_login = $user->user_login;
 
-					wp_set_password( $password1, $user_id ) ;
+                    wp_set_password( $password1, $user_id ) ;
 
-					//notify user
-					$xoouserultra->messaging->send_new_password_to_user($user_email, $user_login, $password1);
+                    //notify user
+                    $xoouserultra->messaging->send_new_password_to_user($user_email, $user_login, $password1);
 
-					$html = "<div class='uupublic-ultra-success'>".__(" Success!! The new password has been sent to ".$user_email."  ", 'xoousers')."</div>";
+                    $html = "<div class='uupublic-ultra-success'>".__(" Success!! The new password has been sent to ".$user_email."  ", 'xoousers')."</div>";
 
-					// Here is the magic:
-					wp_cache_delete($user_id, 'users');
-					wp_cache_delete($username, 'userlogins'); // This might be an issue for how you are doing it. Presumably you'd need to run this for the ORIGINAL user login name, not the new one.
-					wp_logout();
-					wp_signon(array('user_login' => $user_login, 'user_password' => $password1));
+                    // Here is the magic:
+                    wp_cache_delete($user_id, 'users');
+                    wp_cache_delete($username, 'userlogins'); // This might be an issue for how you are doing it. Presumably you'd need to run this for the ORIGINAL user login name, not the new one.
+                    wp_logout();
+                    wp_signon(array('user_login' => $user_login, 'user_password' => $password1));
 
-				}else{
+                }else{
 
-				}
+                }
 
-			}
-		 echo $html;
-		 die();
+            }
+         echo $html;
+         die();
 
 
-	}
+    }
 
-	function validate_valid_email ($myString)
-	{
-		$ret = true;
-		if (!filter_var($myString, FILTER_VALIDATE_EMAIL)) {
-    		// invalid e-mail address
-			$ret = false;
-		}
+    function validate_valid_email ($myString)
+    {
+        $ret = true;
+        if (!filter_var($myString, FILTER_VALIDATE_EMAIL)) {
+            // invalid e-mail address
+            $ret = false;
+        }
 
-		return $ret;
+        return $ret;
 
 
-	}
+    }
 
-	public function confirm_update_email_user()
-	{
-		global $wpdb,  $xoouserultra, $wp_rewrite;
+    public function confirm_update_email_user()
+    {
+        global $wpdb,  $xoouserultra, $wp_rewrite;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/general-template.php');
-		require_once(ABSPATH . 'wp-includes/link-template.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/general-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$wp_rewrite = new WP_Rewrite();
+        $wp_rewrite = new WP_Rewrite();
 
-		$user_id = get_current_user_id();
+        $user_id = get_current_user_id();
 
 
-		$email = $_POST['email'];
-		$html = '';
-		$validation = '';
+        $email = $_POST['email'];
+        $html = '';
+        $validation = '';
 
 
-		//validate if it's a valid email address
-		$ret_validate_email = $this->validate_valid_email($email);
+        //validate if it's a valid email address
+        $ret_validate_email = $this->validate_valid_email($email);
 
-		if($email=="")
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Please type your new email ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if($email=="")
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Please type your new email ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
-		if(!$ret_validate_email)
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Please type a valid email address ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if(!$ret_validate_email)
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Please type a valid email address ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
-		$current_user = get_userdata($user_id);
-		//print_r($user);
-		$current_user_email = $current_user->user_email;
+        $current_user = get_userdata($user_id);
+        //print_r($user);
+        $current_user_email = $current_user->user_email;
 
-		//check if already used
+        //check if already used
 
-		$check_user = get_user_by('email',$email);
-		$user_check_id = $check_user->ID;
-		$user_check_email = $check_user->ID;
+        $check_user = get_user_by('email',$email);
+        $user_check_id = $check_user->ID;
+        $user_check_email = $check_user->ID;
 
-		if($validation=="" )
-		{
+        if($validation=="" )
+        {
 
-			if($user_check_id==$user_id) //this is the same user then change email
-			{
-				$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! You haven't changed your email. ", 'xoousers')."</div>";
-				$html = $validation;
+            if($user_check_id==$user_id) //this is the same user then change email
+            {
+                $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! You haven't changed your email. ", 'xoousers')."</div>";
+                $html = $validation;
 
 
-			}else{ //email already used by another user
+            }else{ //email already used by another user
 
-				if($user_check_email!="")
-				{
+                if($user_check_email!="")
+                {
 
-					$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! The email is in use already ", 'xoousers')."</div>";
-					$html = $validation;
+                    $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! The email is in use already ", 'xoousers')."</div>";
+                    $html = $validation;
 
-				}else{
+                }else{
 
-					//email available
+                    //email available
 
-				}
+                }
 
 
-			}
+            }
 
-		}
+        }
 
 
 
-		if($validation=="" )
-		{
+        if($validation=="" )
+        {
 
-			if($user_id >0 )
-			{
-					$user = get_userdata($user_id);
-					$user_id = $user->ID;
-					$user_email = $user->user_email;
-					$user_login = $user->user_login;
+            if($user_id >0 )
+            {
+                    $user = get_userdata($user_id);
+                    $user_id = $user->ID;
+                    $user_email = $user->user_email;
+                    $user_login = $user->user_login;
 
-					$user_id = wp_update_user( array( 'ID' => $user_id, 'user_email' => $email ) );
+                    $user_id = wp_update_user( array( 'ID' => $user_id, 'user_email' => $email ) );
 
-					//update mailchimp?
-					$mail_chimp = get_user_meta( $user_id, 'xoouser_mailchimp', true);
+                    //update mailchimp?
+                    $mail_chimp = get_user_meta( $user_id, 'xoouser_mailchimp', true);
 
-					if($mail_chimp==1) //the user has a mailchip accoun, then we have to sync
-					{
-						if($xoouserultra->get_option('mailchimp_api'))
-						{
-							$list_id =  $xoouserultra->get_option('mailchimp_list_id');
-							$xoouserultra->subscribe->mailchimp_subscribe($user_id, $list_id);
-						}
-					}
+                    if($mail_chimp==1) //the user has a mailchip accoun, then we have to sync
+                    {
+                        if($xoouserultra->get_option('mailchimp_api'))
+                        {
+                            $list_id =  $xoouserultra->get_option('mailchimp_list_id');
+                            $xoouserultra->subscribe->mailchimp_subscribe($user_id, $list_id);
+                        }
+                    }
 
 
 
 
-					$html = "<div class='uupublic-ultra-success'>".__(" Success!! Your email account has been changed to : ".$email."  ", 'xoousers')."</div>";
+                    $html = "<div class='uupublic-ultra-success'>".__(" Success!! Your email account has been changed to : ".$email."  ", 'xoousers')."</div>";
 
 
-				}else{
+                }else{
 
 
-				}
+                }
 
-			}
-		 echo $html;
-		 die();
+            }
+         echo $html;
+         die();
 
 
-	}
+    }
 
-	public function check_force_upgrade()
-	{
-		global $wpdb,  $xoouserultra, $wp_rewrite;
+    public function check_force_upgrade()
+    {
+        global $wpdb,  $xoouserultra, $wp_rewrite;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/general-template.php');
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/general-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
 
-		$user_id = get_current_user_id();
-		$force_upgrade = $xoouserultra->get_option('force_account_upgrading');
+        $user_id = get_current_user_id();
+        $force_upgrade = $xoouserultra->get_option('force_account_upgrading');
 
-		if($force_upgrade=='yes')
-		{
-			//check if user already upgraded
+        if($force_upgrade=='yes')
+        {
+            //check if user already upgraded
 
 
 
-		}else{
+        }else{
 
-			return false;
+            return false;
 
-		}
+        }
 
 
-	}
+    }
 
-	public function confirm_reset_password()
-	{
-		global $wpdb,  $xoouserultra, $wp_rewrite;
+    public function confirm_reset_password()
+    {
+        global $wpdb,  $xoouserultra, $wp_rewrite;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/general-template.php');
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/general-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		$wp_rewrite = new WP_Rewrite();
+        $wp_rewrite = new WP_Rewrite();
 
 
-		//check redir
-		//$account_page_id = get_option('xoousersultra_my_account_page');
-		$account_page_id = $xoouserultra->get_option('login_page_id');
-		$my_account_url = get_permalink($account_page_id);
+        //check redir
+        //$account_page_id = get_option('xoousersultra_my_account_page');
+        $account_page_id = $xoouserultra->get_option('login_page_id');
+        $my_account_url = get_permalink($account_page_id);
 
 
 
-		$PASSWORD_LENGHT =7;
+        $PASSWORD_LENGHT =7;
 
-		$password1 = $_POST['p1'];
-		$password2 = $_POST['p2'];
-		$key = $_POST['key'];
+        $password1 = $_POST['p1'];
+        $password2 = $_POST['p2'];
+        $key = $_POST['key'];
 
-		$html = '';
-		$validation = '';
+        $html = '';
+        $validation = '';
 
-		//check password
+        //check password
 
-		if($password1!=$password2)
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password must be identical ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if($password1!=$password2)
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password must be identical ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
-		if(strlen($password1)<$PASSWORD_LENGHT)
-		{
-			$validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password should contain at least 7 alphanumeric characters ", 'xoousers')."</div>";
-			$html = $validation;
-		}
+        if(strlen($password1)<$PASSWORD_LENGHT)
+        {
+            $validation .= "<div class='uupublic-ultra-error'>".__(" ERROR! Password should contain at least 7 alphanumeric characters ", 'xoousers')."</div>";
+            $html = $validation;
+        }
 
 
-		$user = $this->get_one_user_with_key($key);
+        $user = $this->get_one_user_with_key($key);
 
 
-		if($validation=="" )
-		{
+        if($validation=="" )
+        {
 
-			if($user->ID >0 )
-			{
-				//print_r($user);
-				$user_id = $user->ID;
-				$user_email = $user->user_email;
-				$user_login = $user->user_login;
+            if($user->ID >0 )
+            {
+                //print_r($user);
+                $user_id = $user->ID;
+                $user_email = $user->user_email;
+                $user_login = $user->user_login;
 
-				wp_set_password( $password1, $user_id ) ;
+                wp_set_password( $password1, $user_id ) ;
 
-				//notify user
+                //notify user
 
-				$xoouserultra->messaging->send_new_password_to_user($user_email, $user_login, $password1);
+                $xoouserultra->messaging->send_new_password_to_user($user_email, $user_login, $password1);
 
-				$html = "<div class='uupublic-ultra-success'>".__(" Success!! The new password has been sent to ".$user_email."  ", 'xoousers')."</div>";
+                $html = "<div class='uupublic-ultra-success'>".__(" Success!! The new password has been sent to ".$user_email."  ", 'xoousers')."</div>";
 
-				$html .= "<div class=''>".__('<a href="'.$my_account_url.'" title="'.__("Login","xoousers").'">CLICK HERE TO LOGIN</a>', 'xoousers')."</div>";
+                $html .= "<div class=''>".__('<a href="'.$my_account_url.'" title="'.__("Login","xoousers").'">CLICK HERE TO LOGIN</a>', 'xoousers')."</div>";
 
 
-			}else{
+            }else{
 
-				// we couldn't find the user
-				$html = "<div class='uupublic-ultra-error'>".__(" ERROR! Invalid reset link ", 'xoousers')."</div>";
+                // we couldn't find the user
+                $html = "<div class='uupublic-ultra-error'>".__(" ERROR! Invalid reset link ", 'xoousers')."</div>";
 
-			}
+            }
 
-		}
-		 echo $html;
-		 die();
+        }
+         echo $html;
+         die();
 
 
-	}
+    }
 
-	public function send_reset_link()
-	{
-		session_start();
-		global $wpdb,  $xoouserultra;
+    public function send_reset_link()
+    {
+        session_start();
+        global $wpdb,  $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$html = "";
+        $html = "";
 
-		// Adding support for login by email
-		if(is_email($_POST['user_login']))
-		{
-			  $user = get_user_by( 'email', $_POST['user_login'] );
+        // Adding support for login by email
+        if(is_email($_POST['user_login']))
+        {
+              $user = get_user_by( 'email', $_POST['user_login'] );
 
 
-			  // check if active
-			  $user_id =$user->ID;
+              // check if active
+              $user_id =$user->ID;
 
-			  if($user_id=="")
-			  {
-				  //user not found
-				  $html = __('Email not found','xoousers');
+              if($user_id=="")
+              {
+                  //user not found
+                  $html = __('Email not found','xoousers');
 
-			  }else{
+              }else{
 
-				  //user found
-				   if(!$this->is_active($user_id) && !is_super_admin($user_id))
-				   {
+                  //user found
+                   if(!$this->is_active($user_id) && !is_super_admin($user_id))
+                   {
 
-					   //user is not active
-					   $html = __('Your account is not active yet.','xoousers');
-					   $noactive = true;
+                       //user is not active
+                       $html = __('Your account is not active yet.','xoousers');
+                       $noactive = true;
 
-				   }else{
+                   }else{
 
 
 
-				   }
+                   }
 
-			  }
+              }
 
-		  }else{
+          }else{
 
-			  // User is trying to login using username
-			  $user = get_user_by('login',$_POST['user_login']);
+              // User is trying to login using username
+              $user = get_user_by('login',$_POST['user_login']);
 
-			  // check if active and it's not an admin
-			  $user_id =$user->ID;
+              // check if active and it's not an admin
+              $user_id =$user->ID;
 
-			  if($user_id=="")
-			  {
-				  //user not found
-				  $html = __('User not found','xoousers');
+              if($user_id=="")
+              {
+                  //user not found
+                  $html = __('User not found','xoousers');
 
-			  }else{
+              }else{
 
-				  //user found
+                  //user found
 
-				   if(!$this->is_active($user_id) && !is_super_admin($user_id))
-				   {
+                   if(!$this->is_active($user_id) && !is_super_admin($user_id))
+                   {
 
-					   //user is not active
-					   $html = __('Your account is not active yet.','xoousers');
-					   $noactive = true;
+                       //user is not active
+                       $html = __('Your account is not active yet.','xoousers');
+                       $noactive = true;
 
-				   }else{
+                   }else{
 
 
 
-				   }
+                   }
 
-			  }
+              }
 
 
-		  }
+          }
 
-		  if($html=="" && isset($user))
-		  {
-			  //generate reset link
-			  $unique_key =  $xoouserultra->login->get_unique_verify_account_id();
+          if($html=="" && isset($user))
+          {
+              //generate reset link
+              $unique_key =  $xoouserultra->login->get_unique_verify_account_id();
 
-			  //web url
-			  $web_url = $xoouserultra->login->get_login_page_direct_link();
+              //web url
+              $web_url = $xoouserultra->login->get_login_page_direct_link();
 
-			  $pos = strpos("page_id", $web_url);
+              $pos = strpos("page_id", $web_url);
 
 
-			  if ($pos === false) //not page_id found
-			  {
-				    //
-					$reset_link = $web_url."?resskey=".$unique_key;
+              if ($pos === false) //not page_id found
+              {
+                    //
+                    $reset_link = $web_url."?resskey=".$unique_key;
 
-			  } else {
+              } else {
 
-					 // found then we're using seo links
-					 $reset_link = $web_url."&resskey=".$unique_key;
+                     // found then we're using seo links
+                     $reset_link = $web_url."&resskey=".$unique_key;
 
-			  }
+              }
 
-			  //update meta
-			  update_user_meta ($user_id, 'xoouser_ultra_very_key', $unique_key);
+              //update meta
+              update_user_meta ($user_id, 'xoouser_ultra_very_key', $unique_key);
 
-			  //notify users
-			  $xoouserultra->messaging->send_reset_link($user, $reset_link);
+              //notify users
+              $xoouserultra->messaging->send_reset_link($user, $reset_link);
 
-			  //send reset link to user
-			   $html = "<div class='uupublic-ultra-success'>".__(" A reset link has been sent to your email ", 'xoousers')."</div>";
+              //send reset link to user
+               $html = "<div class='uupublic-ultra-success'>".__(" A reset link has been sent to your email ", 'xoousers')."</div>";
 
 
 
 
-		  }
+          }
 
 
-		 echo $html;
-		 die();
-	}
+         echo $html;
+         die();
+    }
 
-	function get_me_wphtml_editor($meta, $content)
-	{
-		// Turn on the output buffer
-		ob_start();
+    function get_me_wphtml_editor($meta, $content)
+    {
+        // Turn on the output buffer
+        ob_start();
 
-		$editor_id = $meta;
-		$editor_settings = array('media_buttons' => false , 'textarea_rows' => 15 , 'teeny' =>true);
+        $editor_id = $meta;
+        $editor_settings = array('media_buttons' => false , 'textarea_rows' => 15 , 'teeny' =>true);
 
 
-		wp_editor( $content, $editor_id , $editor_settings);
+        wp_editor( $content, $editor_id , $editor_settings);
 
-		// Store the contents of the buffer in a variable
-		$editor_contents = ob_get_clean();
+        // Store the contents of the buffer in a variable
+        $editor_contents = ob_get_clean();
 
-		// Return the content you want to the calling function
-		return $editor_contents;
+        // Return the content you want to the calling function
+        return $editor_contents;
 
 
 
-	}
+    }
 
-	function edit_user_custorm_form ( $user_id)
-	{
+    function edit_user_custorm_form ( $user_id)
+    {
 
-		global  $xoouserultra, $uultra_form;
+        global  $xoouserultra, $uultra_form;
 
-		$html = '';
+        $html = '';
 
 
-		$forms = $uultra_form->get_all();
+        $forms = $uultra_form->get_all();
 
-		//get user form
-		$custom_form = $this->get_user_meta_custom( $user_id, 'uultra_custom_registration_form');
+        //get user form
+        $custom_form = $this->get_user_meta_custom( $user_id, 'uultra_custom_registration_form');
 
-		$html .='<select name="p_custom_registration_form" id="p_custom_registration_form">';
+        $html .='<select name="p_custom_registration_form" id="p_custom_registration_form">';
 
-		if($custom_form ==''){$selected = 'selected="selected"';}
+        if($custom_form ==''){$selected = 'selected="selected"';}
 
-		$html .='<option value="" '.$selected.'>
-					'.__('Default Registration Form','xoousers').'
-				</option>';
+        $html .='<option value="" '.$selected.'>
+                    '.__('Default Registration Form','xoousers').'
+                </option>';
 
 
-			 if(!empty($forms))
-			 {
+             if(!empty($forms))
+             {
 
-				  foreach ( $forms as $key => $form )
-				  {
-					  $selected ='';
-					  if($custom_form ==$key){$selected = 'selected="selected"';}
+                  foreach ( $forms as $key => $form )
+                  {
+                      $selected ='';
+                      if($custom_form ==$key){$selected = 'selected="selected"';}
 
-					  $html .='<option value="'.$key.'" '.$selected.'>	'. $form['name'].'</option> ';
+                      $html .='<option value="'.$key.'" '.$selected.'>  '. $form['name'].'</option> ';
 
-				  }
+                  }
 
-			 }
+             }
 
-		$html .='</select>';
-		$html .= '<a href="#" class="button-primary uultra-user-edit-customform-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
-		$html .= '<span id="uultra-customform-conf"></span>';
+        $html .='</select>';
+        $html .= '<a href="#" class="button-primary uultra-user-edit-customform-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
+        $html .= '<span id="uultra-customform-conf"></span>';
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	public function get_user_groups_editing( $user_id)
-	{
-		global  $xoouserultra,  $uultra_group;
-		$html = null;
+    public function get_user_groups_editing( $user_id)
+    {
+        global  $xoouserultra,  $uultra_group;
+        $html = null;
 
-		$groups = $uultra_group->get_all();
+        $groups = $uultra_group->get_all();
 
-		if ( !empty( $groups ) )
-		{
-			$users_groups = array();
-			$users_groups =  $uultra_group->get_all_user_groups($user_id);
-			foreach ( $groups as $group )
-			{
-				$checked = '';
-				if (in_array($group->group_id, $users_groups))
-				{
-					$checked = 'checked="checked"';
-				}
+        if ( !empty( $groups ) )
+        {
+            $users_groups = array();
+            $users_groups =  $uultra_group->get_all_user_groups($user_id);
+            foreach ( $groups as $group )
+            {
+                $checked = '';
+                if (in_array($group->group_id, $users_groups))
+                {
+                    $checked = 'checked="checked"';
+                }
 
-				$html .= '<input type="checkbox" name="uultra_user_group[]" id="uultra_user_group_'.$group->group_id.'" value="'.$group->group_id.'" '.$check_va.' '.$checked.' /> <label for="uultra_user_group_'.$group->group_id.'"><span></span>'.$group->group_name.'</label> ';
+                $html .= '<input type="checkbox" name="uultra_user_group[]" id="uultra_user_group_'.$group->group_id.'" value="'.$group->group_id.'" '.$check_va.' '.$checked.' /> <label for="uultra_user_group_'.$group->group_id.'"><span></span>'.$group->group_name.'</label> ';
 
 
-			}
+            }
 
-		}
+        }
 
-		return $html;
+        return $html;
 
 
-	}
+    }
 
-		/* This is the */
-	public function edit_profile_form_admin( $user_id )
-	{
-		global  $xoouserultra, $uultra_group;
-		$html = null;
+        /* This is the */
+    public function edit_profile_form_admin( $user_id )
+    {
+        global  $xoouserultra, $uultra_group;
+        $html = null;
 
 
-		// Optimized condition and added strict conditions
-		if ($user_id>0)
-		{
+        // Optimized condition and added strict conditions
+        if ($user_id>0)
+        {
 
-			$user = get_userdata($user_id);
+            $user = get_userdata($user_id);
 
 
-			$u_status =  $this->get_user_meta_custom($user_id, 'usersultra_account_status');
-			$u_ip =  $this->get_user_meta_custom($user_id, 'uultra_user_registered_ip');
-			$u_role =  $this->get_all_user_roles($user_id);
-			$u_last_login =   $this->get_user_meta_custom($user_id, 'uultra_last_login');
-			$badges = $this->display_optional_fields( $user_id,'only', 'badges');
+            $u_status =  $this->get_user_meta_custom($user_id, 'usersultra_account_status');
+            $u_ip =  $this->get_user_meta_custom($user_id, 'uultra_user_registered_ip');
+            $u_role =  $this->get_all_user_roles($user_id);
+            $u_last_login =   $this->get_user_meta_custom($user_id, 'uultra_last_login');
+            $badges = $this->display_optional_fields( $user_id,'only', 'badges');
 
-			//expiration date
+            //expiration date
 
-			$expiration_date = $this->get_user_meta_custom( $user_id, 'usersultra_membership_expiration');
+            $expiration_date = $this->get_user_meta_custom( $user_id, 'usersultra_membership_expiration');
 
 
 
-		$html .= '<div class="xoouserultra-clear"></div>';
-		$html .= '<form action="" method="post" id="xoouserultra-profile-edition-form-admin" name="xoouserultra-profile-edition-form-admin">';
-		$html .= '<input type="hidden" name="user_id" value="'.$user_id.'">';
+        $html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<form action="" method="post" id="xoouserultra-profile-edition-form-admin" name="xoouserultra-profile-edition-form-admin">';
+        $html .= '<input type="hidden" name="user_id" value="'.$user_id.'">';
 
 
-		$html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition"  widget-id="99999">'.__('Account Information', 'xoousers').'';
+        $html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition"  widget-id="99999">'.__('Account Information', 'xoousers').'';
 
-		$html .= '<span widget-id="99999" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-99999" class="uultra-user-editions-icon-close-open"></span>';
+        $html .= '<span widget-id="99999" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-99999" class="uultra-user-editions-icon-close-open"></span>';
 
-		$html .='</div>';
+        $html .='</div>';
 
 
-		$date_format = $xoouserultra->get_option('uultra_date_format');
+        $date_format = $xoouserultra->get_option('uultra_date_format');
 
 
-		$html .= '<div class="" id="uultra-user-edition-block-account-info-99999">';
+        $html .= '<div class="" id="uultra-user-edition-block-account-info-99999">';
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('User ID:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .= $user_id;
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('User ID:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .= $user_id;
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Registration Date:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .= date($date_format,strtotime($user->user_registered));
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Registration Date:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .= date($date_format,strtotime($user->user_registered));
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Expiration Date:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Expiration Date:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
 
-		//expiration date
+        //expiration date
 
-		$html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="uultra-edit-user-expiration-date" id="uultra-edit-user-expiration-date" value="'.$expiration_date.'"  title="'.$name.'"  '.$disabled.'/>';
+        $html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="uultra-edit-user-expiration-date" id="uultra-edit-user-expiration-date" value="'.$expiration_date.'"  title="'.$name.'"  '.$disabled.'/>';
 
-		$html .= '<a href="#" class="button-primary uultra-user-edit-expiration-confirm" data-user="'.$user_id.'">'.__('Change','xoousers').'</a>';
-		$html .= '<span id="uultra-expiration-date-conf"></span>';
+        $html .= '<a href="#" class="button-primary uultra-user-edit-expiration-confirm" data-user="'.$user_id.'">'.__('Change','xoousers').'</a>';
+        $html .= '<span id="uultra-expiration-date-conf"></span>';
 
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Badges:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .=$badges;
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Badges:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .=$badges;
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Role:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .= $u_role;
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Role:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .= $u_role;
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Assign Membership','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .= $this->edit_user_package_admin_form( $user_id);
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Assign Membership','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .= $this->edit_user_package_admin_form( $user_id);
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Assign Custom Form','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
-		$html .= $this->edit_user_custorm_form( $user_id);
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Assign Custom Form','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
+        $html .= $this->edit_user_custorm_form( $user_id);
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		//status
+        //status
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-		$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-		$html .= '<span>'.__('Status:','xoousers').'</span></label>';
-		$html .= '<div class="xoouserultra-field-value">';
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+        $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+        $html .= '<span>'.__('Status:','xoousers').'</span></label>';
+        $html .= '<div class="xoouserultra-field-value">';
 
-		$u_status =  $this->get_user_meta_custom( $user_id, 'usersultra_account_status');
+        $u_status =  $this->get_user_meta_custom( $user_id, 'usersultra_account_status');
 
-		$u_status_active='';
-		$u_status_pending='';
-		$u_status_pending_admin='';
-		$u_status_pending_payment='';
+        $u_status_active='';
+        $u_status_pending='';
+        $u_status_pending_admin='';
+        $u_status_pending_payment='';
 
-		if($u_status =='active') {$u_status_active='selected="selected"';};
-		if($u_status =='pending') {$u_status_pending='selected="selected"';};
-		if($u_status =='pending_admin') {$u_status_pending_admin='selected="selected"';};
-		if($u_status =='pending_payment') {$u_status_pending_payment='selected="selected"';};
+        if($u_status =='active') {$u_status_active='selected="selected"';};
+        if($u_status =='pending') {$u_status_pending='selected="selected"';};
+        if($u_status =='pending_admin') {$u_status_pending_admin='selected="selected"';};
+        if($u_status =='pending_payment') {$u_status_pending_payment='selected="selected"';};
 
 
-		$html .= '<select name="uultra_user_status" id="uultra_user_status">
+        $html .= '<select name="uultra_user_status" id="uultra_user_status">
                <option value="active" '.$u_status_active.'>'.__('Active','xoousers').'</option>
                <option value="pending" '.$u_status_pending.'>'.__('Pending Confirmation','xoousers').'</option>
                <option value="pending_admin" '.$u_status_pending_admin.'>'.__('Pending Admin','xoousers').'</option>
@@ -2842,888 +2842,888 @@ class XooUserUser {
           </select>';
 
 
-		$html .= '<a href="#" class="button-primary uultra-user-edit-status-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
-		$html .= '<span id="uultra-status-conf"></span>';
+        $html .= '<a href="#" class="button-primary uultra-user-edit-status-confirm" data-user="'.$user_id.'">'.__('Ok','xoousers').'</a>';
+        $html .= '<span id="uultra-status-conf"></span>';
 
 
-		$html .= '</div>';
-		$html .= '</div>';
-		$html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '<div class="xoouserultra-clear"></div>';
 
-		$html .= '</div>';
+        $html .= '</div>';
 
 
-		if(isset($uultra_group))
-		{
+        if(isset($uultra_group))
+        {
 
-			$html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition"  widget-id="990999">'.__('Groups', 'xoousers').'';
+            $html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition"  widget-id="990999">'.__('Groups', 'xoousers').'';
 
-			$html .= '<span widget-id="990999" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-990999" class="uultra-user-editions-icon-close-open"></span>';
+            $html .= '<span widget-id="990999" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-990999" class="uultra-user-editions-icon-close-open"></span>';
 
-			$html .='</div>';
+            $html .='</div>';
 
 
 
-			$html .= '<div class="" id="uultra-user-edition-block-account-info-990999">';
-			$html .= '<p>'.__('The user will be added to the selected groups.','xoousers').'</p>';
-			$html .= $this->get_user_groups_editing($user_id);
-			$html .= '</div>';
+            $html .= '<div class="" id="uultra-user-edition-block-account-info-990999">';
+            $html .= '<p>'.__('The user will be added to the selected groups.','xoousers').'</p>';
+            $html .= $this->get_user_groups_editing($user_id);
+            $html .= '</div>';
 
-			$html .= '</br></br>';
-			$html .= '<div class="xoouserultra-clear"></div>';
+            $html .= '</br></br>';
+            $html .= '<div class="xoouserultra-clear"></div>';
 
 
-		}
+        }
 
 
-		//get user form
-		$custom_form = $this->get_user_meta_custom( $user_id, 'uultra_custom_registration_form');
+        //get user form
+        $custom_form = $this->get_user_meta_custom( $user_id, 'uultra_custom_registration_form');
 
-		if($custom_form!="")
-		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$array = get_option($custom_form);
+        if($custom_form!="")
+        {
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $array = get_option($custom_form);
 
-		}else{
+        }else{
 
-			$array = get_option('usersultra_profile_fields');
+            $array = get_option('usersultra_profile_fields');
 
-		}
+        }
 
-		//echo $custom_form;
+        //echo $custom_form;
 
-		foreach($array as $key=>$field)
-		{
-		    // Optimized condition and added strict conditions
-		    $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
-		    if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
-		    {
-		        unset($array[$key]);
-		    }
-		}
+        foreach($array as $key=>$field)
+        {
+            // Optimized condition and added strict conditions
+            $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
+            if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
+            {
+                unset($array[$key]);
+            }
+        }
 
-		$i_array_end = end($array);
+        $i_array_end = end($array);
 
-		if(isset($i_array_end['position']))
-		{
-		    $array_end = $i_array_end['position'];
-		    if ($array[$array_end]['type'] == 'separator') {
-		        unset($array[$array_end]);
-		    }
-		}
+        if(isset($i_array_end['position']))
+        {
+            $array_end = $i_array_end['position'];
+            if ($array[$array_end]['type'] == 'separator') {
+                unset($array[$array_end]);
+            }
+        }
 
 
 
-		foreach($array as $key => $field)
-		{
+        foreach($array as $key => $field)
+        {
 
-			extract($field);
+            extract($field);
 
-			// WP 3.6 Fix
-			if(!isset($deleted))
-			    $deleted = 0;
+            // WP 3.6 Fix
+            if(!isset($deleted))
+                $deleted = 0;
 
-			if(!isset($private))
-			    $private = 0;
+            if(!isset($private))
+                $private = 0;
 
-			if(!isset($required))
-			    $required = 0;
+            if(!isset($required))
+                $required = 0;
 
-			$required_class = '';
-			if($required == 1 && in_array($field, $xoouserultra->include_for_validation))
-			{
-			    $required_class = ' required';
-			}
+            $required_class = '';
+            if($required == 1 && in_array($field, $xoouserultra->include_for_validation))
+            {
+                $required_class = ' required';
+            }
 
-			/* Fieldset separator */
-			if ( $type == 'separator' && $deleted == 0 && $private == 0 )
-			{
-				if($sep_open)
-				{
-					$html .= '</div>'; //close previous sep box
+            /* Fieldset separator */
+            if ( $type == 'separator' && $deleted == 0 && $private == 0 )
+            {
+                if($sep_open)
+                {
+                    $html .= '</div>'; //close previous sep box
 
-					$sep_open = false;
+                    $sep_open = false;
 
 
-				}
-
-
-				$html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition" widget-id="'.$meta.'">'.$name.'';
-
-				$html .= '<span widget-id="'.$meta.'" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-'.$meta.'" class="uultra-user-editions-icon-close-open"></span>';
-				$html .= '</div>';
-
-				if(!$sep_open)
-				{
-					$html .= '<div class="" id="uultra-user-edition-block-account-info-'.$meta.'">';
-
-					$sep_open = true;
-
-				}
-
-			}else{
-
-				//$sep_open = false;
-
-			}
-
-
-			if ( $type == 'usermeta' )
-			{
-
-				 $show_field_status =  true;
-
-			 if ($show_field_status)
-			 {
-
-
-				$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-
-				/* Show the label */
-				if (isset($array[$key]['name']) && $name)
-				 {
-					$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-
-					if (isset($array[$key]['icon']) && $icon) {
-                            $html .= '<i class="fa fa-' . $icon . '"></i>';
-                    } else {
-                            $html .= '<i class="fa fa-icon-none"></i>';
-                    }
-
-					$html .= '<span>'.$name.'</span></label>';
-
-
-				} else {
-					$html .= '<label class="xoouserultra-field-type">&nbsp;</label>';
-				}
-
-				$html .= '<div class="xoouserultra-field-value">';
-
-
-
-				 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
-
-
-					switch($field) {
-
-						case 'textarea':
-
-						    //check if html editor active
-							$html .= $this->get_me_wphtml_editor($meta, $this->get_user_meta_custom( $user_id, $meta));
-
-							break;
-
-						case 'text':
-							$html .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta_custom( $user_id, $meta).'"  title="'.$name.'"  '.$disabled.'/>';
-							break;
-
-
-						case 'datetime':
-						    $html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta_custom( $user_id,$meta).'"  title="'.$name.'"  '.$disabled.'/>';
-						    break;
-
-						case 'select':
-
-							if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
-							{
-								$loop = $xoouserultra->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
-							}elseif(isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
-
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
-
-
-							}
-
-							if (isset($loop))
-							{
-								$html .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'" '.$disabled.'>';
-
-
-								foreach($loop as $sh)
-								{
-
-									$option = trim($option);
-								    $html .= '<option value="'.$sh.'" '.selected( $this->get_user_meta_custom( $user_id, $meta), $sh, 0 ).' '.$disabled.'>'.$sh.'</option>';
-
-								}
-
-								$html .= '</select>';
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
-
-							break;
-
-						case 'radio':
-
-							if (isset($array[$key]['choices']))
-							{
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
-							}
-
-							if (isset($loop) && $loop[0] != '')
-							{
-							  $counter =0;
-
-								foreach($loop as  $option)
-								{
-								    if($counter >0)
-								        $required_class = '';
-
-								    $option = trim($option);
-
-									$html .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" '.$disabled.' id="uultra_multi_radio_'.$meta.'_'.$counter.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_user_meta_custom( $user_id,$meta), $option, 0 );
-									$html .= '/> <label for="uultra_multi_radio_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label> </label>';
-
-									$counter++;
-
-								}
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
-							break;
-
-						case 'checkbox':
-							if (isset($array[$key]['choices']))
-							{
-
-
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
-
-
-
-							}
-							if (isset($loop) && $loop[0] != '') {
-							  $counter =0;
-								foreach($loop as $option) {
-
-								   if($counter >0)
-								        $required_class = '';
-
-								  $option = trim($option);
-									$html .= '<div class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" id="uultra_multi_box_'.$meta.'_'.$counter.'" value="'.$option.'" '.$disabled.' ';
-
-
-									$values = explode(', ', $this->get_user_meta_custom( $user_id, $meta));
-
-									if (in_array($option, $values)) {
-
-									$html .= 'checked="checked"';
-									}
-									$html .= '/> <label  for="uultra_multi_box_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label></div>';
-
-									$counter++;
-								}
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
-							break;
-
-
-
-					}
-
-
-						//get meta
-						$check_va = "";
-						$ischecked = $this->get_user_meta_custom( $user_id,"hide_".$meta);
-						//echo "meta: ".$ischecked ;
-
-						 if($ischecked==1) $check_va = 'checked="checked"';
-
-						$html .= '<div class="xoouserultra-hide-from-public">
-										<input type="checkbox" name="hide_'.$meta.'" id="hide_'.$meta.'" value="1" '.$check_va.' /> <label for="hide_'.$meta.'"><span></span>'.__('Hide from Public','xoousers').'</label>
-									</div>';
-
-
-
-				$html .= '</div>';
-				$html .= '</div><div class="xoouserultra-clear"></div>';
-
-				} //end if roles
-
-			} //end if user meta
-		}
-
-
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">
-						<label class="xoouserultra-field-type xoouserultra-field-type-'.$sidebar_class.'">&nbsp;</label>
-						<div class="xoouserultra-field-value">
-						    <input type="hidden" name="xoouserultra-profile-edition-form-admin" value="xoouserultra-profile-edition-form-admin" />
-							<input type="submit" name="xoouserultra-update" id="xoouserultra-update" class="xoouserultra-button" value="'.__('Update','xoousers').'" />
-						</div>
-					</div><div class="xoouserultra-clear"></div>';
-
-
-		$html .= '</form>';
-
-		} // End of the Profile Edition Function
-
-		return $html;
-	}
-
-	/* This is the */
-	public function edit_profile_form( $sidebar_class=null, $redirect_to=null )
-	{
-		global  $xoouserultra;
-		$html = null;
-
-		$user_id = get_current_user_id();
-
-		// Optimized condition and added strict conditions
-		if (!isset($xoousers_register->registered) || $xoousers_register->registered != 1)
-		{
-
-
-		$html .= '<div class="xoouserultra-clear"></div>';
-		$html .= '<form action="" method="post" id="xoouserultra-profile-edition-form">';
-
-
-		$array = array();
-		//get user form
-		$custom_form = $this->get_user_meta( 'uultra_custom_registration_form');
-
-		if($custom_form!="")
-		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$array = get_option($custom_form);
-
-		}else{
-
-			$array = get_option('usersultra_profile_fields');
-
-		}
-
-		//echo $custom_form;
-
-		foreach($array as $key=>$field)
-		{
-		    // Optimized condition and added strict conditions
-		    $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
-		    if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
-		    {
-		        unset($array[$key]);
-		    }
-		}
-
-		$i_array_end = end($array);
-
-		if(isset($i_array_end['position']))
-		{
-		    $array_end = $i_array_end['position'];
-		    if ($array[$array_end]['type'] == 'separator') {
-		        unset($array[$array_end]);
-		    }
-		}
-
-
-
-		foreach($array as $key => $field)
-		{
-			//echo "<pre>".print_r($field) . "</pre>";
-
-			$show_to_user_role_list = '';
-			$show_to_user_role = 0;
-			$edit_by_user_role = 0;
-			$edit_by_user_role_list = '';
-
-			extract($field);
-
-			// WP 3.6 Fix
-			if(!isset($deleted))
-			    $deleted = 0;
-
-			if(!isset($private))
-			    $private = 0;
-
-			if(!isset($required))
-			    $required = 0;
-
-			$required_class = '';
-			if($required == 1 && in_array($field, $xoouserultra->include_for_validation))
-			{
-			    $required_class = ' required';
-			}
-
-
-
-			/* Fieldset separator */
-			if ( $type == 'separator' && $deleted == 0 && $private == 0 )
-			{
-				if(!isset($show_to_user_role) || $show_to_user_role =="")
-				{
-					$show_to_user_role = 0;
-				}
-
-				if(!isset($show_to_user_role_list) || $show_to_user_role_list =="")
-				{
-					$show_to_user_role_list = '';
-
-				}
-
-				$xoouserultra->role->uultra_get_user_roles_by_id($user_id);
-				$show_field_status =  $xoouserultra->role->uultra_fields_by_user_role($show_to_user_role, $show_to_user_role_list);
-
-				if ($show_field_status)
-			 	{
-					$html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show">'.$name.'</div>';
-
-				}
-
-
-
-			}
-
-
-			if ( $type == 'usermeta' && $deleted == 0 && $private == 0)
-			{
-
-
-				if(!isset($show_to_user_role) || $show_to_user_role =="")
-				{
-					$show_to_user_role = 0;
-				}
-
-				if(!isset($show_to_user_role_list) || $show_to_user_role_list =="")
-				{
-					$show_to_user_role_list = '';
-
-
-				}else{
-
-
-				}
-
-
-
-				 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
-				 $show_field_status =  $xoouserultra->role->uultra_fields_by_user_role($show_to_user_role, $show_to_user_role_list);
-
-				 //echo "Field: " . $meta . " ---Roles - ". $show_to_user_role_list . "<br>";
-
-
-			 if ($show_field_status)
-			 {
-
-
-				$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
-
-				/* Show the label */
-				if (isset($array[$key]['name']) && $name)
-				 {
-					$html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
-
-					if (isset($array[$key]['icon']) && $icon) {
-                            $html .= '<i class="fa fa-' . $icon . '"></i>';
-                    } else {
-                            $html .= '<i class="fa fa-icon-none"></i>';
-                    }
-
-					$html .= '<span>'.$name.'</span></label>';
-
-
-				} else {
-					$html .= '<label class="xoouserultra-field-type">&nbsp;</label>';
-				}
-
-				$html .= '<div class="xoouserultra-field-value">';
-
-
-
-				if ($can_edit == 0)
-				{
-
-                     $disabled = 'disabled="disabled"';
-
-			 	}else{
-
-					  $disabled = null;
                 }
 
 
-				if(!isset($edit_by_user_role) || $edit_by_user_role =="")
-				{
-					$edit_by_user_role = 0;
-				}
+                $html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show uultra-heading-user-edition" widget-id="'.$meta.'">'.$name.'';
 
-				if(!isset($edit_by_user_role_list) || $edit_by_user_role_list =="")
-				{
-					$edit_by_user_role_list = '';
+                $html .= '<span widget-id="'.$meta.'" style="background-position: 0px -20px;" id="uultra-user-edition-icon-close-'.$meta.'" class="uultra-user-editions-icon-close-open"></span>';
+                $html .= '</div>';
 
-				}
+                if(!$sep_open)
+                {
+                    $html .= '<div class="" id="uultra-user-edition-block-account-info-'.$meta.'">';
 
-				 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
-				 $edit_field_status =  $xoouserultra->role->uultra_fields_by_user_role($edit_by_user_role, $edit_by_user_role_list);
+                    $sep_open = true;
 
-				 if (!$edit_field_status) {
+                }
 
-					  $disabled = 'disabled="disabled"';
+            }else{
 
-				 }
+                //$sep_open = false;
 
+            }
 
 
-					switch($field) {
+            if ( $type == 'usermeta' )
+            {
 
-						case 'textarea':
+                 $show_field_status =  true;
 
-						    //check if html editor active
-							$html .= $this->get_me_wphtml_editor($meta, $this->get_user_meta( $meta));
+             if ($show_field_status)
+             {
 
-							break;
 
-						case 'text':
-							$html .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta( $meta).'"  title="'.$name.'"  '.$disabled.'/>';
-							break;
+                $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
 
+                /* Show the label */
+                if (isset($array[$key]['name']) && $name)
+                 {
+                    $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
 
-						case 'datetime':
-						    $html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta( $meta).'"  title="'.$name.'"  '.$disabled.'/>';
-						    break;
+                    if (isset($array[$key]['icon']) && $icon) {
+                            $html .= '<i class="fa fa-' . $icon . '"></i>';
+                    } else {
+                            $html .= '<i class="fa fa-icon-none"></i>';
+                    }
 
-						case 'select':
+                    $html .= '<span>'.$name.'</span></label>';
 
-							if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
-							{
-								$loop = $xoouserultra->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
-							}elseif(isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
 
+                } else {
+                    $html .= '<label class="xoouserultra-field-type">&nbsp;</label>';
+                }
 
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+                $html .= '<div class="xoouserultra-field-value">';
 
 
-							}
 
-							if (isset($loop))
-							{
-								$html .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'" '.$disabled.'>';
+                 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
 
 
-								foreach($loop as $sh)
-								{
+                    switch($field) {
 
-									$option = trim($option);
-								    $html .= '<option value="'.$sh.'" '.selected( $this->get_user_meta( $meta), $sh, 0 ).' '.$disabled.'>'.$sh.'</option>';
+                        case 'textarea':
 
-								}
+                            //check if html editor active
+                            $html .= $this->get_me_wphtml_editor($meta, $this->get_user_meta_custom( $user_id, $meta));
 
-								$html .= '</select>';
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-							break;
+                        case 'text':
+                            $html .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta_custom( $user_id, $meta).'"  title="'.$name.'"  '.$disabled.'/>';
+                            break;
 
-						case 'radio':
 
-							if (isset($array[$key]['choices']))
-							{
+                        case 'datetime':
+                            $html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta_custom( $user_id,$meta).'"  title="'.$name.'"  '.$disabled.'/>';
+                            break;
 
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
-							}
+                        case 'select':
 
-							if (isset($loop) && $loop[0] != '')
-							{
-							  $counter =0;
+                            if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
+                            {
+                                $loop = $xoouserultra->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
+                            }elseif(isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
 
-								foreach($loop as  $option)
-								{
-								    if($counter >0)
-								        $required_class = '';
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
 
-								    $option = trim($option);
 
-									$html .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" '.$disabled.' id="uultra_multi_radio_'.$meta.'_'.$counter.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_user_meta( $meta), $option, 0 );
-									$html .= '/> <label for="uultra_multi_radio_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label> </label>';
+                            }
 
-									$counter++;
+                            if (isset($loop))
+                            {
+                                $html .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'" '.$disabled.'>';
 
-								}
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
-							break;
 
-						case 'checkbox':
-							if (isset($array[$key]['choices']))
-							{
+                                foreach($loop as $sh)
+                                {
 
-								$loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+                                    $option = trim($option);
+                                    $html .= '<option value="'.$sh.'" '.selected( $this->get_user_meta_custom( $user_id, $meta), $sh, 0 ).' '.$disabled.'>'.$sh.'</option>';
 
+                                }
 
-							}
-							if (isset($loop) && $loop[0] != '') {
-							  $counter =0;
-								foreach($loop as $option) {
+                                $html .= '</select>';
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
 
-								   if($counter >0)
-								        $required_class = '';
+                            break;
 
-								  $option = trim($option);
-									$html .= '<div class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" id="uultra_multi_box_'.$meta.'_'.$counter.'" value="'.$option.'" '.$disabled.' ';
+                        case 'radio':
 
+                            if (isset($array[$key]['choices']))
+                            {
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+                            }
 
-									$values = explode(', ', $this->get_user_meta($meta));
+                            if (isset($loop) && $loop[0] != '')
+                            {
+                              $counter =0;
 
-									if (in_array($option, $values)) {
+                                foreach($loop as  $option)
+                                {
+                                    if($counter >0)
+                                        $required_class = '';
 
-									$html .= 'checked="checked"';
-									}
-									$html .= '/> <label  for="uultra_multi_box_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label></div>';
+                                    $option = trim($option);
 
-									$counter++;
-								}
-							}
-							$html .= '<div class="xoouserultra-clear"></div>';
-							break;
+                                    $html .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" '.$disabled.' id="uultra_multi_radio_'.$meta.'_'.$counter.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_user_meta_custom( $user_id,$meta), $option, 0 );
+                                    $html .= '/> <label for="uultra_multi_radio_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label> </label>';
 
-					}
+                                    $counter++;
 
-					/*User can hide this from public*/
-					if (isset($array[$key]['can_hide']) && $can_hide == 1) {
+                                }
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-						//get meta
-						$check_va = "";
-						$ischecked = $this->get_user_meta("hide_".$meta);
-						//echo "meta: ".$ischecked ;
+                        case 'checkbox':
+                            if (isset($array[$key]['choices']))
+                            {
 
-						 if($ischecked==1) $check_va = 'checked="checked"';
 
-						$html .= '<div class="xoouserultra-hide-from-public">
-										<input type="checkbox" name="hide_'.$meta.'" id="hide_'.$meta.'" value="1" '.$check_va.' /> <label for="hide_'.$meta.'"><span></span>'.__('Hide from Public','xoousers').'</label>
-									</div>';
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
 
-					} elseif ($can_hide == 0 && $private == 0) {
 
 
+                            }
+                            if (isset($loop) && $loop[0] != '') {
+                              $counter =0;
+                                foreach($loop as $option) {
 
-					}
+                                   if($counter >0)
+                                        $required_class = '';
 
-				$html .= '</div>';
-				$html .= '</div><div class="xoouserultra-clear"></div>';
+                                  $option = trim($option);
+                                    $html .= '<div class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" id="uultra_multi_box_'.$meta.'_'.$counter.'" value="'.$option.'" '.$disabled.' ';
 
-				} //end if roles
 
-			} //end if user meta
-		}
+                                    $values = explode(', ', $this->get_user_meta_custom( $user_id, $meta));
 
+                                    if (in_array($option, $values)) {
 
-		$html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">
-						<label class="xoouserultra-field-type xoouserultra-field-type-'.$sidebar_class.'">&nbsp;</label>
-						<div class="xoouserultra-field-value">
-						    <input type="hidden" name="xoouserultra-profile-edition-form" value="xoouserultra-profile-edition-form" />
-							<input type="submit" name="xoouserultra-update" id="xoouserultra-update" class="xoouserultra-button" value="'.__('Update','xoousers').'" />
-						</div>
-					</div><div class="xoouserultra-clear"></div>';
+                                    $html .= 'checked="checked"';
+                                    }
+                                    $html .= '/> <label  for="uultra_multi_box_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label></div>';
 
+                                    $counter++;
+                                }
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-		$html .= '</form>';
 
-		} // End of the Profile Edition Function
 
-		return $html;
-	}
+                    }
 
 
-	/*Get All Packages for Upgrade */
-	public function get_change_role_my_account ()
-	{
-		global $wpdb,  $xoouserultra;
+                        //get meta
+                        $check_va = "";
+                        $ischecked = $this->get_user_meta_custom( $user_id,"hide_".$meta);
+                        //echo "meta: ".$ischecked ;
 
+                         if($ischecked==1) $check_va = 'checked="checked"';
 
-		$user_id = get_current_user_id();
+                        $html .= '<div class="xoouserultra-hide-from-public">
+                                        <input type="checkbox" name="hide_'.$meta.'" id="hide_'.$meta.'" value="1" '.$check_va.' /> <label for="hide_'.$meta.'"><span></span>'.__('Hide from Public','xoousers').'</label>
+                                    </div>';
 
 
-		$html = '';
 
-		if($xoouserultra->get_option('uultra_roles_actives_backend')=='yes')
-		{
+                $html .= '</div>';
+                $html .= '</div><div class="xoouserultra-clear"></div>';
 
-			//text to display
-			$label_for_role = $this->get_option('label_for_registration_user_role');
-			$label_for_role_1 = $this->get_option('label_for_registration_user_role_1');
-			$custom_text = $this->get_option('uultra_roles_actives_backend_text');
+                } //end if roles
 
+            } //end if user meta
+        }
 
 
-			if($label_for_role =="")
-			{
-				$label_for_role = __('Select your Role','xoousers');
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">
+                        <label class="xoouserultra-field-type xoouserultra-field-type-'.$sidebar_class.'">&nbsp;</label>
+                        <div class="xoouserultra-field-value">
+                            <input type="hidden" name="xoouserultra-profile-edition-form-admin" value="xoouserultra-profile-edition-form-admin" />
+                            <input type="submit" name="xoouserultra-update" id="xoouserultra-update" class="xoouserultra-button" value="'.__('Update','xoousers').'" />
+                        </div>
+                    </div><div class="xoouserultra-clear"></div>';
 
-			}
 
-			if($label_for_role_1 =="")
-			{
-				$label_for_role_1 = __('Role','xoousers');
+        $html .= '</form>';
 
-			}
+        } // End of the Profile Edition Function
 
+        return $html;
+    }
 
+    /* This is the */
+    public function edit_profile_form( $sidebar_class=null, $redirect_to=null )
+    {
+        global  $xoouserultra;
+        $html = null;
 
-			$html .= '  <div class="commons-panel-content">';
-			$html .= ' <h2>'. $label_for_role.'</h2>';
-			$html .= $custom_text ;
+        $user_id = get_current_user_id();
 
-			$html .= '<p>';
-			$html .= $xoouserultra->role->get_private_roles_registration($user_id);
-			$html .= '</p>';
+        // Optimized condition and added strict conditions
+        if (!isset($xoousers_register->registered) || $xoousers_register->registered != 1)
+        {
 
 
-			$html .= '<p><input type="submit" name="xoouserultra-change-user-role-backend" id="xoouserultra-change-user-role-backend" class="xoouserultra-button" value="'.__('SUBMIT','xoousers').'" /></p>';
+        $html .= '<div class="xoouserultra-clear"></div>';
+        $html .= '<form action="" method="post" id="xoouserultra-profile-edition-form">';
 
-			$html .= '<p id="uultra-change-role-confmsg" style="display:none"></p>';
 
-			$html .= "</div>" ;
+        $array = array();
+        //get user form
+        $custom_form = $this->get_user_meta( 'uultra_custom_registration_form');
 
+        if($custom_form!="")
+        {
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $array = get_option($custom_form);
 
+        }else{
 
+            $array = get_option('usersultra_profile_fields');
 
-		}
+        }
 
-		return $html;
+        //echo $custom_form;
 
-	}
+        foreach($array as $key=>$field)
+        {
+            // Optimized condition and added strict conditions
+            $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
+            if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
+            {
+                unset($array[$key]);
+            }
+        }
 
+        $i_array_end = end($array);
 
-	/*Update Profile from admin*/
-	function update_me_admin()
-	{
-		global  $xoouserultra, $uultra_group;
+        if(isset($i_array_end['position']))
+        {
+            $array_end = $i_array_end['position'];
+            if ($array[$array_end]['type'] == 'separator') {
+                unset($array[$array_end]);
+            }
+        }
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
 
-		$user_id = $_POST['user_id'];
 
-		//get user form
-		$custom_form = $this->get_user_meta_custom($user_id, 'uultra_custom_registration_form');
+        foreach($array as $key => $field)
+        {
+            //echo "<pre>".print_r($field) . "</pre>";
 
-		if($custom_form!="")
-		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$array = get_option($custom_form);
+            $show_to_user_role_list = '';
+            $show_to_user_role = 0;
+            $edit_by_user_role = 0;
+            $edit_by_user_role_list = '';
 
-		}else{
+            extract($field);
 
-			$array = get_option('usersultra_profile_fields');
+            // WP 3.6 Fix
+            if(!isset($deleted))
+                $deleted = 0;
 
-		}
+            if(!isset($private))
+                $private = 0;
 
-		$array_check = $array;
+            if(!isset($required))
+                $required = 0;
 
+            $required_class = '';
+            if($required == 1 && in_array($field, $xoouserultra->include_for_validation))
+            {
+                $required_class = ' required';
+            }
 
-		 // Get list of dattime fields
+
+
+            /* Fieldset separator */
+            if ( $type == 'separator' && $deleted == 0 && $private == 0 )
+            {
+                if(!isset($show_to_user_role) || $show_to_user_role =="")
+                {
+                    $show_to_user_role = 0;
+                }
+
+                if(!isset($show_to_user_role_list) || $show_to_user_role_list =="")
+                {
+                    $show_to_user_role_list = '';
+
+                }
+
+                $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
+                $show_field_status =  $xoouserultra->role->uultra_fields_by_user_role($show_to_user_role, $show_to_user_role_list);
+
+                if ($show_field_status)
+                {
+                    $html .= '<div class="xoouserultra-field xoouserultra-seperator xoouserultra-edit xoouserultra-edit-show">'.$name.'</div>';
+
+                }
+
+
+
+            }
+
+
+            if ( $type == 'usermeta' && $deleted == 0 && $private == 0)
+            {
+
+
+                if(!isset($show_to_user_role) || $show_to_user_role =="")
+                {
+                    $show_to_user_role = 0;
+                }
+
+                if(!isset($show_to_user_role_list) || $show_to_user_role_list =="")
+                {
+                    $show_to_user_role_list = '';
+
+
+                }else{
+
+
+                }
+
+
+
+                 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
+                 $show_field_status =  $xoouserultra->role->uultra_fields_by_user_role($show_to_user_role, $show_to_user_role_list);
+
+                 //echo "Field: " . $meta . " ---Roles - ". $show_to_user_role_list . "<br>";
+
+
+             if ($show_field_status)
+             {
+
+
+                $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">';
+
+                /* Show the label */
+                if (isset($array[$key]['name']) && $name)
+                 {
+                    $html .= '<label class="xoouserultra-field-type" for="'.$meta.'">';
+
+                    if (isset($array[$key]['icon']) && $icon) {
+                            $html .= '<i class="fa fa-' . $icon . '"></i>';
+                    } else {
+                            $html .= '<i class="fa fa-icon-none"></i>';
+                    }
+
+                    $html .= '<span>'.$name.'</span></label>';
+
+
+                } else {
+                    $html .= '<label class="xoouserultra-field-type">&nbsp;</label>';
+                }
+
+                $html .= '<div class="xoouserultra-field-value">';
+
+
+
+                if ($can_edit == 0)
+                {
+
+                     $disabled = 'disabled="disabled"';
+
+                }else{
+
+                      $disabled = null;
+                }
+
+
+                if(!isset($edit_by_user_role) || $edit_by_user_role =="")
+                {
+                    $edit_by_user_role = 0;
+                }
+
+                if(!isset($edit_by_user_role_list) || $edit_by_user_role_list =="")
+                {
+                    $edit_by_user_role_list = '';
+
+                }
+
+                 $xoouserultra->role->uultra_get_user_roles_by_id($user_id);
+                 $edit_field_status =  $xoouserultra->role->uultra_fields_by_user_role($edit_by_user_role, $edit_by_user_role_list);
+
+                 if (!$edit_field_status) {
+
+                      $disabled = 'disabled="disabled"';
+
+                 }
+
+
+
+                    switch($field) {
+
+                        case 'textarea':
+
+                            //check if html editor active
+                            $html .= $this->get_me_wphtml_editor($meta, $this->get_user_meta( $meta));
+
+                            break;
+
+                        case 'text':
+                            $html .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta( $meta).'"  title="'.$name.'"  '.$disabled.'/>';
+                            break;
+
+
+                        case 'datetime':
+                            $html .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_user_meta( $meta).'"  title="'.$name.'"  '.$disabled.'/>';
+                            break;
+
+                        case 'select':
+
+                            if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
+                            {
+                                $loop = $xoouserultra->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
+                            }elseif(isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
+
+
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+
+
+                            }
+
+                            if (isset($loop))
+                            {
+                                $html .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'" '.$disabled.'>';
+
+
+                                foreach($loop as $sh)
+                                {
+
+                                    $option = trim($option);
+                                    $html .= '<option value="'.$sh.'" '.selected( $this->get_user_meta( $meta), $sh, 0 ).' '.$disabled.'>'.$sh.'</option>';
+
+                                }
+
+                                $html .= '</select>';
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
+
+                            break;
+
+                        case 'radio':
+
+                            if (isset($array[$key]['choices']))
+                            {
+
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+                            }
+
+                            if (isset($loop) && $loop[0] != '')
+                            {
+                              $counter =0;
+
+                                foreach($loop as  $option)
+                                {
+                                    if($counter >0)
+                                        $required_class = '';
+
+                                    $option = trim($option);
+
+                                    $html .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" '.$disabled.' id="uultra_multi_radio_'.$meta.'_'.$counter.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_user_meta( $meta), $option, 0 );
+                                    $html .= '/> <label for="uultra_multi_radio_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label> </label>';
+
+                                    $counter++;
+
+                                }
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
+                            break;
+
+                        case 'checkbox':
+                            if (isset($array[$key]['choices']))
+                            {
+
+                                $loop = $xoouserultra->uultra_one_line_checkbox_on_window_fix($choices);
+
+
+                            }
+                            if (isset($loop) && $loop[0] != '') {
+                              $counter =0;
+                                foreach($loop as $option) {
+
+                                   if($counter >0)
+                                        $required_class = '';
+
+                                  $option = trim($option);
+                                    $html .= '<div class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" id="uultra_multi_box_'.$meta.'_'.$counter.'" value="'.$option.'" '.$disabled.' ';
+
+
+                                    $values = explode(', ', $this->get_user_meta($meta));
+
+                                    if (in_array($option, $values)) {
+
+                                    $html .= 'checked="checked"';
+                                    }
+                                    $html .= '/> <label  for="uultra_multi_box_'.$meta.'_'.$counter.'"><span></span>'.$option.'</label></div>';
+
+                                    $counter++;
+                                }
+                            }
+                            $html .= '<div class="xoouserultra-clear"></div>';
+                            break;
+
+                    }
+
+                    /*User can hide this from public*/
+                    if (isset($array[$key]['can_hide']) && $can_hide == 1) {
+
+                        //get meta
+                        $check_va = "";
+                        $ischecked = $this->get_user_meta("hide_".$meta);
+                        //echo "meta: ".$ischecked ;
+
+                         if($ischecked==1) $check_va = 'checked="checked"';
+
+                        $html .= '<div class="xoouserultra-hide-from-public">
+                                        <input type="checkbox" name="hide_'.$meta.'" id="hide_'.$meta.'" value="1" '.$check_va.' /> <label for="hide_'.$meta.'"><span></span>'.__('Hide from Public','xoousers').'</label>
+                                    </div>';
+
+                    } elseif ($can_hide == 0 && $private == 0) {
+
+
+
+                    }
+
+                $html .= '</div>';
+                $html .= '</div><div class="xoouserultra-clear"></div>';
+
+                } //end if roles
+
+            } //end if user meta
+        }
+
+
+        $html .= '<div class="xoouserultra-field xoouserultra-edit xoouserultra-edit-show">
+                        <label class="xoouserultra-field-type xoouserultra-field-type-'.$sidebar_class.'">&nbsp;</label>
+                        <div class="xoouserultra-field-value">
+                            <input type="hidden" name="xoouserultra-profile-edition-form" value="xoouserultra-profile-edition-form" />
+                            <input type="submit" name="xoouserultra-update" id="xoouserultra-update" class="xoouserultra-button" value="'.__('Update','xoousers').'" />
+                        </div>
+                    </div><div class="xoouserultra-clear"></div>';
+
+
+        $html .= '</form>';
+
+        } // End of the Profile Edition Function
+
+        return $html;
+    }
+
+
+    /*Get All Packages for Upgrade */
+    public function get_change_role_my_account ()
+    {
+        global $wpdb,  $xoouserultra;
+
+
+        $user_id = get_current_user_id();
+
+
+        $html = '';
+
+        if($xoouserultra->get_option('uultra_roles_actives_backend')=='yes')
+        {
+
+            //text to display
+            $label_for_role = $this->get_option('label_for_registration_user_role');
+            $label_for_role_1 = $this->get_option('label_for_registration_user_role_1');
+            $custom_text = $this->get_option('uultra_roles_actives_backend_text');
+
+
+
+            if($label_for_role =="")
+            {
+                $label_for_role = __('Select your Role','xoousers');
+
+            }
+
+            if($label_for_role_1 =="")
+            {
+                $label_for_role_1 = __('Role','xoousers');
+
+            }
+
+
+
+            $html .= '  <div class="commons-panel-content">';
+            $html .= ' <h2>'. $label_for_role.'</h2>';
+            $html .= $custom_text ;
+
+            $html .= '<p>';
+            $html .= $xoouserultra->role->get_private_roles_registration($user_id);
+            $html .= '</p>';
+
+
+            $html .= '<p><input type="submit" name="xoouserultra-change-user-role-backend" id="xoouserultra-change-user-role-backend" class="xoouserultra-button" value="'.__('SUBMIT','xoousers').'" /></p>';
+
+            $html .= '<p id="uultra-change-role-confmsg" style="display:none"></p>';
+
+            $html .= "</div>" ;
+
+
+
+
+        }
+
+        return $html;
+
+    }
+
+
+    /*Update Profile from admin*/
+    function update_me_admin()
+    {
+        global  $xoouserultra, $uultra_group;
+
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+
+        $user_id = $_POST['user_id'];
+
+        //get user form
+        $custom_form = $this->get_user_meta_custom($user_id, 'uultra_custom_registration_form');
+
+        if($custom_form!="")
+        {
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $array = get_option($custom_form);
+
+        }else{
+
+            $array = get_option('usersultra_profile_fields');
+
+        }
+
+        $array_check = $array;
+
+
+         // Get list of dattime fields
         $date_time_fields = array();
 
         foreach ($array as $key => $field)
-		{
+        {
             extract($field);
 
             if (isset($array[$key]['field']) && $array[$key]['field'] == 'checkbox')
-			{
-				//echo "is meta field: " .$meta;
+            {
+                //echo "is meta field: " .$meta;
                 update_user_meta($user_id, $meta, null);
             }
 
             // Filter date/time custom fields
             if (isset($array[$key]['field']) && $array[$key]['field'] == 'datetime')
-			{
+            {
                 array_push($date_time_fields, $array[$key]['meta']);
             }
 
 
         }
 
-			/* Check if the were errors before updating the profile */
-			if (!isset($this->errors))
-			{
-				/* Now update all user meta */
-				foreach($this->usermeta as $key => $value)
-				{
-					// save checkboxes
+            /* Check if the were errors before updating the profile */
+            if (!isset($this->errors))
+            {
+                /* Now update all user meta */
+                foreach($this->usermeta as $key => $value)
+                {
+                    // save checkboxes
                     if (is_array($value))
-					{ // checkboxes
+                    { // checkboxes
                         $value = implode(', ', $value);
                     }
-					//echo $key. " ";
-					update_user_meta($user_id, "hide_".$key, "");
+                    //echo $key. " ";
+                    update_user_meta($user_id, "hide_".$key, "");
 
 
-					if($key=="display_name")
-					{
-						wp_update_user( array( 'ID' => $user_id, 'display_name' => esc_attr($value) ) );
-					}
+                    if($key=="display_name")
+                    {
+                        wp_update_user( array( 'ID' => $user_id, 'display_name' => esc_attr($value) ) );
+                    }
 
 
-					if ($this->field_allow_html($key,$array_check))
-					{
-						update_user_meta($user_id, $key, $value);
+                    if ($this->field_allow_html($key,$array_check))
+                    {
+                        update_user_meta($user_id, $key, $value);
 
-					}else{
+                    }else{
 
-						update_user_meta($user_id, $key, esc_attr($value));
-
-
-					}
+                        update_user_meta($user_id, $key, esc_attr($value));
 
 
-				}
-
-				//upate activity
+                    }
 
 
-			}
+                }
+
+                //upate activity
 
 
-			//update user groups
-			if($user_id !='' && isset($uultra_group))
-			{
-				//delete user's groups
-				$uultra_group->groups_and_users_rel_del($user_id);
-
-				$groups = array();
-
-				if(isset($_POST['uultra_user_group']))
-				{
-					$groups = $_POST['uultra_user_group'];
-
-					foreach ($groups as $group )
-					{
-						//add user to group
-						$uultra_group->save_user_group_rel($user_id, $group);
-
-					}
-
-				}
-
-			}
+            }
 
 
+            //update user groups
+            if($user_id !='' && isset($uultra_group))
+            {
+                //delete user's groups
+                $uultra_group->groups_and_users_rel_del($user_id);
 
-	}
+                $groups = array();
 
-	/*Update Profile*/
-	function update_me()
-	{
-		global  $xoouserultra;
+                if(isset($_POST['uultra_user_group']))
+                {
+                    $groups = $_POST['uultra_user_group'];
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+                    foreach ($groups as $group )
+                    {
+                        //add user to group
+                        $uultra_group->save_user_group_rel($user_id, $group);
 
-		$user_id = get_current_user_id();
+                    }
 
-		//get user form
-		$custom_form = $this->get_user_meta( 'uultra_custom_registration_form');
+                }
 
-		if($custom_form!="")
-		{
-
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$array = get_option($custom_form);
-
-		}else{
-
-			$array = get_option('usersultra_profile_fields');
-
-		}
-
-		$array_check = $array;
+            }
 
 
-		 // Get list of dattime fields
+
+    }
+
+    /*Update Profile*/
+    function update_me()
+    {
+        global  $xoouserultra;
+
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+
+        $user_id = get_current_user_id();
+
+        //get user form
+        $custom_form = $this->get_user_meta( 'uultra_custom_registration_form');
+
+        if($custom_form!="")
+        {
+
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $array = get_option($custom_form);
+
+        }else{
+
+            $array = get_option('usersultra_profile_fields');
+
+        }
+
+        $array_check = $array;
+
+
+         // Get list of dattime fields
         $date_time_fields = array();
 
         $prof_category_field = "";
@@ -3732,12 +3732,12 @@ class XooUserUser {
         $profcategory_to_name = [];
 
         foreach ($array as $key => $field)
-		{
+        {
             extract($field);
 
             if (isset($array[$key]['field']) && $array[$key]['field'] == 'checkbox')
-			{
-				echo "is meta field: " .$meta . "<br/>";
+            {
+                echo "is meta field: " .$meta . "<br/>";
                 update_user_meta($user_id, $meta, null);
             }
 
@@ -3749,19 +3749,19 @@ class XooUserUser {
 
             // Filter date/time custom fields
             if (isset($array[$key]['field']) && $array[$key]['field'] == 'datetime')
-			{
+            {
                 array_push($date_time_fields, $array[$key]['meta']);
             }
         }
 
 //        var_dump($profcategory_to_name);
         $profcategory_meta_keys = [];
-		/* Check if the were errors before updating the profile */
-		if (!isset($this->errors))
-		{
-			/* Now update all user meta */
-			foreach($this->usermeta as $key => $value)
-			{
+        /* Check if the were errors before updating the profile */
+        if (!isset($this->errors))
+        {
+            /* Now update all user meta */
+            foreach($this->usermeta as $key => $value)
+            {
                 // custom hack to update prof_category field
                 $stripped_key = str_split($key, $profcategory_field_length);
 
@@ -3772,38 +3772,38 @@ class XooUserUser {
                 //    $prof_category_field = $prof_category_field . ',' . $key;
                 }
 
-				// save checkboxes
+                // save checkboxes
                 if (is_array($value))
-				{ // checkboxes
+                { // checkboxes
                     $value = implode(', ', $value);
                 }
-				echo $key. " ";
+                echo $key. " ";
                 echo $value. "<br/>";
-				update_user_meta($user_id, "hide_".$key, "");
+                update_user_meta($user_id, "hide_".$key, "");
 
-				if($key=="display_name")
-				{
-					wp_update_user( array( 'ID' => $user_id, 'display_name' => esc_attr($value) ) );
-				}
-
-
-				if ($this->field_allow_html($key,$array_check))
-				{
-					update_user_meta($user_id, $key, $value);
-
-				}else{
-
-					update_user_meta($user_id, $key, esc_attr($value));
+                if($key=="display_name")
+                {
+                    wp_update_user( array( 'ID' => $user_id, 'display_name' => esc_attr($value) ) );
+                }
 
 
-				}
+                if ($this->field_allow_html($key,$array_check))
+                {
+                    update_user_meta($user_id, $key, $value);
+
+                }else{
+
+                    update_user_meta($user_id, $key, esc_attr($value));
 
 
-			}
+                }
+
+
+            }
             echo "***<br/>profcategory_meta_keys: ";
 //            var_dump($profcategory_meta_keys);
             echo "<br/>***<br/>";
-			//upate activity
+            //upate activity
             $profcategory_meta_names = [];
             foreach ($profcategory_meta_keys as $key => $value) {
                 echo "<br/>111<br/>";
@@ -3817,1502 +3817,1502 @@ class XooUserUser {
             echo "<br/>***<br/>";
 
             update_user_meta($user_id, $profcategory_field_name, esc_attr($profcategory_meta_names_str));
-		}
+        }
 
-	}
+    }
 
-	function field_allow_html ($field_to_check, $fields_set)
-	{
+    function field_allow_html ($field_to_check, $fields_set)
+    {
 
-		foreach ($fields_set as $key => $field)
-		{
+        foreach ($fields_set as $key => $field)
+        {
             extract($field);
 
-			if($meta==$field_to_check)
-			{
+            if($meta==$field_to_check)
+            {
 
-				if (isset($allow_html) && $allow_html == '1')
-				{
-					return true;
+                if (isset($allow_html) && $allow_html == '1')
+                {
+                    return true;
 
-				}else{
+                }else{
 
-					return false;
+                    return false;
 
 
-				}
-			}
+                }
+            }
 
         }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	/*Post value*/
-	function get_post_value($meta)
-	{
+    /*Post value*/
+    function get_post_value($meta)
+    {
 
-		if (isset($_POST['xoouserultra-register-form'])) {
-			if (isset($_POST[$meta]) ) {
-				return $_POST[$meta];
-			}
-		} else {
-			if (strstr($meta, 'country')) {
-			return 'United States';
-			}
-		}
-	}
+        if (isset($_POST['xoouserultra-register-form'])) {
+            if (isset($_POST[$meta]) ) {
+                return $_POST[$meta];
+            }
+        } else {
+            if (strstr($meta, 'country')) {
+            return 'United States';
+            }
+        }
+    }
 
 
-	/******************************************
-	Get user by ID, username
-	******************************************/
-	function get_user_data_by_uri()
-	{
+    /******************************************
+    Get user by ID, username
+    ******************************************/
+    function get_user_data_by_uri()
+    {
 
-		global  $xoouserultra, $wpdb;
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        global  $xoouserultra, $wpdb;
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
 
-		$u_nick = get_query_var('uu_username');
+        $u_nick = get_query_var('uu_username');
 
-		if($u_nick=="") //permalink not activated
-		{
-			$u_nick=$this->parse_user_id_from_url();
+        if($u_nick=="") //permalink not activated
+        {
+            $u_nick=$this->parse_user_id_from_url();
 
-		}
+        }
 
 
 
-		$nice_url_type = $xoouserultra->get_option('usersultra_permalink_type');
+        $nice_url_type = $xoouserultra->get_option('usersultra_permalink_type');
 
 
-		if ($nice_url_type == 'ID' || $nice_url_type == '' )
-		{
+        if ($nice_url_type == 'ID' || $nice_url_type == '' )
+        {
 
-			$user = get_user_by('id',$u_nick);
+            $user = get_user_by('id',$u_nick);
 
-		}elseif ($nice_url_type == 'username') {
+        }elseif ($nice_url_type == 'username') {
 
 
-			$user = get_user_by('slug',$u_nick);
+            $user = get_user_by('slug',$u_nick);
 
-		}
+        }
 
-		return $user;
-	}
+        return $user;
+    }
 
-	public function get_display_name($user_id)
-	{
-		global  $xoouserultra;
+    public function get_display_name($user_id)
+    {
+        global  $xoouserultra;
 
-		$display_name = "";
+        $display_name = "";
 
-		$display_type = $xoouserultra->get_option('uprofile_setting_display_name');
-		$display_type = 'display_name';
+        $display_type = $xoouserultra->get_option('uprofile_setting_display_name');
+        $display_type = 'display_name';
 
-		$user = get_user_by('id',$user_id);
+        $user = get_user_by('id',$user_id);
 
-		if ($display_type == 'fr_la_name' || $display_type == '' )
-		{
-			$f_name = get_user_meta($user_id, 'first_name', true);
-	        $l_name = get_user_meta($user_id, 'last_name', true);
+        if ($display_type == 'fr_la_name' || $display_type == '' )
+        {
+            $f_name = get_user_meta($user_id, 'first_name', true);
+            $l_name = get_user_meta($user_id, 'last_name', true);
 
-			$display_name = $f_name. " " .  $l_name;
+            $display_name = $f_name. " " .  $l_name;
 
-		}elseif ($display_type == 'username') {
+        }elseif ($display_type == 'username') {
 
-			$display_name =$user->user_login;
+            $display_name =$user->user_login;
 
 
-		}elseif ($display_type == 'display_name') {
+        }elseif ($display_type == 'display_name') {
 
 
-			$display_name =$user->display_name;
+            $display_name =$user->display_name;
 
 
-		}
+        }
 
 
-		return ucfirst($display_name);
+        return ucfirst($display_name);
 
 
-	}
+    }
 
 
 
 
-	/*Prepare user meta*/
-	function prepare ($array )
-	{
+    /*Prepare user meta*/
+    function prepare ($array )
+    {
 
-		foreach($array as $k => $v)
-		{
-			if ($k == 'usersultra-update' || $k == 'xoouserultra-profile-edition-form'  ) continue;
+        foreach($array as $k => $v)
+        {
+            if ($k == 'usersultra-update' || $k == 'xoouserultra-profile-edition-form'  ) continue;
 
-			$this->usermeta[$k] = $v;
-		}
-		return $this->usermeta;
-	}
+            $this->usermeta[$k] = $v;
+        }
+        return $this->usermeta;
+    }
 
-	/*Handle/return any errors*/
-	function handle()
-	{
+    /*Handle/return any errors*/
+    function handle()
+    {
 
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
 
-	}
+    }
 
-	public function get_user_info()
-	{
-		$current_user = wp_get_current_user();
-		return $current_user;
+    public function get_user_info()
+    {
+        $current_user = wp_get_current_user();
+        return $current_user;
 
 
-	}
+    }
 
-	/******************************************
-	Get permalink for user
-	******************************************/
-	function get_user_profile_permalink( $user_id=0)
-	{
+    /******************************************
+    Get permalink for user
+    ******************************************/
+    function get_user_profile_permalink( $user_id=0)
+    {
 
-		global  $xoouserultra;
+        global  $xoouserultra;
 
-		$wp_rewrite = new WP_Rewrite();
+        $wp_rewrite = new WP_Rewrite();
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
 
 
 
-		if ($user_id > 0)
-		{
+        if ($user_id > 0)
+        {
 
-			$user = get_userdata($user_id);
-			$nice_url_type = $xoouserultra->get_option('usersultra_permalink_type');
+            $user = get_userdata($user_id);
+            $nice_url_type = $xoouserultra->get_option('usersultra_permalink_type');
 
 
-			if ($nice_url_type == 'ID' || $nice_url_type == '' )
-			{
-				$formated_user_login = $user_id;
+            if ($nice_url_type == 'ID' || $nice_url_type == '' )
+            {
+                $formated_user_login = $user_id;
 
-			}elseif ($nice_url_type == 'username') {
+            }elseif ($nice_url_type == 'username') {
 
-				$formated_user_login = $user->user_nicename;
-				$formated_user_login = str_replace(' ','-',$formated_user_login);
+                $formated_user_login = $user->user_nicename;
+                $formated_user_login = str_replace(' ','-',$formated_user_login);
 
-			}elseif ($nice_url_type == 'name'){
+            }elseif ($nice_url_type == 'name'){
 
-				$formated_user_login = $xoouserultra->get_fname_by_userid( $user_id );
+                $formated_user_login = $xoouserultra->get_fname_by_userid( $user_id );
 
-			}elseif ($nice_url_type == 'display_name'){
+            }elseif ($nice_url_type == 'display_name'){
 
-				$formated_user_login = get_user_meta( $user_id, 'display_name', true);
-				$formated_user_login = str_replace(' ','-',$formated_user_login);
+                $formated_user_login = get_user_meta( $user_id, 'display_name', true);
+                $formated_user_login = str_replace(' ','-',$formated_user_login);
 
-			}elseif ($nice_url_type == 'custom_display_name'){
+            }elseif ($nice_url_type == 'custom_display_name'){
 
-				$formated_user_login = get_user_meta( $user_id, 'display_name', true);
-				$formated_user_login = str_replace(' ','-',$formated_user_login);
+                $formated_user_login = get_user_meta( $user_id, 'display_name', true);
+                $formated_user_login = str_replace(' ','-',$formated_user_login);
 
 
 
-			}
+            }
 
-			$formated_user_login = strtolower ($formated_user_login);
-			$profile_page_id = $xoouserultra->get_option('profile_page_id');
+            $formated_user_login = strtolower ($formated_user_login);
+            $profile_page_id = $xoouserultra->get_option('profile_page_id');
 
 
-			/* append permalink */
-			if ( $xoouserultra->get_option('usersultra_permalink_type') == '' )
-			{
-				$link = add_query_arg( 'uu_username', $formated_user_login, get_page_link($profile_page_id) );
+            /* append permalink */
+            if ( $xoouserultra->get_option('usersultra_permalink_type') == '' )
+            {
+                $link = add_query_arg( 'uu_username', $formated_user_login, get_page_link($profile_page_id) );
 
-			}else{
+            }else{
 
-				$link = trailingslashit ( trailingslashit( get_page_link($profile_page_id) ) . $formated_user_login );
+                $link = trailingslashit ( trailingslashit( get_page_link($profile_page_id) ) . $formated_user_login );
 
-			}
+            }
 
-		} else {
-			$link = get_page_link($page_id);
-		}
+        } else {
+            $link = get_page_link($page_id);
+        }
 
-		return $link;
-	}
+        return $link;
+    }
 
-	function parse_user_id_from_url()
-	{
-		$user_id="";
+    function parse_user_id_from_url()
+    {
+        $user_id="";
 
-		if(isset($_GET["page_id"]) && $_GET["page_id"]>0)
-		{
-			$page_id = $_GET["page_id"];
-			$user_id = $this->extract_string($page_id, '/', '/');
+        if(isset($_GET["page_id"]) && $_GET["page_id"]>0)
+        {
+            $page_id = $_GET["page_id"];
+            $user_id = $this->extract_string($page_id, '/', '/');
 
 
-		}
+        }
 
-		return $user_id;
+        return $user_id;
 
 
-	}
+    }
 
-	function extract_string($str, $start, $end)
-		{
-		$str_low = $str;
-		$pos_start = strpos($str_low, $start);
-		$pos_end = strpos($str_low, $end, ($pos_start + strlen($start)));
-		if ( ($pos_start !== false) && ($pos_end !== false) )
-		{
-		$pos1 = $pos_start + strlen($start);
-		$pos2 = $pos_end - $pos1;
-		return substr($str, $pos1, $pos2);
-		}
-	}
+    function extract_string($str, $start, $end)
+        {
+        $str_low = $str;
+        $pos_start = strpos($str_low, $start);
+        $pos_end = strpos($str_low, $end, ($pos_start + strlen($start)));
+        if ( ($pos_start !== false) && ($pos_end !== false) )
+        {
+        $pos1 = $pos_start + strlen($start);
+        $pos2 = $pos_end - $pos1;
+        return substr($str, $pos1, $pos2);
+        }
+    }
 
-	/**
-	Get Internatl Menu Links
-	******************************************/
-	public function get_internal_links($slug, $slug_2, $id)
-	{
-		$url = "";
+    /**
+    Get Internatl Menu Links
+    ******************************************/
+    public function get_internal_links($slug, $slug_2, $id)
+    {
+        $url = "";
 
-			if(!isset($_GET["page_id"]) && !isset($_POST["page_id"]) )
-			{
-				$url = '?module='.$slug.'&'.$slug_2.'='. $id.'';
+            if(!isset($_GET["page_id"]) && !isset($_POST["page_id"]) )
+            {
+                $url = '?module='.$slug.'&'.$slug_2.'='. $id.'';
 
-			}else{
+            }else{
 
-				if(isset($_GET["page_id"]) )
-			    {
+                if(isset($_GET["page_id"]) )
+                {
 
-					$page_id = $_GET["page_id"];
+                    $page_id = $_GET["page_id"];
 
-				}else{
+                }else{
 
-					$page_id = $_POST["page_id"];
+                    $page_id = $_POST["page_id"];
 
-				}
+                }
 
 
-				$url = '?page_id='.$page_id.'&module='.$slug.'&'.$slug_2.'='. $id.'';
+                $url = '?page_id='.$page_id.'&module='.$slug.'&'.$slug_2.'='. $id.'';
 
-			}
+            }
 
 
-		return $url;
+        return $url;
 
 
-	}
+    }
 
-	/**
-	Get Internal Messaging Menu Links
-	******************************************/
-	public function get_internal_pmb_links($slug, $slug_2, $id)
-	{
-		$url = "";
+    /**
+    Get Internal Messaging Menu Links
+    ******************************************/
+    public function get_internal_pmb_links($slug, $slug_2, $id)
+    {
+        $url = "";
 
-			if(!isset($_GET["page_id"]) && !isset($_POST["page_id"]) )
-			{
-				$url = '?module='.$slug.'&'.$slug_2.'='. $id.'';
+            if(!isset($_GET["page_id"]) && !isset($_POST["page_id"]) )
+            {
+                $url = '?module='.$slug.'&'.$slug_2.'='. $id.'';
 
-			}else{
+            }else{
 
-				if(isset($_GET["page_id"]) )
-			    {
+                if(isset($_GET["page_id"]) )
+                {
 
-					$page_id = $_GET["page_id"];
+                    $page_id = $_GET["page_id"];
 
-				}else{
+                }else{
 
-					$page_id = $_POST["page_id"];
+                    $page_id = $_POST["page_id"];
 
-				}
+                }
 
 
-				$url = '?page_id='.$page_id.'&module='.$slug.'&'.$slug_2.'='. $id.'';
+                $url = '?page_id='.$page_id.'&module='.$slug.'&'.$slug_2.'='. $id.'';
 
-			}
+            }
 
 
-		return $url;
+        return $url;
 
 
-	}
+    }
 
-	public function build_user_menu_navigator()
-	{
-		global $xoouserultra;
+    public function build_user_menu_navigator()
+    {
+        global $xoouserultra;
 
-		$html="";
+        $html="";
 
 
-	}
+    }
 
 
-	/**
-	Get Menu Links
-	******************************************/
-	public function get_user_backend_menu($slug, $menu_item_id = null)
-	{
-		global $xoouserultra;
+    /**
+    Get Menu Links
+    ******************************************/
+    public function get_user_backend_menu($slug, $menu_item_id = null)
+    {
+        global $xoouserultra;
 
-		$url = "";
+        $url = "";
 
-		if($slug=="dashboard")
-		{
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=dashboard"><span><i class="fa fa-tachometer fa-2x"></i></span>'.__('Dashboard', 'xoousers').'</a>';
+        if($slug=="dashboard")
+        {
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=dashboard"><span><i class="fa fa-tachometer fa-2x"></i></span>'.__('Dashboard', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=dashboard"><span><i class="fa fa-tachometer fa-2x"></i></span>'.__('Dashboard', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=dashboard"><span><i class="fa fa-tachometer fa-2x"></i></span>'.__('Dashboard', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="profile"){
+        }elseif($slug=="profile"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=profile"><span><i class="fa fa-user fa-2x"></i></span>'.__('Profile', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=profile"><span><i class="fa fa-user fa-2x"></i></span>'.__('Profile', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=profile"><span><i class="fa fa-user fa-2x"></i></span>'.__('Profile', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=profile"><span><i class="fa fa-user fa-2x"></i></span>'.__('Profile', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="profile-customizer"){
+        }elseif($slug=="profile-customizer"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=profile-customizer"><span><i class="fa fa-puzzle-piece fa-2x"></i></span>'.__('Profile Customizer', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=profile-customizer"><span><i class="fa fa-puzzle-piece fa-2x"></i></span>'.__('Profile Customizer', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=profile-customizer"><span><i class="fa fa-puzzle-piece fa-2x"></i></span>'.__('Profile Customizer', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=profile-customizer"><span><i class="fa fa-puzzle-piece fa-2x"></i></span>'.__('Profile Customizer', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="account"){
+        }elseif($slug=="account"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=account"><span><i class="fa fa-wrench  fa-2x"></i></span>'.__('My Account', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=account"><span><i class="fa fa-wrench  fa-2x"></i></span>'.__('My Account', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=account"><span><i class="fa fa-wrench  fa-2x"></i></span>'.__('My Account', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=account"><span><i class="fa fa-wrench  fa-2x"></i></span>'.__('My Account', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="settings"){
+        }elseif($slug=="settings"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=settings"><span><i class="fa fa-gear  fa-2x"></i></span>'.__('Settings', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=settings"><span><i class="fa fa-gear  fa-2x"></i></span>'.__('Settings', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=settings"><span><i class="fa fa-gear  fa-2x"></i></span>'.__('Settings', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=settings"><span><i class="fa fa-gear  fa-2x"></i></span>'.__('Settings', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="wootracker"){
+        }elseif($slug=="wootracker"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=wootracker"><span><i class="fa fa-truck   fa-2x"></i></span>'.__('My Purchases', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=wootracker"><span><i class="fa fa-truck   fa-2x"></i></span>'.__('My Purchases', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=wootracker"><span><i class="fa fa-truck   fa-2x"></i></span>'.__('My Purchases', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=wootracker"><span><i class="fa fa-truck   fa-2x"></i></span>'.__('My Purchases', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="myorders"){
+        }elseif($slug=="myorders"){
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=myorders"><span><i class="fa fa-list   fa-2x"></i></span>'.__('My Orders', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=myorders"><span><i class="fa fa-list   fa-2x"></i></span>'.__('My Orders', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=myorders"><span><i class="fa fa-list   fa-2x"></i></span>'.__('My Orders', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=myorders"><span><i class="fa fa-list   fa-2x"></i></span>'.__('My Orders', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="messages"){
+        }elseif($slug=="messages"){
 
-			//check if unread replies or messages
-			$user_id = get_current_user_id();
-			$total = $xoouserultra->mymessage->get_unread_messages_amount($user_id);
+            //check if unread replies or messages
+            $user_id = get_current_user_id();
+            $total = $xoouserultra->mymessage->get_unread_messages_amount($user_id);
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=messages"><span><i class="fa fa-envelope-o fa-2x"></i></span>'.__('My Messages', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=messages"><span><i class="fa fa-envelope-o fa-2x"></i></span>'.__('My Messages', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=messages"><span><i class="fa fa-envelope-o fa-2x"></i></span>'.__('Messages', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=messages"><span><i class="fa fa-envelope-o fa-2x"></i></span>'.__('Messages', 'xoousers').'</a>';
 
-			}
+            }
 
-			if($total>0)
-			{
-				$url .= '<div class="uultra-noti-bubble" title="'.__('Unread Messages', 'xoousers').'">'.$total.'</div>';
+            if($total>0)
+            {
+                $url .= '<div class="uultra-noti-bubble" title="'.__('Unread Messages', 'xoousers').'">'.$total.'</div>';
 
-			}
+            }
 
 
 
-		}elseif($slug=="photos"){
+        }elseif($slug=="photos"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=photos"><span><i class="fa fa-camera fa-2x"></i></span>'.__('Photos', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=photos"><span><i class="fa fa-camera fa-2x"></i></span>'.__('Photos', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=photos"><span><i class="fa fa-camera fa-2x"></i></span>'.__('Photos', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=photos"><span><i class="fa fa-camera fa-2x"></i></span>'.__('Photos', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="videos"){
+        }elseif($slug=="videos"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=videos"><span><i class="fa fa-video-camera fa-2x"></i></span>'.__('My Videos', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=videos"><span><i class="fa fa-video-camera fa-2x"></i></span>'.__('My Videos', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=videos"><span><i class="fa fa-video-camera fa-2x"></i></span>'.__('My Videos', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=videos"><span><i class="fa fa-video-camera fa-2x"></i></span>'.__('My Videos', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="friends"){
+        }elseif($slug=="friends"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=friends"><span><i class="fa fa-users fa-2x"></i></span>'.__('My Friends', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=friends"><span><i class="fa fa-users fa-2x"></i></span>'.__('My Friends', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=friends"><span><i class="fa fa-users fa-2x"></i></span>'.__('My Friends', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=friends"><span><i class="fa fa-users fa-2x"></i></span>'.__('My Friends', 'xoousers').'</a>';
 
-			}
+            }
 
 
-		}elseif($slug=="posts"){
+        }elseif($slug=="posts"){
 
 
-			if(!isset($_GET["page_id"]))
-			{
-				$url = '<a class="uultra-btn-u-menu" href="?module=posts"><span><i class="fa fa-edit fa-2x"></i></span>'.__('My Posts', 'xoousers').'</a>';
+            if(!isset($_GET["page_id"]))
+            {
+                $url = '<a class="uultra-btn-u-menu" href="?module=posts"><span><i class="fa fa-edit fa-2x"></i></span>'.__('My Posts', 'xoousers').'</a>';
 
-			}else{
+            }else{
 
-				$url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=posts"><span><i class="fa fa-edit fa-2x"></i></span>'.__('My Posts', 'xoousers').'</a>';
+                $url = '<a class="uultra-btn-u-menu" href="?page_id='.$_GET["page_id"].'&module=posts"><span><i class="fa fa-edit fa-2x"></i></span>'.__('My Posts', 'xoousers').'</a>';
 
-			}
+            }
 
-		}elseif($slug=="logout"){
+        }elseif($slug=="logout"){
 
-		     $url = '<a class="uultra-btn-u-menu" href="'.$xoouserultra->get_logout_url().'"><span><i class="fa fa-arrow-circle-right fa-2x"></i></span>'.__('Logout', 'xoousers').'</a>';
+             $url = '<a class="uultra-btn-u-menu" href="'.$xoouserultra->get_logout_url().'"><span><i class="fa fa-arrow-circle-right fa-2x"></i></span>'.__('Logout', 'xoousers').'</a>';
 
 
 
-		}
+        }
 
-		return $url;
+        return $url;
 
 
 
-	}
+    }
 
-	/**
-	Get Menu Links
-	******************************************/
-	public function get_user_backend_menu_new($module, $menu_item_id = null)
-	{
-		global $xoouserultra;
+    /**
+    Get Menu Links
+    ******************************************/
+    public function get_user_backend_menu_new($module, $menu_item_id = null)
+    {
+        global $xoouserultra;
 
-		$url = "";
+        $url = "";
 
 
-		$slug = $module["slug"];
-		$link_type = $module["link_type"];
+        $slug = $module["slug"];
+        $link_type = $module["link_type"];
 
-		$uri = $this->uultra_build_user_menu_uri($slug, $link_type);
+        $uri = $this->uultra_build_user_menu_uri($slug, $link_type);
 
-		$url = '<a class="uultra-btn-u-menu" href="'.$uri.'"><span><i class="fa '.$module["icon"].' fa-2x"></i></span><span class="uultra-user-menu-text">'.$module['title'].'</span></a>';
+        $url = '<a class="uultra-btn-u-menu" href="'.$uri.'"><span><i class="fa '.$module["icon"].' fa-2x"></i></span><span class="uultra-user-menu-text">'.$module['title'].'</span></a>';
 
-		//messsages
-		if($module["slug"]=='messages')
-		{
-			//check if unread replies or messages
-			$user_id = get_current_user_id();
-			$total = $xoouserultra->mymessage->get_unread_messages_amount($user_id);
+        //messsages
+        if($module["slug"]=='messages')
+        {
+            //check if unread replies or messages
+            $user_id = get_current_user_id();
+            $total = $xoouserultra->mymessage->get_unread_messages_amount($user_id);
 
-			if($total>0)
-			{
-				$url .= '<div class="uultra-noti-bubble" title="'.__('Unread Messages', 'xoousers').'">'.$total.'</div>';
-			}
+            if($total>0)
+            {
+                $url .= '<div class="uultra-noti-bubble" title="'.__('Unread Messages', 'xoousers').'">'.$total.'</div>';
+            }
 
-		}
+        }
 
-		//friends
-		if($module["slug"]=='friends')
-		{
-			//check if unread replies or messages
-			$user_id = get_current_user_id();
-			$total = $xoouserultra->social->get_total_friend_request($user_id);
-			if($total>0)
-			{
-				$url .= '<div class="uultra-noti-bubble" title="'.__('Friend Requests', 'xoousers').'">'.$total.'</div>';
-			}
+        //friends
+        if($module["slug"]=='friends')
+        {
+            //check if unread replies or messages
+            $user_id = get_current_user_id();
+            $total = $xoouserultra->social->get_total_friend_request($user_id);
+            if($total>0)
+            {
+                $url .= '<div class="uultra-noti-bubble" title="'.__('Friend Requests', 'xoousers').'">'.$total.'</div>';
+            }
 
-		}
-		return $url;
+        }
+        return $url;
 
 
-	}
+    }
 
-	function uultra_build_user_menu_uri($slug, $link_type)
-	{
-		global $xoouserultra;
-		$uri = "";
+    function uultra_build_user_menu_uri($slug, $link_type)
+    {
+        global $xoouserultra;
+        $uri = "";
 
-		if(!isset($_GET["page_id"]))
-		{
-			$uri = '?module='.$slug;
+        if(!isset($_GET["page_id"]))
+        {
+            $uri = '?module='.$slug;
 
-		}else{
+        }else{
 
-			$uri = '?page_id='.$_GET["page_id"].'&module='.$slug;
+            $uri = '?page_id='.$_GET["page_id"].'&module='.$slug;
 
-		}
+        }
 
-		if($link_type=='custom')
-		{
-			$uri = '?custom-module='.$slug;
+        if($link_type=='custom')
+        {
+            $uri = '?custom-module='.$slug;
 
 
-		}
+        }
 
-		if($slug=='logout')
-		{
-			$uri = $xoouserultra->get_logout_url();
+        if($slug=='logout')
+        {
+            $uri = $xoouserultra->get_logout_url();
 
-		}
+        }
 
-		return $uri;
+        return $uri;
 
-	}
+    }
 
-	/**
-	Display Public Profile
-	******************************************/
-	public function show_public_profile($atts)
-	{
-		global $xoouserultra;
+    /**
+    Display Public Profile
+    ******************************************/
+    public function show_public_profile($atts)
+    {
+        global $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-			'template' => 'profile', //this is the template file's name
-			'user_id' => '', //this is the template file's name
-			'template_width' => '100%', //this is the template file's name
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size_type' => 'fixed', // dynamic or fixed
-			'pic_size' => 120, // size in pixels of the user's picture
-			'gallery_type' => '', // lightbox or single page for each photo
-			'media_options_exclude' => '', // rating, description, tags, category
+            'template' => 'profile', //this is the template file's name
+            'user_id' => '', //this is the template file's name
+            'template_width' => '100%', //this is the template file's name
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'fixed', // dynamic or fixed
+            'pic_size' => 120, // size in pixels of the user's picture
+            'gallery_type' => '', // lightbox or single page for each photo
+            'media_options_exclude' => '', // rating, description, tags, category
 
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'optional_right_col_fields_to_display' => '',
-			'profile_fields_to_display' => '', // all or empty
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'optional_right_col_fields_to_display' => '',
+            'profile_fields_to_display' => '', // all or empty
 
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_social' => 'yes', // display social
-			'display_photo_rating' => 'yes', // display social
-			'display_photo_description' => 'yes', //yes or no
-			'display_gallery_rating' => 'yes', //
-			'display_private_message' => 'yes', //
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_social' => 'yes', // display social
+            'display_photo_rating' => 'yes', // display social
+            'display_photo_description' => 'yes', //yes or no
+            'display_gallery_rating' => 'yes', //
+            'display_private_message' => 'yes', //
 
 
-		), $atts ) );
+        ), $atts ) );
 
-		//exclude modules
-		$modules = array();
-		$modules  = explode(',', $media_options_exclude);
+        //exclude modules
+        $modules = array();
+        $modules  = explode(',', $media_options_exclude);
 
 
-		$display_gallery = false;
-		if(isset($_GET["gal_id"]))
-		{
-			$display_gallery = true;
-			$gal_id = $_GET["gal_id"];
+        $display_gallery = false;
+        if(isset($_GET["gal_id"]))
+        {
+            $display_gallery = true;
+            $gal_id = $_GET["gal_id"];
 
-		}
+        }
 
-		$display_photo = false;
-		if(isset($_GET["photo_id"]))
-		{
-			$display_photo = true;
-			$photo_id = $_GET["photo_id"];
+        $display_photo = false;
+        if(isset($_GET["photo_id"]))
+        {
+            $display_photo = true;
+            $photo_id = $_GET["photo_id"];
 
-		}
+        }
 
-		//check if it's a shortcode call
+        //check if it's a shortcode call
 
-		if($user_id!="") // a shortocode attribute has been submited
-		{
+        if($user_id!="") // a shortocode attribute has been submited
+        {
 
-			$current_user = get_user_by('id',$user_id);
+            $current_user = get_user_by('id',$user_id);
 
-		}else{
+        }else{
 
 
 
-				//get current user
-				$current_user = $this->get_user_data_by_uri();
+                //get current user
+                $current_user = $this->get_user_data_by_uri();
 
-				if(isset($current_user->ID))
-				{
-					$user_id = $current_user->ID;
+                if(isset($current_user->ID))
+                {
+                    $user_id = $current_user->ID;
 
-				}
+                }
 
 
 
 
-				//check if logged in and seeing my own profile
-				if (is_user_logged_in() && $user_id=="")
-				{
-					$user_id=get_current_user_id();
-					$current_user = get_user_by('id',$user_id);
+                //check if logged in and seeing my own profile
+                if (is_user_logged_in() && $user_id=="")
+                {
+                    $user_id=get_current_user_id();
+                    $current_user = get_user_by('id',$user_id);
 
-				}
+                }
 
 
-				//update stats for this user
-				if($user_id>0)
-				{
-					$xoouserultra->statistc->update_hits($user_id, 'user');
+                //update stats for this user
+                if($user_id>0)
+                {
+                    $xoouserultra->statistc->update_hits($user_id, 'user');
 
-				}
+                }
 
 
-		}
+        }
 
-		//check visibility settings
-		$photos_available = $this->do_logged_validation();
+        //check visibility settings
+        $photos_available = $this->do_logged_validation();
 
 
-		$display_inactive = $xoouserultra->get_option('uultra_display_not_confirmed_profiles');
+        $display_inactive = $xoouserultra->get_option('uultra_display_not_confirmed_profiles');
 
-		//validate display rule
-		if($display_inactive==0 && !$this->is_active($user_id))
-		{
-			$display = false;
+        //validate display rule
+        if($display_inactive==0 && !$this->is_active($user_id))
+        {
+            $display = false;
 
-		}else{
+        }else{
 
-			$display = true;
+            $display = true;
 
-		}
+        }
 
 
-		if($user_id>0 && $display )
-		{
-			$xoouserultra->customizer->uultra_is_paid_user($user_id);
-			$current_template = $xoouserultra->customizer->get_default_profile_template();
+        if($user_id>0 && $display )
+        {
+            $xoouserultra->customizer->uultra_is_paid_user($user_id);
+            $current_template = $xoouserultra->customizer->get_default_profile_template();
 
-			if($current_template==1 || $current_template=="") // 3 columns
-			{
+            if($current_template==1 || $current_template=="") // 3 columns
+            {
 
-				//get template
-				$cols = array(1,2,3);
-				$html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
-				return $html;
+                //get template
+                $cols = array(1,2,3);
+                $html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
+                return $html;
 
-			}
+            }
 
-			if($current_template==3) //two cols
-			{
-				$cols = array(1,2);
+            if($current_template==3) //two cols
+            {
+                $cols = array(1,2);
 
-				//get template
-				$html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
-				return $html;
+                //get template
+                $html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
+                return $html;
 
-			}
+            }
 
-			if($current_template==4) //one col
-			{
-				$cols = array(1);
-				//get template
-				$html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
-				return $html;
+            if($current_template==4) //one col
+            {
+                $cols = array(1);
+                //get template
+                $html = $this->get_basic_template($user_id, $atts, $display_country_flag, $display_photo_rating,$display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols);
+                return $html;
 
-			}
+            }
 
-			if($current_template==2 ) //basic
-			{
+            if($current_template==2 ) //basic
+            {
 
 
-				//turn on output buffering to capture script output
-				ob_start();
-				require_once(xoousers_path.'/templates/'.xoousers_template."/".$template.".php");
-				$content = ob_get_clean();
-				//ob_end_clean();
-				return $content ;
+                //turn on output buffering to capture script output
+                ob_start();
+                require_once(xoousers_path.'/templates/'.xoousers_template."/".$template.".php");
+                $content = ob_get_clean();
+                //ob_end_clean();
+                return $content ;
 
-			}
+            }
 
 
 
-		}elseif($user_id>0 && !$display){
+        }elseif($user_id>0 && !$display){
 
 
-			$display_inactive = $xoouserultra->get_option('uultra_display_not_confirmed_profiles_message');
-			$html = '<p>'.$display_inactive.'</p>';
-			return $html ;
+            $display_inactive = $xoouserultra->get_option('uultra_display_not_confirmed_profiles_message');
+            $html = '<p>'.$display_inactive.'</p>';
+            return $html ;
 
 
-		}else{
+        }else{
 
-			//user not found
-			echo do_shortcode("[usersultra_login]");
+            //user not found
+            echo do_shortcode("[usersultra_login]");
 
-		}
+        }
 
 
 
 
 
-	}
+    }
 
-	public function get_fancy_template_style($part)
-	{
-		global $xoouserultra;
-		//style customizing
-		$profile_customizing = array();
-		$profile_customizing = $xoouserultra->customizer->get_profile_customizing();
-		$style = 'style="';
+    public function get_fancy_template_style($part)
+    {
+        global $xoouserultra;
+        //style customizing
+        $profile_customizing = array();
+        $profile_customizing = $xoouserultra->customizer->get_profile_customizing();
+        $style = 'style="';
 
-		if($part=='main_cont')
-		{
+        if($part=='main_cont')
+        {
 
-			if($profile_customizing['uultra_profile_bg_color']!="")
-			{
-				$style .= 'background-color:'.$profile_customizing['uultra_profile_bg_color'].' !important';
+            if($profile_customizing['uultra_profile_bg_color']!="")
+            {
+                $style .= 'background-color:'.$profile_customizing['uultra_profile_bg_color'].' !important';
 
-			}
+            }
 
-		}elseif($part=='inferior_cont'){
+        }elseif($part=='inferior_cont'){
 
-			if($profile_customizing['uultra_profile_inferior_bg_color']!="")
-			{
-				$style .= 'background-color:'.$profile_customizing['uultra_profile_inferior_bg_color'].' !important';
+            if($profile_customizing['uultra_profile_inferior_bg_color']!="")
+            {
+                $style .= 'background-color:'.$profile_customizing['uultra_profile_inferior_bg_color'].' !important';
 
-			}
+            }
 
-		}elseif($part=='user_prof_bg_color'){
+        }elseif($part=='user_prof_bg_color'){
 
-			if($profile_customizing['uultra_profile_image_bg_color']!="")
-			{
-				$style .= 'background-color:'.$profile_customizing['uultra_profile_image_bg_color'].' !important';
+            if($profile_customizing['uultra_profile_image_bg_color']!="")
+            {
+                $style .= 'background-color:'.$profile_customizing['uultra_profile_image_bg_color'].' !important';
 
-			}
+            }
 
 
-		}
+        }
 
 
 
-		$style .= '"';
-		return $style;
+        $style .= '"';
+        return $style;
 
-	}
+    }
 
-	//this functions builds the front-end profile's navigator
-	function get_profile_navitagor_links($user_id)
-	{
+    //this functions builds the front-end profile's navigator
+    function get_profile_navitagor_links($user_id)
+    {
 
-		global $xoouserultra;
-		require_once(ABSPATH . 'wp-includes/user.php');
+        global $xoouserultra;
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$html = '';
+        $html = '';
 
-		//$modules = get_option('userultra_default_user_profile_front_navigator');
+        //$modules = get_option('userultra_default_user_profile_front_navigator');
 
-		$modules = $xoouserultra->customizer->uultra_get_front_profile_navigator_membership();
+        $modules = $xoouserultra->customizer->uultra_get_front_profile_navigator_membership();
 
-		 //check if bbPress active
-		 $options_to_display = $xoouserultra->get_option('uulltra_bbp_modules');
+         //check if bbPress active
+         $options_to_display = $xoouserultra->get_option('uulltra_bbp_modules');
 
-		foreach($modules as $key => $module)
-		{
+        foreach($modules as $key => $module)
+        {
 
-			if($key==7 && $xoouserultra->get_option('uulltra_bbp_status')!='1')
-			{
-				continue;
+            if($key==7 && $xoouserultra->get_option('uulltra_bbp_status')!='1')
+            {
+                continue;
 
-			}
+            }
 
-			//is available by the admin?
-			if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id,$key))
-			{
-				$stats = $this->get_front_link_stats($user_id, $key);
-				$html .=' <li><p class="cat"><a href="?'.$module['slug'].'">'.$module['title'].'</a></p>
+            //is available by the admin?
+            if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id,$key))
+            {
+                $stats = $this->get_front_link_stats($user_id, $key);
+                $html .=' <li><p class="cat"><a href="?'.$module['slug'].'">'.$module['title'].'</a></p>
 
                           <p class="number">'.$stats.'</p>
                     </li>';
-			}
+            }
 
 
 
-		}
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	function get_front_link_stats($user_id, $key)
-	{
+    function get_front_link_stats($user_id, $key)
+    {
 
-		global $xoouserultra;
-		require_once(ABSPATH . 'wp-includes/user.php');
+        global $xoouserultra;
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		$html = '';
+        $html = '';
 
-		$post_type = 'post';
+        $post_type = 'post';
 
-		if($key==1) //followwers
-		{
-			//total followers
-			$html =  $xoouserultra->social->get_followers_total($user_id);
+        if($key==1) //followwers
+        {
+            //total followers
+            $html =  $xoouserultra->social->get_followers_total($user_id);
 
-		}elseif($key==2){ // Following
+        }elseif($key==2){ // Following
 
-			//total following
-			$html =  $xoouserultra->social->get_following_total($user_id);
+            //total following
+            $html =  $xoouserultra->social->get_following_total($user_id);
 
-		}elseif($key==3){ // Photos
+        }elseif($key==3){ // Photos
 
-			//total photos
-			$html =  $xoouserultra->photogallery->get_total_photos($user_id);
+            //total photos
+            $html =  $xoouserultra->photogallery->get_total_photos($user_id);
 
-		}elseif($key==4){ // Videos
+        }elseif($key==4){ // Videos
 
-			//total videos
-			$html =  $xoouserultra->photogallery->get_total_videos($user_id);
+            //total videos
+            $html =  $xoouserultra->photogallery->get_total_videos($user_id);
 
-		}elseif($key==5){ // Posts
+        }elseif($key==5){ // Posts
 
-			//total posts
-			$html = $xoouserultra->publisher->count_user_posts_published($user_id, $post_type);
+            //total posts
+            $html = $xoouserultra->publisher->count_user_posts_published($user_id, $post_type);
 
-		}elseif($key==6){ // Friends
+        }elseif($key==6){ // Friends
 
-			//total friends
-			$html =  $xoouserultra->social->get_friends_total($user_id);
+            //total friends
+            $html =  $xoouserultra->social->get_friends_total($user_id);
 
-		}elseif($key==7){ // Topics
+        }elseif($key==7){ // Topics
 
-			//total topics
-			$html = $xoouserultra->bbpress->count_user_posts_published($user_id, "topic");
+            //total topics
+            $html = $xoouserultra->bbpress->count_user_posts_published($user_id, "topic");
 
-		}
+        }
 
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	//this functions builds the front-end profile's TOP navigator
-	function get_top_profile_navigator_links($user_id)
-	{
+    //this functions builds the front-end profile's TOP navigator
+    function get_top_profile_navigator_links($user_id)
+    {
 
-		global $xoouserultra, $wp_rewrite, $blog_id ;
+        global $xoouserultra, $wp_rewrite, $blog_id ;
 
-		$wp_rewrite = new WP_Rewrite();
+        $wp_rewrite = new WP_Rewrite();
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-includes/load.php');
-		require_once(ABSPATH . 'wp-includes/user.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/pluggable.php');
+        require_once(ABSPATH . 'wp-includes/load.php');
+        require_once(ABSPATH . 'wp-includes/user.php');
 
 
 
-		//my id
-		$my_id = get_current_user_id();
+        //my id
+        $my_id = get_current_user_id();
 
-		if ($my_id != $user_id) { //great idea sugested by http://www.usersultra.com/support/profile/snedkeren/
+        if ($my_id != $user_id) { //great idea sugested by http://www.usersultra.com/support/profile/snedkeren/
 
-			$html = '<ul class="uultra-inner-nav">';
+            $html = '<ul class="uultra-inner-nav">';
 
-			//$modules = get_option('userultra_default_user_profile_front_navigator');
+            //$modules = get_option('userultra_default_user_profile_front_navigator');
 
-			$modules = $xoouserultra->customizer->uultra_get_front_profile_navigator_membership($this->mIsPaidMembership);
+            $modules = $xoouserultra->customizer->uultra_get_front_profile_navigator_membership($this->mIsPaidMembership);
 
 
 
-			$html .='<li><a href="?my_profile" title="'.__('Profile','xoousers').'"><i class="fa fa-lg fa-user uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Profile','xoousers').'</span></a></li>  ';
+            $html .='<li><a href="?my_profile" title="'.__('Profile','xoousers').'"><i class="fa fa-lg fa-user uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Profile','xoousers').'</span></a></li>  ';
 
-			//is available by the admin?
-			if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id,8))
-			{
-				$html .='<li><a href="#" id="uultra-send-private-message-box" user-id="'.$user_id.'" title="'.__('Send Message','xoousers').'" ><i class="fa fa-lg fa-envelope uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Send Message','xoousers').'</span></a></li> ';
+            //is available by the admin?
+            if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id,8))
+            {
+                $html .='<li><a href="#" id="uultra-send-private-message-box" user-id="'.$user_id.'" title="'.__('Send Message','xoousers').'" ><i class="fa fa-lg fa-envelope uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Send Message','xoousers').'</span></a></li> ';
 
-			}
+            }
 
-			if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 1) || $xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 2))
-			{
+            if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 1) || $xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 2))
+            {
 
-				$html .='<li><a href="#" user-id="'.$user_id.'" id="uu-follow-request-header" title="'.__('Follow','xoousers').'"><i class="fa fa-lg fa-eye uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Follow','xoousers').'</span></a></li>';
+                $html .='<li><a href="#" user-id="'.$user_id.'" id="uu-follow-request-header" title="'.__('Follow','xoousers').'"><i class="fa fa-lg fa-eye uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Follow','xoousers').'</span></a></li>';
 
-			}
+            }
 
-			if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 6))
-			{
-				$html .='<li><a id="uu-send-friend-request" href="#" user-id="'.$user_id.'" title="'.__('Send Friend Request','xoousers').'"><i class="fa fa-lg fa-retweet uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Send Friend Request','xoousers').'</span></a></li>   ';
+            if($xoouserultra->customizer->user_front_nav_menu_allowed($user_id, 6))
+            {
+                $html .='<li><a id="uu-send-friend-request" href="#" user-id="'.$user_id.'" title="'.__('Send Friend Request','xoousers').'"><i class="fa fa-lg fa-retweet uultra-icon-menu"></i><span class="uultra-top-nav-labels-resp">'.__('Send Friend Request','xoousers').'</span></a></li>   ';
 
-			}
+            }
 
-			$html .= '</ul>';
+            $html .= '</ul>';
 
 
-			//new style 12-06-2014
+            //new style 12-06-2014
 
-		}else{
+        }else{
 
-			$account_page_id = get_option('xoousersultra_my_account_page');
-			$my_account_url = get_page_link($account_page_id);
+            $account_page_id = get_option('xoousersultra_my_account_page');
+            $my_account_url = get_page_link($account_page_id);
 
-			$uri_account = $my_account_url."?module=dashboard";
+            $uri_account = $my_account_url."?module=dashboard";
 
 
-			// users seeing his/her own profile
-			$html .= '<div class="uultra-inner-nav-owm-profile">';
+            // users seeing his/her own profile
+            $html .= '<div class="uultra-inner-nav-owm-profile">';
 
 
 
 
-		}
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
 
 
-	//basic template
-	public function get_basic_template($user_id, $atts, $display_country_flag,  $display_photo_rating, $display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols)
-	{
-		global $xoouserultra;
-		require_once(ABSPATH . 'wp-includes/user.php');
+    //basic template
+    public function get_basic_template($user_id, $atts, $display_country_flag,  $display_photo_rating, $display_photo_description, $gallery_type, $pic_size, $pic_type, $pic_boder_type,  $pic_size_type, $optional_fields_to_display, $cols)
+    {
+        global $xoouserultra;
+        require_once(ABSPATH . 'wp-includes/user.php');
 
-		//turn on output buffering to capture script output
+        //turn on output buffering to capture script output
         ob_start();
 
-		include(xoousers_path.'/templates/'.xoousers_template."/profile_fancy.php");
+        include(xoousers_path.'/templates/'.xoousers_template."/profile_fancy.php");
 
         $content = ob_get_clean();
-		//ob_end_clean();
+        //ob_end_clean();
 
-		return $content ;
+        return $content ;
 
-	}
+    }
 
 
 
-	function get_width_of_column($total_cols)
-	{
-		$html = '';
+    function get_width_of_column($total_cols)
+    {
+        $html = '';
 
-		if($total_cols == 2)
-		{
-			$html = 'style="width:49%" ';
-		}
+        if($total_cols == 2)
+        {
+            $html = 'style="width:49%" ';
+        }
 
-		if($total_cols == 1)
-		{
-			$html = 'style="width:99%" ';
-		}
+        if($total_cols == 1)
+        {
+            $html = 'style="width:99%" ';
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	function uultra_force_upgrade_check($user_id)
-	{
+    function uultra_force_upgrade_check($user_id)
+    {
 
-		global $xoouserultra;
+        global $xoouserultra;
 
-		//check if updgrade forced
+        //check if updgrade forced
 
-		$force_upgrade = 'no';
+        $force_upgrade = 'no';
 
-		$force_upgrade = $xoouserultra->get_option('force_account_upgrading');
+        $force_upgrade = $xoouserultra->get_option('force_account_upgrading');
 
-		if($force_upgrade=='yes')
-		{
-			//check if already upgraded
+        if($force_upgrade=='yes')
+        {
+            //check if already upgraded
 
-			$upgraded = get_user_meta($user_id, 'uultra_force_upgrade_check', true);
+            $upgraded = get_user_meta($user_id, 'uultra_force_upgrade_check', true);
 
-			if($upgraded=='yes')
-			{
-				$force_upgrade = 'no';
+            if($upgraded=='yes')
+            {
+                $force_upgrade = 'no';
 
-			}else{
+            }else{
 
-				$force_upgrade = 'yes';
+                $force_upgrade = 'yes';
 
-			}
+            }
 
 
-		}
+        }
 
-		return $force_upgrade ;
+        return $force_upgrade ;
 
-	}
+    }
 
-	function contact_me_public_form_directory($user_id)
-	{
-		$html = '<div id="uultra-dialog-form-'.$user_id.'" user-id="'.$user_id.'" class="uultra-send-pm-box uultra-dialog-form-directory" title="'.__("Send Private Message", "xoousers").'">';
+    function contact_me_public_form_directory($user_id)
+    {
+        $html = '<div id="uultra-dialog-form-'.$user_id.'" user-id="'.$user_id.'" class="uultra-send-pm-box uultra-dialog-form-directory" title="'.__("Send Private Message", "xoousers").'">';
 
-		//check if logged in and seeing my own profile
-		if (is_user_logged_in() )
-		{
+        //check if logged in and seeing my own profile
+        if (is_user_logged_in() )
+        {
 
-		$html .= '	<form>
-			<fieldset>
+        $html .= '  <form>
+            <fieldset>
 
-			<div class="uultra-field-msbox-div-history" id="uultra-msg-history-list-'.$user_id.'"></div>
+            <div class="uultra-field-msbox-div-history" id="uultra-msg-history-list-'.$user_id.'"></div>
 
-			<div class="uultra-field-msbox-div"><input type="text" name="uu_subject_'.$user_id.'" id="uu_subject_'.$user_id.'" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
+            <div class="uultra-field-msbox-div"><input type="text" name="uu_subject_'.$user_id.'" id="uu_subject_'.$user_id.'" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
 
-			<div class="uultra-field-msbox-div"><textarea name="uu_message_'.$user_id.'"  id="uu_message_'.$user_id.'" cols="" rows="" class="text uultra-private-message-txt-box" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
+            <div class="uultra-field-msbox-div"><textarea name="uu_message_'.$user_id.'"  id="uu_message_'.$user_id.'" cols="" rows="" class="text uultra-private-message-txt-box" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
 
 
-			<div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list_directory($user_id).'</div>
+            <div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list_directory($user_id).'</div>
 
-			</fieldset>';
+            </fieldset>';
 
 
-		$html .= '	</form>';
+        $html .= '  </form>';
 
-		}else{
+        }else{
 
-			$html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
+            $html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
 
-		}
+        }
 
 
-		$html .= '	</div>';
+        $html .= '  </div>';
 
-	return $html;
-	}
+    return $html;
+    }
 
 
 
-	function contact_me_public_form()
-	{
-		$html = '<div id="uultra-dialog-form" class="uultra-send-pm-box" title="'.__("Send Private Message", "xoousers").'">';
+    function contact_me_public_form()
+    {
+        $html = '<div id="uultra-dialog-form" class="uultra-send-pm-box" title="'.__("Send Private Message", "xoousers").'">';
 
-		//check if logged in and seeing my own profile
-		if (is_user_logged_in() )
-		{
+        //check if logged in and seeing my own profile
+        if (is_user_logged_in() )
+        {
 
-		$html .= '	<form>
-			<fieldset>
+        $html .= '  <form>
+            <fieldset>
 
-			<div class="uultra-field-msbox-div-history" id="uultra-msg-history-list"></div>
+            <div class="uultra-field-msbox-div-history" id="uultra-msg-history-list"></div>
 
-			<div class="uultra-field-msbox-div"><input type="text" name="uu_subject" id="uu_subject" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
+            <div class="uultra-field-msbox-div"><input type="text" name="uu_subject" id="uu_subject" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
 
-			<div class="uultra-field-msbox-div"><textarea name="uu_message"  id="uu_message" cols="" rows="" class="text uultra-private-message-txt-box" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
+            <div class="uultra-field-msbox-div"><textarea name="uu_message"  id="uu_message" cols="" rows="" class="text uultra-private-message-txt-box" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
 
 
-			<div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list().'</div>
+            <div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list().'</div>
 
-			</fieldset>';
+            </fieldset>';
 
 
-		$html .= '	</form>';
+        $html .= '  </form>';
 
-		}else{
+        }else{
 
-			$html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
+            $html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
 
-		}
+        }
 
 
-		$html .= '	</div>';
+        $html .= '  </div>';
 
-	return $html;
-	}
+    return $html;
+    }
 
-	/*Contact Admin Form*/
+    /*Contact Admin Form*/
 
-	function contact_admin_form_internal()
-	{
-		$html = '<div id="uultra-dialog-form-contact-admin" class="uultra-send-pm-box" title="'.__("Send Private Message To Admin", "xoousers").'">';
+    function contact_admin_form_internal()
+    {
+        $html = '<div id="uultra-dialog-form-contact-admin" class="uultra-send-pm-box" title="'.__("Send Private Message To Admin", "xoousers").'">';
 
-		//check if logged in and seeing my own profile
-		if (is_user_logged_in() )
-		{
+        //check if logged in and seeing my own profile
+        if (is_user_logged_in() )
+        {
 
-		$html .= '	<form>
-			<fieldset>
+        $html .= '  <form>
+            <fieldset>
 
 
-			<div class="uultra-field-msbox-div"><input type="text" name="uu_subject" id="uu_subject" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
+            <div class="uultra-field-msbox-div"><input type="text" name="uu_subject" id="uu_subject" class="text" placeholder="'.__("Type Subject", "xoousers").'"></div>
 
-			<div class="uultra-field-msbox-div"><textarea name="uu_message"  id="uu_message" cols="" rows="" class="text uultra-private-message-txt-box-admin" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
+            <div class="uultra-field-msbox-div"><textarea name="uu_message"  id="uu_message" cols="" rows="" class="text uultra-private-message-txt-box-admin" placeholder="'.__("Type Message", "xoousers").'"></textarea></div>
 
 
-			<div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list().'</div>
+            <div class="uultra-field-emoticons-div">'.$this->get_message_emoticons_list().'</div>
 
-			</fieldset>';
+            </fieldset>';
 
 
-		$html .= '	</form>';
+        $html .= '  </form>';
 
-		}else{
+        }else{
 
-			$html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
+            $html .= '<p>'.__("You have to be logged in to send messages","xoousers").'</p>';
 
-		}
+        }
 
 
-		$html .= '	</div>';
+        $html .= '  </div>';
 
-	return $html;
-	}
+    return $html;
+    }
 
 
-	public function uultra_get_administrators_list(){
+    public function uultra_get_administrators_list(){
 
-		global $wp_roles;
+        global $wp_roles;
         $user_roles = array();
 
-		$user_query = new WP_User_Query( array( 'role' => 'Administrator' ) );
+        $user_query = new WP_User_Query( array( 'role' => 'Administrator' ) );
 
 
 
 
-		// User Loop
-		if ( ! empty( $user_query->results ) ) {
-			foreach ( $user_query->results as $user ) {
+        // User Loop
+        if ( ! empty( $user_query->results ) ) {
+            foreach ( $user_query->results as $user ) {
 
-				 $user_roles[$user->ID] = $user->display_name;
-			}
-		} else {
+                 $user_roles[$user->ID] = $user->display_name;
+            }
+        } else {
 
-		}
+        }
 
 
         return $user_roles;
     }
 
-	public function get_message_emoticons_list()
-	{
-		$icons = $this->emoticon_list;
-		$html="";
+    public function get_message_emoticons_list()
+    {
+        $icons = $this->emoticon_list;
+        $html="";
 
-		foreach($icons as $icon => $array_data)
-		{
-			$short = $array_data["shortocde"];
-			$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/".$icon.".gif";
-			$html .='<img src="'.$ico_url.'" icoid="'.$short.'" alt="'.$short.'" class="uultra-emoti-msg-ico">';
+        foreach($icons as $icon => $array_data)
+        {
+            $short = $array_data["shortocde"];
+            $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/".$icon.".gif";
+            $html .='<img src="'.$ico_url.'" icoid="'.$short.'" alt="'.$short.'" class="uultra-emoti-msg-ico">';
 
-		}
+        }
 
-		return $html;
-	}
+        return $html;
+    }
 
-	public function get_message_emoticons_list_directory($user_id)
-	{
-		$icons = $this->emoticon_list;
-		$html="";
+    public function get_message_emoticons_list_directory($user_id)
+    {
+        $icons = $this->emoticon_list;
+        $html="";
 
-		foreach($icons as $icon => $array_data)
-		{
-			$short = $array_data["shortocde"];
-			$ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/".$icon.".gif";
-			$html .='<img src="'.$ico_url.'" icoid="'.$short.'" alt="'.$short.'" user-id="'.$user_id.'" class="uultra-emoti-msg-ico-directory">';
+        foreach($icons as $icon => $array_data)
+        {
+            $short = $array_data["shortocde"];
+            $ico_url = xoousers_url."templates/".xoousers_template."/img/emoticons/".$icon.".gif";
+            $html .='<img src="'.$ico_url.'" icoid="'.$short.'" alt="'.$short.'" user-id="'.$user_id.'" class="uultra-emoti-msg-ico-directory">';
 
-		}
+        }
 
-		return $html;
-	}
+        return $html;
+    }
 
 
-	public function get_profile_bg($user_id)
-	{
-		global $xoouserultra;
+    public function get_profile_bg($user_id)
+    {
+        global $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		$site_url = site_url()."/";
-		$profile_customizing = $xoouserultra->customizer->get_profile_customizing();
+        $site_url = site_url()."/";
+        $profile_customizing = $xoouserultra->customizer->get_profile_customizing();
 
-		$html = "";
+        $html = "";
 
-		$upload_folder =  $xoouserultra->get_option('media_uploading_folder');
-		$user_pic = get_user_meta($user_id, 'user_profile_bg', true);
+        $upload_folder =  $xoouserultra->get_option('media_uploading_folder');
+        $user_pic = get_user_meta($user_id, 'user_profile_bg', true);
 
 
-		if($user_pic!="")
-		{
-			$src = $site_url.$upload_folder.'/'.$user_id.'/'.$user_pic;
-			$html .= '<img class="landscape" src="'.$src.'" />';
-		}else{
+        if($user_pic!="")
+        {
+            $src = $site_url.$upload_folder.'/'.$user_id.'/'.$user_pic;
+            $html .= '<img class="landscape" src="'.$src.'" />';
+        }else{
 
 
-			if($profile_customizing['uultra_profile_image_bg_color']=="")
-			{
-				//check if admin set a custom image
-				$admin_img = $xoouserultra->customizer->get_custom_bg_for_user_profile();
+            if($profile_customizing['uultra_profile_image_bg_color']=="")
+            {
+                //check if admin set a custom image
+                $admin_img = $xoouserultra->customizer->get_custom_bg_for_user_profile();
 
-				if($admin_img=="")
-				{
-					//default image only if color hasn't been set
-					$src = xoousers_url.'/templates/'.xoousers_template.'/img/1920X1000.png';
-					$html .= '<img class="landscape" src="'.$src.'" />';
+                if($admin_img=="")
+                {
+                    //default image only if color hasn't been set
+                    $src = xoousers_url.'/templates/'.xoousers_template.'/img/1920X1000.png';
+                    $html .= '<img class="landscape" src="'.$src.'" />';
 
-				}else{
+                }else{
 
-					//default image by admin
-					$src = $admin_img;
-					$html .= '<img class="landscape" src="'.$src.'" />';
+                    //default image by admin
+                    $src = $admin_img;
+                    $html .= '<img class="landscape" src="'.$src.'" />';
 
-				}
+                }
 
 
 
-			}
+            }
 
 
 
 
-		}
+        }
 
 
-		return $html;
+        return $html;
 
 
-	}
+    }
 
 
-	public function get_profile_cover_upload_btn($user_id)
-	{
-		global $xoouserultra;
+    public function get_profile_cover_upload_btn($user_id)
+    {
+        global $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		$site_url = site_url()."/";
+        $site_url = site_url()."/";
 
-		$html = '';
+        $html = '';
 
 
-		$my_id = get_current_user_id();
+        $my_id = get_current_user_id();
 
-		if ($my_id == $user_id) // i am seeing my own id
-		{
+        if ($my_id == $user_id) // i am seeing my own id
+        {
 
-			$html .= '<div class="uultra-change-profile-cover-div">';
-			$html .= ' <a class="uultra-btn-change-users-profile-cover" href="#" id="uultra-btn-save-customizer-change" title="" > '.__('Change Cover','xoousers').'</a>';
-			$html .= '</div>';
+            $html .= '<div class="uultra-change-profile-cover-div">';
+            $html .= ' <a class="uultra-btn-change-users-profile-cover" href="#" id="uultra-btn-save-customizer-change" title="" > '.__('Change Cover','xoousers').'</a>';
+            $html .= '</div>';
 
 
-		}
+        }
 
-		return $html;
+        return $html;
 
 
 
-	}
+    }
 
-	public function has_profile_bg($user_id)
-	{
-		global $xoouserultra;
+    public function has_profile_bg($user_id)
+    {
+        global $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		$site_url = site_url()."/";
+        $site_url = site_url()."/";
 
-		$profile_customizing = $xoouserultra->customizer->get_profile_customizing();
+        $profile_customizing = $xoouserultra->customizer->get_profile_customizing();
 
-		$html = "";
+        $html = "";
 
-		$upload_folder =  $xoouserultra->get_option('media_uploading_folder');
-		$user_pic = get_user_meta($user_id, 'user_profile_bg', true);
+        $upload_folder =  $xoouserultra->get_option('media_uploading_folder');
+        $user_pic = get_user_meta($user_id, 'user_profile_bg', true);
 
 
-		if($user_pic!="")
-		{
-			return true;
-		}else{
+        if($user_pic!="")
+        {
+            return true;
+        }else{
 
-			return false;
+            return false;
 
-		}
+        }
 
 
 
-	}
+    }
 
 
-	function get_user_desc_exerpt($the_excerpt,$excerpt_length)
-	{
-		$the_excerpt = strip_tags(strip_shortcodes($the_excerpt)); //Strips tags and images
-		$words = explode(' ', $the_excerpt, $excerpt_length + 1);
+    function get_user_desc_exerpt($the_excerpt,$excerpt_length)
+    {
+        $the_excerpt = strip_tags(strip_shortcodes($the_excerpt)); //Strips tags and images
+        $words = explode(' ', $the_excerpt, $excerpt_length + 1);
 
-		if(count($words) > $excerpt_length) :
-			array_pop($words);
-			array_push($words, '… ');
-			$the_excerpt = implode(' ', $words);
-		endif;
+        if(count($words) > $excerpt_length) :
+            array_pop($words);
+            array_push($words, '… ');
+            $the_excerpt = implode(' ', $words);
+        endif;
 
-		$the_excerpt = '' . $the_excerpt . '';
+        $the_excerpt = '' . $the_excerpt . '';
 
-		return $the_excerpt;
-	}
+        return $the_excerpt;
+    }
 
-	public function get_profile_bg_url($user_id)
-	{
-		global $xoouserultra;
+    public function get_profile_bg_url($user_id)
+    {
+        global $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
+        require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		$site_url = site_url()."/";
+        $site_url = site_url()."/";
 
-		$html = "";
+        $html = "";
 
-		$upload_folder =  $xoouserultra->get_option('media_uploading_folder');
-		$user_pic = get_user_meta($user_id, 'user_profile_bg', true);
+        $upload_folder =  $xoouserultra->get_option('media_uploading_folder');
+        $user_pic = get_user_meta($user_id, 'user_profile_bg', true);
 
 
-		if($user_pic!="")
-		{
-			$src = $site_url.$upload_folder.'/'.$user_id.'/'.$user_pic;
-			$html .= $src;
+        if($user_pic!="")
+        {
+            $src = $site_url.$upload_folder.'/'.$user_id.'/'.$user_pic;
+            $html .= $src;
 
-		}
+        }
 
 
-		return $html;
+        return $html;
 
 
-	}
+    }
 
-	public function get_column_widgets($col)
-	{
-		//get col
+    public function get_column_widgets($col)
+    {
+        //get col
 
 
 
-	}
+    }
 
-	public function do_logged_validation()
-	{
-		global $xoouserultra;
+    public function do_logged_validation()
+    {
+        global $xoouserultra;
 
-		$photo_visibility = $xoouserultra->get_option("uurofile_setting_display_photos");
+        $photo_visibility = $xoouserultra->get_option("uurofile_setting_display_photos");
 
-		if($photo_visibility=='public' || $photo_visibility=="")
-		{
-			$photos_available = true;
+        if($photo_visibility=='public' || $photo_visibility=="")
+        {
+            $photos_available = true;
 
-		}else{
+        }else{
 
-			 if (!is_user_logged_in())
-		     {
-				 $photos_available = false;
+             if (!is_user_logged_in())
+             {
+                 $photos_available = false;
 
-			 }else{
+             }else{
 
-				 $photos_available = true;
+                 $photos_available = true;
 
-			 }
+             }
 
-		}
+        }
 
-		return $photos_available;
+        return $photos_available;
 
 
 
-	}
+    }
 
-	/**
-	Display most visited users List
-	******************************************/
-	public function show_most_visited_users($atts)
-	{
-		global    $xoouserultra;
+    /**
+    Display most visited users List
+    ******************************************/
+    public function show_most_visited_users($atts)
+    {
+        global    $xoouserultra;
 
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-			'item_width' => '25%', // this is the width of each item or user in the directory
-			'howmany' => 3, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'pic_size' => 100, // size in pixels of the user's picture
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => 'in-line',
+            'item_width' => '25%', // this is the width of each item or user in the directory
+            'howmany' => 3, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => 'in-line',
 
 
-		), $atts ) );
+        ), $atts ) );
 
-		$html = "";
+        $html = "";
 
 
-		$users_list = $this->get_most_visited_users($howmany);
+        $users_list = $this->get_most_visited_users($howmany);
 
-		$html.='<div class="uultra-mostvisited-users">
+        $html.='<div class="uultra-mostvisited-users">
 
-			<ul>';
+            <ul>';
 
-		foreach ( $users_list as $user )
-		{
+        foreach ( $users_list as $user )
+        {
 
-			$user_id = $user->ID;
+            $user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
 
-		    }
+            }
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
 
                <div class="prof-photo">
 
@@ -5322,7 +5322,7 @@ class XooUserUser {
 
                 <div class="info-div">
 
-				 <p class="uu-direct-name">'.  $this->get_display_name($user_id).'</p>
+                 <p class="uu-direct-name">'.  $this->get_display_name($user_id).'</p>
 
                  <div class="social-icon-divider">  </div> ';
 
@@ -5347,82 +5347,82 @@ class XooUserUser {
             </li>';
 
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
-
-
-
-	}
-
-	public function get_most_visited_users ($howmany)
-	{
-		global $wpdb, $xoouserultra;
-
-		$sql = ' SELECT u.*, stat.stat_item_id,
-		  stat.stat_module , stat.stat_total_hits
-
-		  FROM ' . $wpdb->prefix . 'users u  ' ;
-		$sql .= " RIGHT JOIN ".$wpdb->prefix ."usersultra_stats stat ON (stat.stat_item_id = u.ID)";
-
-		$sql .= " WHERE stat.stat_item_id = u.ID AND  stat.stat_module= 'user' ORDER BY stat.stat_total_hits DESC  LIMIT $howmany";
-
-		$rows = $wpdb->get_results($sql);
-
-		return $rows;
-
-	}
-
-	/**
-	Display top rated users List
-	******************************************/
-	public function show_minified_profile($atts)
-	{
-		global  $xoouserultra;
-
-		extract( shortcode_atts( array(
-
-			'item_width' => '', // this is the width of each item or user in the directory
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size' => 50, // size in pixels of the user's picture
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'optional_fields_to_display' => 'social,country', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => '',
-			'display_country_flag' => '',
+        return $html ;
 
 
 
+    }
 
-		), $atts ) );
+    public function get_most_visited_users ($howmany)
+    {
+        global $wpdb, $xoouserultra;
 
-		$html = "";
+        $sql = ' SELECT u.*, stat.stat_item_id,
+          stat.stat_module , stat.stat_total_hits
+
+          FROM ' . $wpdb->prefix . 'users u  ' ;
+        $sql .= " RIGHT JOIN ".$wpdb->prefix ."usersultra_stats stat ON (stat.stat_item_id = u.ID)";
+
+        $sql .= " WHERE stat.stat_item_id = u.ID AND  stat.stat_module= 'user' ORDER BY stat.stat_total_hits DESC  LIMIT $howmany";
+
+        $rows = $wpdb->get_results($sql);
+
+        return $rows;
+
+    }
+
+    /**
+    Display top rated users List
+    ******************************************/
+    public function show_minified_profile($atts)
+    {
+        global  $xoouserultra;
+
+        extract( shortcode_atts( array(
+
+            'item_width' => '', // this is the width of each item or user in the directory
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size' => 50, // size in pixels of the user's picture
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'optional_fields_to_display' => 'social,country', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => '',
+            'display_country_flag' => '',
 
 
-		$users_list = $this->get_logged_in_user();
 
-		$html.='<div class="uultra-miniprofile-users">
 
-			<ul>';
+        ), $atts ) );
 
-		foreach ( $users_list as $user )
-		{
+        $html = "";
 
-			$user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+        $users_list = $this->get_logged_in_user();
 
-		    }
+        $html.='<div class="uultra-miniprofile-users">
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
+            <ul>';
+
+        foreach ( $users_list as $user )
+        {
+
+            $user_id = $user->ID;
+
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
+
+            }
+
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
 
                <div class="prof-photo">
                    '.$this->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type).'
@@ -5430,93 +5430,93 @@ class XooUserUser {
 
                 <div class="info-div">
 
-				 <p class="uu-direct-name"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'">'. $this->get_display_name($user_id).' </a> <span>'.$this->get_user_country_flag($user_id).'</span></p> ';
+                 <p class="uu-direct-name"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'">'. $this->get_display_name($user_id).' </a> <span>'.$this->get_user_country_flag($user_id).'</span></p> ';
 
                  if ($optional_fields_to_display!="")
-				 {
+                 {
 
                    $html .= $this->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
 
                   }
 
-				  $html .= '<div class="tool-div-bar"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'" '.__('See Profile','xoousers').'><i class="fa fa-eye fa-lg"></i> </a>
-				  <a class="uultra-btn-profile" href="'.$xoouserultra->get_logout_url().'" title="'.__('Logout','xoousers').'"> <i class="fa fa-power-off fa-lg"></i> </a>  </div> ';
+                  $html .= '<div class="tool-div-bar"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'" '.__('See Profile','xoousers').'><i class="fa fa-eye fa-lg"></i> </a>
+                  <a class="uultra-btn-profile" href="'.$xoouserultra->get_logout_url().'" title="'.__('Logout','xoousers').'"> <i class="fa fa-power-off fa-lg"></i> </a>  </div> ';
 
                   $html .= '</div> ';
 
             $html .=' </li>';
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
-
-
-
-	}
-
-	function get_logged_in_user()
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$logged_user_id = get_current_user_id();
-		$sql = "SELECT ID, user_login, user_nicename from ".$wpdb->prefix ."users WHERE ID = '".$logged_user_id."' ";
-
-		$rows = $wpdb->get_results($sql);
-
-		return $rows;
-	}
-
-	/**
-	Display top rated users List
-	******************************************/
-	public function show_latest_users($atts)
-	{
-		global    $xoouserultra;
-
-		extract( shortcode_atts( array(
-
-			'item_width' => '', // this is the width of each item or user in the directory
-			'howmany' =>3, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size' => 50, // size in pixels of the user's picture
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => '',
-			'display_country_flag' => '',
+        return $html ;
 
 
 
+    }
 
-		), $atts ) );
+    function get_logged_in_user()
+    {
+        global  $wpdb,  $xoouserultra;
 
-		$html = "";
+        $logged_user_id = get_current_user_id();
+        $sql = "SELECT ID, user_login, user_nicename from ".$wpdb->prefix ."users WHERE ID = '".$logged_user_id."' ";
+
+        $rows = $wpdb->get_results($sql);
+
+        return $rows;
+    }
+
+    /**
+    Display top rated users List
+    ******************************************/
+    public function show_latest_users($atts)
+    {
+        global    $xoouserultra;
+
+        extract( shortcode_atts( array(
+
+            'item_width' => '', // this is the width of each item or user in the directory
+            'howmany' =>3, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size' => 50, // size in pixels of the user's picture
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => '',
+            'display_country_flag' => '',
 
 
-		$users_list = $this->get_latest_users($howmany);
 
-		$html.='<div class="uultra-latest-users">
 
-			<ul>';
+        ), $atts ) );
 
-		foreach ( $users_list as $user )
-		{
+        $html = "";
 
-			$user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+        $users_list = $this->get_latest_users($howmany);
 
-		    }
+        $html.='<div class="uultra-latest-users">
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
+            <ul>';
+
+        foreach ( $users_list as $user )
+        {
+
+            $user_id = $user->ID;
+
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
+
+            }
+
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
 
 
 
@@ -5534,7 +5534,7 @@ class XooUserUser {
 
 
 
-				 <p class="uu-direct-name"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'">'. $this->get_display_name($user_id).' </a> <span>'.$this->get_user_country_flag($user_id).'</span></p> ';
+                 <p class="uu-direct-name"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'">'. $this->get_display_name($user_id).' </a> <span>'.$this->get_user_country_flag($user_id).'</span></p> ';
 
                  if ($optional_fields_to_display!="") {
 
@@ -5544,11 +5544,11 @@ class XooUserUser {
                   }
 
 
-				  $html .= '<div class="tool-div-bar"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'" title="'.__('See Profile','xoousers').'" alt="'.__('See Profile','xoousers').'" "><i class="fa fa-eye fa-lg"></i> </a>  </div> ';
+                  $html .= '<div class="tool-div-bar"><a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'" title="'.__('See Profile','xoousers').'" alt="'.__('See Profile','xoousers').'" "><i class="fa fa-eye fa-lg"></i> </a>  </div> ';
 
                   $html .= '</div> ';
 
-				 /* $html .= '
+                 /* $html .= '
                   <div class="uultra-view-profile-bar">
 
                     <a class="uultra-btn-profile" href="'.$this->get_user_profile_permalink( $user_id).'">See Profile</a>
@@ -5559,430 +5559,430 @@ class XooUserUser {
             $html .=' </li>';
 
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
-
-
-
-	}
+        return $html ;
 
 
 
-	function get_latest_users( $howmany )
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
-
-		// prepare arguments
-		$args  = array(
-
-		'orderby' => 'ID',
-		'order' => 'DESC',
-		'number' => $howmany,
-
-		// check for two meta_values
-		'meta_query' => array(
-			array(
-
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-				),
-
-		));
+    }
 
 
 
+    function get_latest_users( $howmany )
+    {
+        global  $wpdb,  $xoouserultra;
+
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
+
+        // prepare arguments
+        $args  = array(
+
+        'orderby' => 'ID',
+        'order' => 'DESC',
+        'number' => $howmany,
+
+        // check for two meta_values
+        'meta_query' => array(
+            array(
+
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+                ),
+
+        ));
 
 
 
-		$wp_user_query = new WP_User_Query($args);
-		$res = $wp_user_query->results;
-
-		return $res;
-	}
-
-	function get_latest_users_private( $howmany )
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
-
-		// prepare arguments
-		$args  = array(
-
-		'orderby' => 'ID',
-		'order' => 'DESC',
-		'number' => $howmany,
-
-		);
 
 
-		$wp_user_query = new WP_User_Query($args);
-		$res = $wp_user_query->results;
 
-		return $res;
-	}
+        $wp_user_query = new WP_User_Query($args);
+        $res = $wp_user_query->results;
+
+        return $res;
+    }
+
+    function get_latest_users_private( $howmany )
+    {
+        global  $wpdb,  $xoouserultra;
+
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
+
+        // prepare arguments
+        $args  = array(
+
+        'orderby' => 'ID',
+        'order' => 'DESC',
+        'number' => $howmany,
+
+        );
 
 
-	/*Used in the Admin Only*/
-	function get_users_filtered( $args )
-	{
+        $wp_user_query = new WP_User_Query($args);
+        $res = $wp_user_query->results;
+
+        return $res;
+    }
+
+
+    /*Used in the Admin Only*/
+    function get_users_filtered( $args )
+    {
 
         global $wpdb,$blog_id, $wp_query;
 
 
-		extract($args);
-		$memberlist_verified = 1;
-		$blog_id = get_current_blog_id();
+        extract($args);
+        $memberlist_verified = 1;
+        $blog_id = get_current_blog_id();
 
-		$paged = (!empty($_GET['paged'])) ? $_GET['paged'] : 1;
-
-		//$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+        $paged = (!empty($_GET['paged'])) ? $_GET['paged'] : 1;
+
+        //$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 
-		$offset = ( ($paged -1) * $per_page);
+        $offset = ( ($paged -1) * $per_page);
 
-		/** QUERY ARGS BEGIN **/
-		if (isset($args['exclude']))
-		{
-			$exclude = explode(',',$args['exclude']);
-			$query['exclude'] = $exclude;
-		}
+        /** QUERY ARGS BEGIN **/
+        if (isset($args['exclude']))
+        {
+            $exclude = explode(',',$args['exclude']);
+            $query['exclude'] = $exclude;
+        }
 
-
-		/** QUERY BY EMAILS **/
-		if ( $uultra_meta=="" )
-		{
-			$query['search'] = $keyword;
-			$query['search_columns']= array('user_login', 'user_email');
-		}
+
+        /** QUERY BY EMAILS **/
+        if ( $uultra_meta=="" )
+        {
+            $query['search'] = $keyword;
+            $query['search_columns']= array('user_login', 'user_email');
+        }
 
-		$query['meta_query'] = array('relation' => strtoupper($relation) );
+        $query['meta_query'] = array('relation' => strtoupper($relation) );
 
-		/*This is applied only if we have to filter certain roles*/
-		if (isset($role) &&  $role!="")
-		{
-			//echo "rol set;";
-			$roles = explode(',',$role);
+        /*This is applied only if we have to filter certain roles*/
+        if (isset($role) &&  $role!="")
+        {
+            //echo "rol set;";
+            $roles = explode(',',$role);
 
-			if (count($roles) >= 2)
-			{
-				$query['meta_query']['relation'] = 'or';
-			}
+            if (count($roles) >= 2)
+            {
+                $query['meta_query']['relation'] = 'or';
+            }
 
-			foreach($roles as $subrole)
-			{
+            foreach($roles as $subrole)
+            {
 
-				$query['meta_query'][] = array(
-				'key' => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
-				'value' => $subrole,
-				'compare' => 'like'
-				);
-			}
-		}
+                $query['meta_query'][] = array(
+                'key' => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+                'value' => $subrole,
+                'compare' => 'like'
+                );
+            }
+        }
 
 
 
-		if ($status)
-		{
+        if ($status)
+        {
 
-			$query['meta_query'][] = array(
-					'key' => 'usersultra_account_status',
-					'value' => $status,
-					'compare' => 'LIKE'
-				);
+            $query['meta_query'][] = array(
+                    'key' => 'usersultra_account_status',
+                    'value' => $status,
+                    'compare' => 'LIKE'
+                );
 
-		}
+        }
 
-		if ($keyword)
-		{
+        if ($keyword)
+        {
 
-			/*$query['meta_query'][] = array(
-					'key' => 'display_name',
-					'value' => $keyword,
-					'compare' => 'LIKE'
-				);*/
+            /*$query['meta_query'][] = array(
+                    'key' => 'display_name',
+                    'value' => $keyword,
+                    'compare' => 'LIKE'
+                );*/
 
-		}
+        }
 
-		if ($uultra_meta)
-		{
+        if ($uultra_meta)
+        {
 
-			$query['meta_query'][] = array(
-					'key' => $uultra_meta,
-					'value' => $keyword,
-					'compare' => 'LIKE'
-				);
-		}
+            $query['meta_query'][] = array(
+                    'key' => $uultra_meta,
+                    'value' => $keyword,
+                    'compare' => 'LIKE'
+                );
+        }
 
-		if ($uultra_membership)
-		{
+        if ($uultra_membership)
+        {
 
-			$query['meta_query'][] = array(
-					'key' => 'usersultra_user_package_id',
-					'value' => $uultra_membership,
-					'compare' => 'LIKE'
-				);
-		}
+            $query['meta_query'][] = array(
+                    'key' => 'usersultra_user_package_id',
+                    'value' => $uultra_membership,
+                    'compare' => 'LIKE'
+                );
+        }
 
 
-		if (isset($memberlist_withavatar) && $memberlist_withavatar == 1)
-		{
-				$query['meta_query'][] = array(
-					'key' => 'profilepicture',
-					'value' => '',
-					'compare' => '!='
-				);
-		}
+        if (isset($memberlist_withavatar) && $memberlist_withavatar == 1)
+        {
+                $query['meta_query'][] = array(
+                    'key' => 'profilepicture',
+                    'value' => '',
+                    'compare' => '!='
+                );
+        }
 
-    	if ($sortby) $query['orderby'] = $sortby;
-	    if ($order) $query['order'] = strtoupper($order); // asc to ASC
+        if ($sortby) $query['orderby'] = $sortby;
+        if ($order) $query['order'] = strtoupper($order); // asc to ASC
 
-		/** QUERY ARGS END **/
+        /** QUERY ARGS END **/
 
-		$query['number'] = $per_page;
-		$query['offset'] = $offset;
+        $query['number'] = $per_page;
+        $query['offset'] = $offset;
 
-		/* Search mode */
-		if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
-		{
-			$count_args = array_merge($query, array('number'=>10000));
-			unset($count_args['offset']);
-			$user_count_query = new WP_User_Query($count_args);
+        /* Search mode */
+        if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
+        {
+            $count_args = array_merge($query, array('number'=>10000));
+            unset($count_args['offset']);
+            $user_count_query = new WP_User_Query($count_args);
 
-		}
+        }
 
-		if ($per_page)
-		{
+        if ($per_page)
+        {
 
-			/* Get Total Users */
-			if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
-			{
-				$user_count = $user_count_query->get_results();
-				$total_users = $user_count ? count($user_count) : 1;
+            /* Get Total Users */
+            if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
+            {
+                $user_count = $user_count_query->get_results();
+                $total_users = $user_count ? count($user_count) : 1;
 
-			} else {
+            } else {
 
-				//echo "HEREE";
+                //echo "HEREE";
 
-				$result = count_users();
-				$total_users = $result['total_users'];
+                $result = count_users();
+                $total_users = $result['total_users'];
 
-				//print_r($result);
-			}
+                //print_r($result);
+            }
 
-			$total_pages = ceil($total_users / $per_page);
+            $total_pages = ceil($total_users / $per_page);
 
-		}
+        }
 
-		$wp_user_query = new WP_User_Query($query);
+        $wp_user_query = new WP_User_Query($query);
 
 
-		//remove_action( 'pre_user_query', 'uultra_query_search_displayname' );
+        //remove_action( 'pre_user_query', 'uultra_query_search_displayname' );
 
-		//print_r($wp_user_query->results);
+        //print_r($wp_user_query->results);
 
-		if (! empty( $wp_user_query->results ))
-		{
-			$arr['total'] = $total_users;
-			$arr['paginate'] = paginate_links( array(
-					'base'         => @add_query_arg('paged','%#%'),
-					'total'        => $total_pages,
-					'current'      => $paged,
-					'show_all'     => false,
-					'end_size'     => 1,
-					'mid_size'     => 2,
-					'prev_next'    => true,
-					'prev_text'    => __('« Previous','xoousers'),
-					'next_text'    => __('Next »','xoousers'),
-					'type'         => 'plain',
-				));
-			$arr['users'] = $wp_user_query->results;
-		}
+        if (! empty( $wp_user_query->results ))
+        {
+            $arr['total'] = $total_users;
+            $arr['paginate'] = paginate_links( array(
+                    'base'         => @add_query_arg('paged','%#%'),
+                    'total'        => $total_pages,
+                    'current'      => $paged,
+                    'show_all'     => false,
+                    'end_size'     => 1,
+                    'mid_size'     => 2,
+                    'prev_next'    => true,
+                    'prev_text'    => __('« Previous','xoousers'),
+                    'next_text'    => __('Next »','xoousers'),
+                    'type'         => 'plain',
+                ));
+            $arr['users'] = $wp_user_query->results;
+        }
 
 
-		return $arr;
+        return $arr;
 
 
-	}
+    }
 
-	//Delete file
-	public function uultra_delete_exported_csv_file()
-	{
+    //Delete file
+    public function uultra_delete_exported_csv_file()
+    {
 
-		global    $xoouserultra;
+        global    $xoouserultra;
 
-		$path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
+        $path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
 
-		$target_path = $path_f.'/import/';
-		$file = $target_path."uultra_data_export.csv";
+        $target_path = $path_f.'/import/';
+        $file = $target_path."uultra_data_export.csv";
 
-		if(file_exists($file))
-		{
-			unlink($file);
+        if(file_exists($file))
+        {
+            unlink($file);
 
-		}
-		die();
+        }
+        die();
 
-	}
+    }
 
-	//Check if CSV exists
-	public function get_downloadable_csv_check()
-	{
-		global    $xoouserultra;
-		$path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
+    //Check if CSV exists
+    public function get_downloadable_csv_check()
+    {
+        global    $xoouserultra;
+        $path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
 
-		$site_url = site_url()."/";
+        $site_url = site_url()."/";
 
-		$target_path = $path_f.'/import/';
-		$file = $target_path."uultra_data_export.csv";
+        $target_path = $path_f.'/import/';
+        $file = $target_path."uultra_data_export.csv";
 
 
-		$html = "";
+        $html = "";
 
-		if(file_exists($file))
-		{
-			$download_file = $site_url.$xoouserultra->get_option('media_uploading_folder')."/import/uultra_data_export.csv";
-			$html .= ' <div class="uuultra-top-noti-admin " id="uultra-csv-download-box">';
-			$html .= "<div class='user-ultra-warning'><p>".__("RECENT EXPORTED USERS", 'xoousers')." <a href='".$download_file."' target='_blank'>".__("CLICK HERE TO DOWNLOAD THE CSV FILE ", 'xoousers')."</a>. ".__("If you don't need it anymore we highly recommend to delete this file. ", 'xoousers')." <a href='#' id='uultra-delete-csv-export-file'> ".__("CLICK HERE TO DELETE THE CSV FILE", 'xoousers')."</a></p></div>";
+        if(file_exists($file))
+        {
+            $download_file = $site_url.$xoouserultra->get_option('media_uploading_folder')."/import/uultra_data_export.csv";
+            $html .= ' <div class="uuultra-top-noti-admin " id="uultra-csv-download-box">';
+            $html .= "<div class='user-ultra-warning'><p>".__("RECENT EXPORTED USERS", 'xoousers')." <a href='".$download_file."' target='_blank'>".__("CLICK HERE TO DOWNLOAD THE CSV FILE ", 'xoousers')."</a>. ".__("If you don't need it anymore we highly recommend to delete this file. ", 'xoousers')." <a href='#' id='uultra-delete-csv-export-file'> ".__("CLICK HERE TO DELETE THE CSV FILE", 'xoousers')."</a></p></div>";
 
 
-			$html .= '</div>';
+            $html .= '</div>';
 
-		}
+        }
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	//Creating downloadable CSV files using
-	public function get_downloadable_csv($users)
-	{
-		global    $xoouserultra;
+    //Creating downloadable CSV files using
+    public function get_downloadable_csv($users)
+    {
+        global    $xoouserultra;
 
-		$path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
+        $path_f = ABSPATH.$xoouserultra->get_option('media_uploading_folder');
 
-		$target_path = $path_f.'/import/';
-		// Checking for upload directory, if not exists then new created.
-		if(!is_dir($target_path))
-			    mkdir($target_path, 0755);
+        $target_path = $path_f.'/import/';
+        // Checking for upload directory, if not exists then new created.
+        if(!is_dir($target_path))
+                mkdir($target_path, 0755);
 
-		// create a file pointer connected to the output stream
-		$file = $target_path."uultra_data_export.csv";
+        // create a file pointer connected to the output stream
+        $file = $target_path."uultra_data_export.csv";
 
-		if(file_exists($file ))
-		{
-			unlink($file);
-		}
+        if(file_exists($file ))
+        {
+            unlink($file);
+        }
 
-		$output = fopen($file, 'w');
+        $output = fopen($file, 'w');
 
 
-		// output the column headings
-		//order username, email, display name, first name and last name
-		$headers_array = array('Nick', 'Email' , 'Display Name' , 'First Name', 'Last Name', 'ID', 'IP', 'Role',    'Status' , 'Registered');
+        // output the column headings
+        //order username, email, display name, first name and last name
+        $headers_array = array('Nick', 'Email' , 'Display Name' , 'First Name', 'Last Name', 'ID', 'IP', 'Role',    'Status' , 'Registered');
 
-		fputcsv($output,$headers_array  );
+        fputcsv($output,$headers_array  );
 
-		if (!empty($users['users']))
-		{
+        if (!empty($users['users']))
+        {
 
-			foreach($users['users'] as $user)
-			{
-				$user_id = $user->ID;
-				$u_status =  $this->get_user_meta_custom($user_id, 'usersultra_account_status');
-				$u_ip =  $this->get_user_meta_custom($user_id, 'uultra_user_registered_ip');
-				$u_role =  $this->get_all_user_roles($user_id);
+            foreach($users['users'] as $user)
+            {
+                $user_id = $user->ID;
+                $u_status =  $this->get_user_meta_custom($user_id, 'usersultra_account_status');
+                $u_ip =  $this->get_user_meta_custom($user_id, 'uultra_user_registered_ip');
+                $u_role =  $this->get_all_user_roles($user_id);
 
-				$user_info = get_userdata($user_id);
+                $user_info = get_userdata($user_id);
 
-				$user_data =  array($user->user_login, $user->user_email, $user_info->display_name,  $user_info->first_name , $user_info->last_name,  $user->ID, $u_ip, $u_role,  $u_status, $user->user_registered  );
+                $user_data =  array($user->user_login, $user->user_email, $user_info->display_name,  $user_info->first_name , $user_info->last_name,  $user->ID, $u_ip, $u_role,  $u_status, $user->user_registered  );
 
 
-				fputcsv($output, $user_data);
+                fputcsv($output, $user_data);
 
-			}
+            }
 
-		}
+        }
 
 
-		// make php send the generated csv lines to the browser
-   		 fclose($output);
+        // make php send the generated csv lines to the browser
+         fclose($output);
 
 
-	}
+    }
 
-	//get user status
-	public function get_user_status($user)
-	{
-		global    $xoouserultra;
+    //get user status
+    public function get_user_status($user)
+    {
+        global    $xoouserultra;
 
-		return $this->get_user_meta_custom($user);
+        return $this->get_user_meta_custom($user);
 
 
-	}
+    }
 
 
-	/**
-	Display top rated users List
-	******************************************/
-	public function show_top_rated_users($atts)
-	{
-		global    $xoouserultra;
+    /**
+    Display top rated users List
+    ******************************************/
+    public function show_top_rated_users($atts)
+    {
+        global    $xoouserultra;
 
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-			'item_width' => '46%', // this is the width of each item or user in the directory
-			'howmany' => 2, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size' => 100, // size in pixels of the user's picture
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => 'in-line',
+            'item_width' => '46%', // this is the width of each item or user in the directory
+            'howmany' => 2, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size' => 100, // size in pixels of the user's picture
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => 'in-line',
 
 
-		), $atts ) );
+        ), $atts ) );
 
-		$html = "";
+        $html = "";
 
 
-		$users_list = $this->get_top_rated_users($howmany);
+        $users_list = $this->get_top_rated_users($howmany);
 
-		$html.='<div class="uultra-toprated-users">
+        $html.='<div class="uultra-toprated-users">
 
-			<ul>';
+            <ul>';
 
-		foreach ( $users_list as $user )
-		{
+        foreach ( $users_list as $user )
+        {
 
-			$user_id = $user->ID;
+            $user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
 
-		    }
+            }
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" style="width:'.$item_width.'" >
 
                <div class="prof-photo">
 
@@ -5992,7 +5992,7 @@ class XooUserUser {
 
                 <div class="info-div">
 
-				 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
+                 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
 
                  <div class="social-icon-divider">  </div> ';
 
@@ -6017,104 +6017,104 @@ class XooUserUser {
             </li>';
 
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
-
-
-
-	}
-
-	public function get_user_display_name($user_id)
-	{
-		$display_name = "";
-
-		$user = get_user_by('id',$user_id);
-
-		$display_name = get_user_meta($user_id, 'display_name', true);
-
-		if($display_name=="")
-		{
-			$display_name =$user->display_name;
-
-		}
-
-		return $display_name;
-
-	}
+        return $html ;
 
 
-	public function get_top_rated_users ($howmany)
-	{
-		global $wpdb, $xoouserultra;
 
-		$sql = ' SELECT u.*, rate.ajaxrating_votesummary_user_id,
-		  rate.ajaxrating_votesummary_total_score
+    }
 
-		  FROM ' . $wpdb->prefix . 'users u  ' ;
-		$sql .= " RIGHT JOIN ".$wpdb->prefix ."usersultra_ajaxrating_votesummary rate ON (rate.ajaxrating_votesummary_user_id = u.ID)";
+    public function get_user_display_name($user_id)
+    {
+        $display_name = "";
 
-		$sql .= " WHERE rate.ajaxrating_votesummary_user_id = u.ID ORDER BY rate.ajaxrating_votesummary_total_score DESC  LIMIT $howmany";
+        $user = get_user_by('id',$user_id);
 
-		$rows = $wpdb->get_results($sql);
+        $display_name = get_user_meta($user_id, 'display_name', true);
 
-		return $rows;
+        if($display_name=="")
+        {
+            $display_name =$user->display_name;
 
-	}
+        }
 
-	/**
-	Display promoted users List
-	******************************************/
-	public function show_promoted_users($atts)
-	{
-		global    $xoouserultra;
+        return $display_name;
+
+    }
 
 
-		extract( shortcode_atts( array(
+    public function get_top_rated_users ($howmany)
+    {
+        global $wpdb, $xoouserultra;
 
-			'users_list' => '', // users list separated by commas
-			'item_width' => '100%', // this is the width of each item or user in the directory
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size' => 100, // size in pixels of the user's picture
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'optional_fields_to_display' => '', //
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_latest_photos' => 'yes',
-			'display_latest_photos_size' => 90,
-			'display_latest_photos_howmany' =>8,
-			'display_promote_desc' =>'',
-			'display_promote_title' =>'',
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => 'in-line',
+        $sql = ' SELECT u.*, rate.ajaxrating_votesummary_user_id,
+          rate.ajaxrating_votesummary_total_score
 
-		), $atts ) );
+          FROM ' . $wpdb->prefix . 'users u  ' ;
+        $sql .= " RIGHT JOIN ".$wpdb->prefix ."usersultra_ajaxrating_votesummary rate ON (rate.ajaxrating_votesummary_user_id = u.ID)";
 
-		$html = "";
+        $sql .= " WHERE rate.ajaxrating_votesummary_user_id = u.ID ORDER BY rate.ajaxrating_votesummary_total_score DESC  LIMIT $howmany";
 
-		$users_list = $this->users_shortcodes_promoted($users_list);
+        $rows = $wpdb->get_results($sql);
 
-		$html.='<div class="uultra-promoted-users">
+        return $rows;
 
-			<ul>';
+    }
 
-		foreach($users_list['users'] as $user)
-		{
+    /**
+    Display promoted users List
+    ******************************************/
+    public function show_promoted_users($atts)
+    {
+        global    $xoouserultra;
 
-			$user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+        extract( shortcode_atts( array(
 
-		    }
+            'users_list' => '', // users list separated by commas
+            'item_width' => '100%', // this is the width of each item or user in the directory
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size' => 100, // size in pixels of the user's picture
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'optional_fields_to_display' => '', //
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_latest_photos' => 'yes',
+            'display_latest_photos_size' => 90,
+            'display_latest_photos_howmany' =>8,
+            'display_promote_desc' =>'',
+            'display_promote_title' =>'',
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => 'in-line',
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" >
+        ), $atts ) );
+
+        $html = "";
+
+        $users_list = $this->users_shortcodes_promoted($users_list);
+
+        $html.='<div class="uultra-promoted-users">
+
+            <ul>';
+
+        foreach($users_list['users'] as $user)
+        {
+
+            $user_id = $user->ID;
+
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
+
+            }
+
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" >
 
                <div class="prof-photo">
 
@@ -6124,36 +6124,36 @@ class XooUserUser {
 
                 <div class="info-div">
 
-				 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
+                 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
 
-				 <p>'.$this->get_user_country_flag($user_id).'</p>
-				 <p>'.$this->get_user_social_icons($user_id).'</p>
+                 <p>'.$this->get_user_country_flag($user_id).'</p>
+                 <p>'.$this->get_user_social_icons($user_id).'</p>
 
 
 
 
                  <div class="social-icon-divider">  </div> ';
 
-				 if ($display_latest_photos=="yes")
-				 {
-					 $html .= $this->get_user_spot_photo($user_id, $display_latest_photos_size, $display_latest_photos_howmany);
+                 if ($display_latest_photos=="yes")
+                 {
+                     $html .= $this->get_user_spot_photo($user_id, $display_latest_photos_size, $display_latest_photos_howmany);
 
 
-				 }
+                 }
 
-				  if ($display_promote_desc!="")
-				 {
-					  $html .= "<h3>" .$display_promote_title."</h3>";
-					 $html .= "<p class='desc'>" .$display_promote_desc."</p>";
-
-
-				 }
+                  if ($display_promote_desc!="")
+                 {
+                      $html .= "<h3>" .$display_promote_title."</h3>";
+                     $html .= "<p class='desc'>" .$display_promote_desc."</p>";
 
 
+                 }
 
 
-				 if ($optional_fields_to_display!="")
-				 {
+
+
+                 if ($optional_fields_to_display!="")
+                 {
 
                    $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
 
@@ -6174,300 +6174,300 @@ class XooUserUser {
             </li>';
 
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
+        return $html ;
 
 
 
-	}
+    }
 
-	function get_user_spot_photo($user_id, $display_latest_photos_size, $display_latest_photos_howmany)
-	{
-		global $wpdb, $xoouserultra;
+    function get_user_spot_photo($user_id, $display_latest_photos_size, $display_latest_photos_howmany)
+    {
+        global $wpdb, $xoouserultra;
 
-		require_once(ABSPATH . 'wp-includes/link-template.php');
-		$site_url = site_url()."/";
+        require_once(ABSPATH . 'wp-includes/link-template.php');
+        $site_url = site_url()."/";
 
-		$upload_folder =  $xoouserultra->get_option('media_uploading_folder');
+        $upload_folder =  $xoouserultra->get_option('media_uploading_folder');
 
-		$html = "";
+        $html = "";
 
-		$rows = $xoouserultra->photogallery->get_user_photos($user_id, $display_latest_photos_howmany);
+        $rows = $xoouserultra->photogallery->get_user_photos($user_id, $display_latest_photos_howmany);
 
-		if ( empty( $rows ) )
-		{
+        if ( empty( $rows ) )
+        {
 
 
-		}else{
+        }else{
 
-			$html.='<div class="uultra-promototed-photo-list">
+            $html.='<div class="uultra-promototed-photo-list">
 
-			<ul>';
+            <ul>';
 
 
-			foreach ( $rows as $photo )
-			{
+            foreach ( $rows as $photo )
+            {
 
 
-				$file=$photo->photo_thumb;
-				$thumb = $site_url.$upload_folder."/".$user_id."/".$file;
+                $file=$photo->photo_thumb;
+                $thumb = $site_url.$upload_folder."/".$user_id."/".$file;
 
-				$html.= "<li id='".$photo->photo_id."' class='".$box_border." ".$box_shadow." ".$display."' >
+                $html.= "<li id='".$photo->photo_id."' class='".$box_border." ".$box_shadow." ".$display."' >
 
-				<a href='".$xoouserultra->userpanel->public_profile_get_photo_link($photo->photo_id, $user_id)."' class='' ><img src='".$thumb."' class='rounded' style='max-width:".$display_latest_photos_size."px'/> </a>";
+                <a href='".$xoouserultra->userpanel->public_profile_get_photo_link($photo->photo_id, $user_id)."' class='' ><img src='".$thumb."' class='rounded' style='max-width:".$display_latest_photos_size."px'/> </a>";
 
 
 
-				$html.= "</li>";
+                $html.= "</li>";
 
 
-			}
+            }
 
-			$html.='</ul></div>';
+            $html.='</ul></div>';
 
 
-		}
+        }
 
-		return $html;
+        return $html;
 
 
 
-	}
+    }
 
-	public function get_current_user_id_for_custom_fields($user_id, $within_widget)
-	{
-		if($within_widget == 'yes' && $user_id=='') //shortcode used within profile's widget
-		{
-			//get from uri
-			$current_user = $this->get_user_data_by_uri();
+    public function get_current_user_id_for_custom_fields($user_id, $within_widget)
+    {
+        if($within_widget == 'yes' && $user_id=='') //shortcode used within profile's widget
+        {
+            //get from uri
+            $current_user = $this->get_user_data_by_uri();
 
-			if(isset($current_user->ID))
-			{
-				$user_id = $current_user->ID;
-			}
+            if(isset($current_user->ID))
+            {
+                $user_id = $current_user->ID;
+            }
 
-			return $user_id;
+            return $user_id;
 
-		}else{
+        }else{
 
 
-			if($user_id=="" && is_user_logged_in())
-			{
-				$user_id = get_current_user_id();
-				return $user_id ;
+            if($user_id=="" && is_user_logged_in())
+            {
+                $user_id = get_current_user_id();
+                return $user_id ;
 
-			}else{
+            }else{
 
-				return $user_id;
+                return $user_id;
 
 
-			}
+            }
 
 
 
-		}
+        }
 
 
 
-	}
+    }
 
-	function uultra_get_user_custom_form_array($user_id)
-	{
-		//get user form
-		$custom_form = $this->get_user_meta( 'uultra_custom_registration_form', $user_id);
+    function uultra_get_user_custom_form_array($user_id)
+    {
+        //get user form
+        $custom_form = $this->get_user_meta( 'uultra_custom_registration_form', $user_id);
 
-		if($custom_form!="")
-		{
+        if($custom_form!="")
+        {
 
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$array = get_option($custom_form);
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $array = get_option($custom_form);
 
-		}else{
+        }else{
 
-			$array = get_option('usersultra_profile_fields');
+            $array = get_option('usersultra_profile_fields');
 
-		}
+        }
 
-		return $array;
+        return $array;
 
-	}
+    }
 
-	/**
-	Display custom information of user
-	******************************************/
-	public function show_user_custom_metainfo($atts)
-	{
-		global   $xoouserultra;
+    /**
+    Display custom information of user
+    ******************************************/
+    public function show_user_custom_metainfo($atts)
+    {
+        global   $xoouserultra;
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-		    'user_id' => '', // this is the width of each item or user in the directory
-			'fields_list' => '',		//example first_name, last_name
-			'template' => 'table',		//table,block,simple
-			'within_widget' => 'no'		//is it being used in widget
+            'user_id' => '', // this is the width of each item or user in the directory
+            'fields_list' => '',        //example first_name, last_name
+            'template' => 'table',      //table,block,simple
+            'within_widget' => 'no'     //is it being used in widget
 
 
-		), $atts ) );
+        ), $atts ) );
 
-		$native_wp_metas= array('user_nicename','user_email' , 'user_registered', 'display_name' , 'first_name' , 'last_name', 'ID');
+        $native_wp_metas= array('user_nicename','user_email' , 'user_registered', 'display_name' , 'first_name' , 'last_name', 'ID');
 
-		$html = "";
+        $html = "";
 
-		$user_id = $this->get_current_user_id_for_custom_fields($user_id, $within_widget );
+        $user_id = $this->get_current_user_id_for_custom_fields($user_id, $within_widget );
 
-		//echo "UID: " .$user_id ;
+        //echo "UID: " .$user_id ;
 
-		if($user_id!="")
-		{
+        if($user_id!="")
+        {
 
-			$fields_list_array = array();
-			$fields_list_array  = explode(',', $fields_list);
+            $fields_list_array = array();
+            $fields_list_array  = explode(',', $fields_list);
 
-			//custom form fields
-			$array=$this->uultra_get_user_custom_form_array($user_id);
+            //custom form fields
+            $array=$this->uultra_get_user_custom_form_array($user_id);
 
-			if($template =='table')
-			{
-				$html .='<table class="uultra-custom-profile-fields-list" width="100%" border="0" cellspacing="0" cellpadding="0">';
+            if($template =='table')
+            {
+                $html .='<table class="uultra-custom-profile-fields-list" width="100%" border="0" cellspacing="0" cellpadding="0">';
 
-			}
+            }
 
-			foreach($fields_list_array as $fields)
-			{
-				$field  = explode(':', $fields);
-				$meta =  preg_replace('/\s+/', '', $field[0]);
-				$meta_label = $field[1];
+            foreach($fields_list_array as $fields)
+            {
+                $field  = explode(':', $fields);
+                $meta =  preg_replace('/\s+/', '', $field[0]);
+                $meta_label = $field[1];
 
-				//check if this is a native WP field
-				if(in_array($meta, $native_wp_metas)	)
-				{
-					$meta_value=get_the_author_meta( $meta, $user_id );
+                //check if this is a native WP field
+                if(in_array($meta, $native_wp_metas)    )
+                {
+                    $meta_value=get_the_author_meta( $meta, $user_id );
 
-					/* Show the label */
-					if ($meta_value!='')
-					{
-						if($template =='table')
-						{
+                    /* Show the label */
+                    if ($meta_value!='')
+                    {
+                        if($template =='table')
+                        {
 
-						$html .= '<tr>';
-						$html .= '<td>' .$meta_label .': </td>';
-						$html .= '<td>' .$meta_value.'</td>';
-						$html .= '</tr>';
+                        $html .= '<tr>';
+                        $html .= '<td>' .$meta_label .': </td>';
+                        $html .= '<td>' .$meta_value.'</td>';
+                        $html .= '</tr>';
 
-						}elseif($template =='block'){
+                        }elseif($template =='block'){
 
-							$html .= '<strong class="uultra-p-custom-field-shortcode">' .$meta_label .': </strong>';
-							$html .= '<p class="uultra-p-custom-field-shortcode">' .$meta_value.'</p>';
+                            $html .= '<strong class="uultra-p-custom-field-shortcode">' .$meta_label .': </strong>';
+                            $html .= '<p class="uultra-p-custom-field-shortcode">' .$meta_value.'</p>';
 
-						}elseif($template =='simple'){
+                        }elseif($template =='simple'){
 
-							$html .= $meta_label." ".$meta_value;
+                            $html .= $meta_label." ".$meta_value;
 
-						}
+                        }
 
-					}
+                    }
 
 
-				}else{
+                }else{
 
-					if($template =='table')
-					{
-						$html .= '<tr>';
-						$html .= '<td>' .$meta_label .': </td>';
-						$html .= '<td>' .$this->get_user_meta_custom( $user_id, $meta) .'</td>';
-						$html .= '</tr>';
+                    if($template =='table')
+                    {
+                        $html .= '<tr>';
+                        $html .= '<td>' .$meta_label .': </td>';
+                        $html .= '<td>' .$this->get_user_meta_custom( $user_id, $meta) .'</td>';
+                        $html .= '</tr>';
 
-					}elseif($template =='block'){
+                    }elseif($template =='block'){
 
-							$html .= '<strong class="uultra-p-custom-field-shortcode">' .$meta_label .': </strong>';
-							$html .= '<p class="uultra-p-custom-field-shortcode">' .$this->get_user_meta_custom( $user_id, $meta).'</p>';
+                            $html .= '<strong class="uultra-p-custom-field-shortcode">' .$meta_label .': </strong>';
+                            $html .= '<p class="uultra-p-custom-field-shortcode">' .$this->get_user_meta_custom( $user_id, $meta).'</p>';
 
-					}elseif($template =='simple'){
+                    }elseif($template =='simple'){
 
-							$html .= $meta_label." ".$this->get_user_meta_custom( $user_id, $meta);
+                            $html .= $meta_label." ".$this->get_user_meta_custom( $user_id, $meta);
 
-					}
+                    }
 
 
 
-				} // end if WP native meta
+                } // end if WP native meta
 
-			} // end for
+            } // end for
 
-			if($template =='table')
-			{
-				 $html .='</table>';
-			}
+            if($template =='table')
+            {
+                 $html .='</table>';
+            }
 
-		} //end if
+        } //end if
 
-		return $html ;
+        return $html ;
 
-	}
+    }
 
 
 
-	/**
-	Display featured users List
-	******************************************/
-	public function show_featured_users($atts)
-	{
-		global    $xoouserultra;
+    /**
+    Display featured users List
+    ******************************************/
+    public function show_featured_users($atts)
+    {
+        global    $xoouserultra;
 
 
-		extract( shortcode_atts( array(
+        extract( shortcode_atts( array(
 
-		    'users_list' => '', // this is the width of each item or user in the directory
-			'meta_key_to_search' => '', //
-			'meta_keyword' => '', //
-			'item_width' => '21%', // this is the width of each item or user in the directory
-			'howmany' => 10, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size' => 100, // size in pixels of the user's picture
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'box_border' => 'rounded',
-			'box_shadow' => 'shadow',
-			'display' => 'in-line',
-			'list_order' => 'ASC', // asc or desc ordering
-		), $atts ) );
+            'users_list' => '', // this is the width of each item or user in the directory
+            'meta_key_to_search' => '', //
+            'meta_keyword' => '', //
+            'item_width' => '21%', // this is the width of each item or user in the directory
+            'howmany' => 10, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size' => 100, // size in pixels of the user's picture
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'box_border' => 'rounded',
+            'box_shadow' => 'shadow',
+            'display' => 'in-line',
+            'list_order' => 'ASC', // asc or desc ordering
+        ), $atts ) );
 
-		$html = "";
+        $html = "";
 
-		if($meta_key_to_search=='')
-		{
+        if($meta_key_to_search=='')
+        {
 
-			$users_list = $this->users_shortcodes_featured($users_list);
+            $users_list = $this->users_shortcodes_featured($users_list);
 
-		}else{
+        }else{
 
-			$users_list = $this->users_shortcodes_featured_by_metakey( $meta_key_to_search, $meta_keyword );
+            $users_list = $this->users_shortcodes_featured_by_metakey( $meta_key_to_search, $meta_keyword );
 
-		}
+        }
 
-		$html.='<div class="uultra-featured-users">
+        $html.='<div class="uultra-featured-users">
 
-			<ul>';
+            <ul>';
 
-		foreach($users_list['users'] as $user)
-		{
+        foreach($users_list['users'] as $user)
+        {
 
-			$user_id = $user->ID;
+            $user_id = $user->ID;
 
-		    if($pic_boder_type=="rounded")
-		    {
-			   $class_avatar = "avatar";
+            if($pic_boder_type=="rounded")
+            {
+               $class_avatar = "avatar";
 
-		    }
+            }
 
-			$html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" >
+            $html .= '<li class="'.$box_border.' '.$box_shadow.' '.$display.'" >
 
                <div class="prof-photo">
 
@@ -6477,7 +6477,7 @@ class XooUserUser {
 
                 <div class="info-div">
 
-				 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
+                 <p class="uu-direct-name">'. $this->get_display_name($user_id).'</p>
 
                  <div class="social-icon-divider">  </div> ';
 
@@ -6502,95 +6502,95 @@ class XooUserUser {
             </li>';
 
 
-		} //end foreach
+        } //end foreach
 
 
-		$html.='</ul></div>';
+        $html.='</ul></div>';
 
-		return $html ;
-
-
-
-	}
-
-	function users_shortcodes_promoted( $users_list )
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$users_list  = explode(',', $users_list);
-
-
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
-
-
-		$query['include'][] = array($users_list);
+        return $html ;
 
 
 
-		$wp_user_query = new WP_User_Query(array('include' =>$users_list ));
-		$arr['users'] = $wp_user_query->results;
+    }
 
-		return $arr;
-	}
+    function users_shortcodes_promoted( $users_list )
+    {
+        global  $wpdb,  $xoouserultra;
 
-	function users_shortcodes_featured( $users_list )
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$users_list  = explode(',', $users_list);
+        $users_list  = explode(',', $users_list);
 
 
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
 
 
-		$query['include'][] = array($users_list);
-		$wp_user_query = new WP_User_Query(array('include' =>$users_list ));
-		$arr['users'] = $wp_user_query->results;
-
-		return $arr;
-	}
-
-	function users_shortcodes_featured_by_metakey( $meta_key, $keyword )
-	{
-		global  $wpdb,  $xoouserultra;
-
-		$query['meta_query'][] = array(
-				'key' => $meta_key,
-				'value' => $keyword,
-				'compare' => 'LIKE'
-			);
-
-		$query['include'][] = array($users_list);
-		$wp_user_query = new WP_User_Query($query);
-		$arr['users'] = $wp_user_query->results;
-
-		return $arr;
-	}
-
-	private function uultra_build_search_field_array($custom_form)
-	{
+        $query['include'][] = array($users_list);
 
 
-		if($custom_form!="")
-		{
-			$custom_form = 'usersultra_profile_fields_'.$custom_form;
-			$custom_fields = get_option($custom_form);
 
-		}else{
+        $wp_user_query = new WP_User_Query(array('include' =>$users_list ));
+        $arr['users'] = $wp_user_query->results;
 
-			$custom_fields = get_option('usersultra_profile_fields');
+        return $arr;
+    }
 
-		}
+    function users_shortcodes_featured( $users_list )
+    {
+        global  $wpdb,  $xoouserultra;
 
-		///$custom_fields = get_option('usersultra_profile_fields');
+        $users_list  = explode(',', $users_list);
+
+
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
+
+
+        $query['include'][] = array($users_list);
+        $wp_user_query = new WP_User_Query(array('include' =>$users_list ));
+        $arr['users'] = $wp_user_query->results;
+
+        return $arr;
+    }
+
+    function users_shortcodes_featured_by_metakey( $meta_key, $keyword )
+    {
+        global  $wpdb,  $xoouserultra;
+
+        $query['meta_query'][] = array(
+                'key' => $meta_key,
+                'value' => $keyword,
+                'compare' => 'LIKE'
+            );
+
+        $query['include'][] = array($users_list);
+        $wp_user_query = new WP_User_Query($query);
+        $arr['users'] = $wp_user_query->results;
+
+        return $arr;
+    }
+
+    private function uultra_build_search_field_array($custom_form)
+    {
+
+
+        if($custom_form!="")
+        {
+            $custom_form = 'usersultra_profile_fields_'.$custom_form;
+            $custom_fields = get_option($custom_form);
+
+        }else{
+
+            $custom_fields = get_option('usersultra_profile_fields');
+
+        }
+
+        ///$custom_fields = get_option('usersultra_profile_fields');
 
 
 
@@ -6700,8 +6700,8 @@ class XooUserUser {
     /* Setup search form */
 
     function uultra_search_form($args=array())
-	{
-		global $xoouserultra, $predefined;
+    {
+        global $xoouserultra, $predefined;
 
         //var_dump($xoouserultra);
         // Determine search form is loaded
@@ -6712,8 +6712,8 @@ class XooUserUser {
             'filters' => null,
             'exclude_fields' => null,
             'operator' => 'AND',
-			'width' => 'AND',
-			'custom_form' => '',
+            'width' => 'AND',
+            'custom_form' => '',
             'use_in_sidebar' => null,
             'users_are_called' => __('Users', 'xooousers'),
             'combined_search_text' =>  __('type user name here', 'xooousers'),
@@ -6740,8 +6740,11 @@ class XooUserUser {
 
         $display.='<div class="xoouserultra-wrap xoouserultra-wrap-form uultra-search-wrap' . $sidebar_class . '">';
         $display.='<div class="xoouserultra-inner xoouserultra-clearfix mc-search-fields">';
-        $display.='<div id="search-title" class="xoouserultra-head">' . sprintf(__('Знайдіть майстра вже сьогодні!', 'xoousers'), $this->search_args['users_are_called']) . '</div>';
-        $display.='<form action="" method="get" id="uultra_search_form" class="uultra-search-form uultra-clearfix">';
+
+        $display.='<div id="search-title" class="xoouserultra-head">' . sprintf(__('%s', 'xoousers'), $this->search_args['users_are_called']) . '</div>';
+//        $display.='<div id="search-title" class="xoouserultra-head">' . sprintf(__('Знайдіть майстра вже сьогодні!', 'xoousers'), $this->search_args['users_are_called']) . '</div>';
+// CUSTOM ACTION
+        $display.='<form action="/usearch/" method="get" id="uultra_search_form" class="uultra-search-form uultra-clearfix">';
 
         // Check For default fields Start
         if ($this->show_combined_search_field === true) {
@@ -6771,12 +6774,12 @@ class XooUserUser {
             $counter = 0;
             $display.='<p class="uultra-p uultra-search-p">';
             foreach ($this->nontext_search_fields as $key => $value)
-			{
+            {
 
                 $method_name = '';
                 $method_name = $this->method_dect[$value['field']];
                 if ($method_name != '')
-				{
+                {
 
                     if ($counter > 0 && $counter % 2 == 0) {
                         $display.='</p>';
@@ -6794,13 +6797,13 @@ class XooUserUser {
 
 
                     if ($method_name == 'drop_down')
-					{
-						//echo "here: ".$method_name;
+                    {
+                        //echo "here: ".$method_name;
                         $loop = array();
 
                         if (isset($value['predefined_options']) && $value['predefined_options'] != '' && $value['predefined_options'] != '0') {
 
-							$defined_loop = $xoouserultra->commmonmethods->get_predifined( $value['predefined_options'] );
+                            $defined_loop = $xoouserultra->commmonmethods->get_predifined( $value['predefined_options'] );
 
 
 
@@ -6869,9 +6872,9 @@ class XooUserUser {
 
 
                 foreach ($this->checkbox_search_fields as $key => $value)
-				{
+                {
                 //    $display.='<p class="uultra-p uultra-search-p uultra-multiselect-p">';
-					$display.='<p class="uultra-p uultra-search-p">';
+                    $display.='<p class="uultra-p uultra-search-p">';
 
                     $method_name = '';
                     $method_name = $this->method_dect[$value['field']];
@@ -6900,13 +6903,13 @@ class XooUserUser {
                         $default = isset($_GET['uultra_search'][$value['meta']]) ? $_GET['uultra_search'][$value['meta']] : '0';
                         $name = 'uultra_search[' . $value['meta'] . ']';
                         if ($value['field'] == 'checkbox')
-						{
+                        {
                             $default = isset($_GET['uultra_search'][$value['meta']]) ? $_GET['uultra_search'][$value['meta']] : array();
                             $name = 'uultra_search[' . $value['meta'] . '][]';
                         }
 
                         if (count($loop) > 0)
-						{
+                        {
                        //     var_dump($loop);
                             $display.= $xoouserultra->htmlbuilder->drop_down(array(
                                         'class' => $class,
@@ -6989,2758 +6992,2749 @@ class XooUserUser {
         wp_localize_script( 'populateCities', 'populate_sities_vars', $regions_sities_data);
     }
 
-	/* Search user by more criteria */
-	function uultra_query_search_displayname( &$query ) {
-		global $wpdb;
-		$search_string = esc_attr( trim( get_query_var('uultra_combined_search') ) );
-		$query->query_where .= $wpdb->prepare( " OR $wpdb->users.display_name LIKE %s", '%' . like_escape( $search_string ) . '%' );
-	}
+    /* Search user by more criteria */
+    function uultra_query_search_displayname( &$query ) {
+        global $wpdb;
+        $search_string = esc_attr( trim( get_query_var('uultra_combined_search') ) );
+        $query->query_where .= $wpdb->prepare( " OR $wpdb->users.display_name LIKE %s", '%' . like_escape( $search_string ) . '%' );
+    }
 
     /* Apply search params and Generate Results */
 
-	function search_result($args)
-	{
-		//add_action('pre_user_query', array( $this, 'uultra_query_search_displayname' ));
+    function search_result($args)
+    {
+        //add_action('pre_user_query', array( $this, 'uultra_query_search_displayname' ));
 
-		global $wpdb,$blog_id, $wp_query, $wp_rewrite, $paged;
-
-
-		extract($args);
-
-		$memberlist_verified = 1;
-
-		$blog_id = get_current_blog_id();
-
-		//$page = (!empty($_GET['uultra-page'])) ? $_GET['uultra-page'] : 1;
-		$wp_query->query_vars['paged'] > 1 ? $page = $wp_query->query_vars['paged'] : $page = 1;
-
-		$offset = ( ($page -1) * $per_page);
-
-		/** QUERY ARGS BEGIN **/
-
-		if (isset($args['exclude']))
-		{
-			$exclude = explode(',',$args['exclude']);
-			$query['exclude'] = $exclude;
-		}
-
-		$query['meta_query'] = array('relation' => strtoupper($relation) );
-
-		/*This is applied only if we have to filder certain roles*/
-		if (isset($role) &&  $role!="")
-		{
-			//echo "rol set;";
-			$roles = explode(',',$role);
-			if (count($roles) >= 2){
-				$query['meta_query']['relation'] = 'or';
-			}
-			foreach($roles as $subrole){
-			$query['meta_query'][] = array(
-				'key' => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
-				'value' => $subrole,
-				'compare' => 'like'
-			);
-			}
-		}
+        global $wpdb,$blog_id, $wp_query, $wp_rewrite, $paged;
 
 
-	    if (isset($_GET['uultra_search']))
-		{
+        extract($args);
+
+        $memberlist_verified = 1;
+
+        $blog_id = get_current_blog_id();
+
+        //$page = (!empty($_GET['uultra-page'])) ? $_GET['uultra-page'] : 1;
+        $wp_query->query_vars['paged'] > 1 ? $page = $wp_query->query_vars['paged'] : $page = 1;
+
+        $offset = ( ($page -1) * $per_page);
+
+        /** QUERY ARGS BEGIN **/
+
+        if (isset($args['exclude']))
+        {
+            $exclude = explode(',',$args['exclude']);
+            $query['exclude'] = $exclude;
+        }
+
+        $query['meta_query'] = array('relation' => strtoupper($relation) );
+
+        /*This is applied only if we have to filder certain roles*/
+        if (isset($role) &&  $role!="")
+        {
+            //echo "rol set;";
+            $roles = explode(',',$role);
+            if (count($roles) >= 2){
+                $query['meta_query']['relation'] = 'or';
+            }
+            foreach($roles as $subrole){
+            $query['meta_query'][] = array(
+                'key' => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+                'value' => $subrole,
+                'compare' => 'like'
+            );
+            }
+        }
+
+
+        if (isset($_GET['uultra_search']))
+        {
 
         foreach ($_GET['uultra_search'] as $key => $value)
-		{
+        {
 
 
-			//echo $key ." val: " . $value;
-			$target =  $value;
+            //echo $key ." val: " . $value;
+            $target =  $value;
 
 
 
-						/*if ($->field_type($key) == 'multiselect' ||
-							$->field_type($key) == 'checkbox' ||
-							$uultra->field_type($key) == 'checkbox-full'
-							) {
-							$like = 'like';
-						} else {
-							$like = '=';
-						}*/
+                        /*if ($->field_type($key) == 'multiselect' ||
+                            $->field_type($key) == 'checkbox' ||
+                            $uultra->field_type($key) == 'checkbox-full'
+                            ) {
+                            $like = 'like';
+                        } else {
+                            $like = '=';
+                        }*/
 
-			$like = 'like';
-			if (isset($target)  && $target != '' && $key != 'role' )
-			{
-				if (substr( trim( htmlspecialchars_decode($args[$key])  ) , 0, 1) === '>')
-				{
-					$choices = explode('>', trim(  htmlspecialchars_decode($args[$key]) ));
-					$target = $choices[1];
-					$query['meta_query'][] = array(
-									'key' => $key,
-									'value' => $target,
-									'compare' => '>'
-						);
-				}elseif (substr( trim(  htmlspecialchars_decode($args[$key]) ) , 0, 1) === '<') {
-								$choices = explode('<', trim(  htmlspecialchars_decode($args[$key]) ));
-								$target = $choices[1];
-								$query['meta_query'][] = array(
-									'key' => $key,
-									'value' => $target,
-									'compare' => '<'
-								);
-							} elseif (strstr( esc_attr( trim(  $args[$key] ) ) , ':')){
-								$choices = explode(':', esc_attr( trim(  $args[$key] ) ));
-								$min = $choices[0];
-								$max = $choices[1];
-								$query['meta_query'][] = array(
-									'key' => $key,
-									'value' => array($min, $max),
-									'compare' => 'between'
-								);
-							} elseif (strstr( esc_attr( trim( $args[$key] ) ) , ',')){
-								$choices = explode(',', esc_attr( trim(  $args[$key] ) ));
-								foreach($choices as $choice){
-									$query['meta_query'][] = array(
-										'key' => $key,
-										'value' => $choice,
-										'compare' => $like
-									);
-								}
-							} else {
+            $like = 'like';
+            if (isset($target)  && $target != '' && $key != 'role' )
+            {
+                if (substr( trim( htmlspecialchars_decode($args[$key])  ) , 0, 1) === '>')
+                {
+                    $choices = explode('>', trim(  htmlspecialchars_decode($args[$key]) ));
+                    $target = $choices[1];
+                    $query['meta_query'][] = array(
+                                    'key' => $key,
+                                    'value' => $target,
+                                    'compare' => '>'
+                        );
+                }elseif (substr( trim(  htmlspecialchars_decode($args[$key]) ) , 0, 1) === '<') {
+                                $choices = explode('<', trim(  htmlspecialchars_decode($args[$key]) ));
+                                $target = $choices[1];
+                                $query['meta_query'][] = array(
+                                    'key' => $key,
+                                    'value' => $target,
+                                    'compare' => '<'
+                                );
+                            } elseif (strstr( esc_attr( trim(  $args[$key] ) ) , ':')){
+                                $choices = explode(':', esc_attr( trim(  $args[$key] ) ));
+                                $min = $choices[0];
+                                $max = $choices[1];
+                                $query['meta_query'][] = array(
+                                    'key' => $key,
+                                    'value' => array($min, $max),
+                                    'compare' => 'between'
+                                );
+                            } elseif (strstr( esc_attr( trim( $args[$key] ) ) , ',')){
+                                $choices = explode(',', esc_attr( trim(  $args[$key] ) ));
+                                foreach($choices as $choice){
+                                    $query['meta_query'][] = array(
+                                        'key' => $key,
+                                        'value' => $choice,
+                                        'compare' => $like
+                                    );
+                                }
+                            } else {
 
-									$query['meta_query'][] = array(
-										'key' => $key,
-										'value' => esc_attr( trim( $target ) ),
-										'compare' => $like
-									);
-							}
+                                    $query['meta_query'][] = array(
+                                        'key' => $key,
+                                        'value' => esc_attr( trim( $target ) ),
+                                        'compare' => $like
+                                    );
+                            }
 
-						}
+                        }
 
 
 
 
                  } //end for each
 
-				 } //end if
+                 } //end if
 
-			 if ($memberlist_verified)
-			 {
-				$query['meta_query'][] = array(
-					'key' => 'usersultra_account_status',
-					'value' => 'active',
-					'compare' => 'LIKE'
-				);
-			}
+             if ($memberlist_verified)
+             {
+                $query['meta_query'][] = array(
+                    'key' => 'usersultra_account_status',
+                    'value' => 'active',
+                    'compare' => 'LIKE'
+                );
+            }
 
-			if (isset($memberlist_withavatar) && $memberlist_withavatar == 1){
-				$query['meta_query'][] = array(
-					'key' => 'profilepicture',
-					'value' => '',
-					'compare' => '!='
-				);
-			}
+            if (isset($memberlist_withavatar) && $memberlist_withavatar == 1){
+                $query['meta_query'][] = array(
+                    'key' => 'profilepicture',
+                    'value' => '',
+                    'compare' => '!='
+                );
+            }
 
 
-		/**
-			CUSTOM SEARCH FILTERS
-		**
-		**
-		**/
+        /**
+            CUSTOM SEARCH FILTERS
+        **
+        **
+        **/
 
-		if (isset($_GET['uultra_combined_search']))
-		{
-			 //echo "YES1";
+        if (isset($_GET['uultra_combined_search']))
+        {
+             //echo "YES1";
 
-			/* Searchuser query param */
-			$search_string = esc_attr( trim( get_value('uultra_combined_search') ) );
+            /* Searchuser query param */
+            $search_string = esc_attr( trim( get_value('uultra_combined_search') ) );
 
-			if ($search_string != '')
-			{
-				// echo "YES2";
+            if ($search_string != '')
+            {
+                // echo "YES2";
 
-				 if (get_value('uultra_combined_search_fields') != '' && get_value('uultra_combined_search') != '')
-				 {
+                 if (get_value('uultra_combined_search_fields') != '' && get_value('uultra_combined_search') != '')
+                 {
 
-					// echo "YES3";
-					//$customfilters = explode(',',$args['memberlist_filters']);
+                    // echo "YES3";
+                    //$customfilters = explode(',',$args['memberlist_filters']);
 
-					$customfilters = explode(',', get_value('uultra_combined_search_fields'));
+                    $customfilters = explode(',', get_value('uultra_combined_search_fields'));
 
                     $combined_search_text = esc_sql(like_escape(get_value('uultra_combined_search')));
 
 
-					if ($customfilters)
-					{
-						if (count($customfilters) > 1)
-						{
-							//$query['meta_query']['relation'] = 'or';
-						}
+                    if ($customfilters)
+                    {
+                        if (count($customfilters) > 1)
+                        {
+                            //$query['meta_query']['relation'] = 'or';
+                        }
 
-						//print_r($customfilters);
+                        //print_r($customfilters);
 
-						$query['meta_query'][] = array(
-							'key' => 'display_name',
-							'value' => $search_string,
-							'compare' => 'LIKE'
-						);
+                        $query['meta_query'][] = array(
+                            'key' => 'display_name',
+                            'value' => $search_string,
+                            'compare' => 'LIKE'
+                        );
 
-					}
-				}
-
-
-				}
-
-			}
+                    }
+                }
 
 
-			if ($sortby) $query['orderby'] = $sortby;
-			if ($order) $query['order'] = strtoupper($order); // asc to ASC
+                }
 
-			/** QUERY ARGS END **/
-
-			$query['number'] = $per_page;
-			$query['offset'] = $offset;
-
-			/* Search mode */
-		if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
-		{
-			$count_args = array_merge($query, array('number'=>10000));
-			unset($count_args['offset']);
-			//$user_count_query = $this->get_cached_query( $count_args );
-
-			$user_count_query = new WP_User_Query($count_args);
-
-		}
-
-		if ($per_page)
-		{
-
-			/* Get Total Users */
-			if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
-			{
-				$user_count = $user_count_query->get_results();
-				$total_users = $user_count ? count($user_count) : 1;
-
-			} else {
+            }
 
 
-				$result = count_users();
-				$total_users = $result['total_users'];
-			}
+            if ($sortby) $query['orderby'] = $sortby;
+            if ($order) $query['order'] = strtoupper($order); // asc to ASC
 
-			$total_pages = ceil($total_users / $per_page);
+            /** QUERY ARGS END **/
 
-		}
+            $query['number'] = $per_page;
+            $query['offset'] = $offset;
 
+            /* Search mode */
+        if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
+        {
+            $count_args = array_merge($query, array('number'=>10000));
+            unset($count_args['offset']);
+            //$user_count_query = $this->get_cached_query( $count_args );
 
+            $user_count_query = new WP_User_Query($count_args);
 
-		remove_action( 'pre_user_query', 'uultra_query_search_displayname' );
-		$wp_user_query = new WP_User_Query($query);
+        }
 
+        if ($per_page)
+        {
 
-		if (! empty( $wp_user_query->results ))
-		{
-			$arr['total'] = $total_users;
-			$arr['paginate'] = paginate_links( array(
-					//'base'         => @add_query_arg('paged','%#%'),
-					'total'        => $total_pages,
-					'current'      => $page,
-					'show_all'     => false,
-					'end_size'     => 1,
-					'mid_size'     => 2,
-					'prev_next'    => true,
-					'prev_text'    => __('« Previous','xoousers'),
-					'next_text'    => __('Next »','xoousers'),
-					'type'         => 'plain',
-				));
-			$arr['users'] = $wp_user_query->results;
-		}
+            /* Get Total Users */
+            if ( ( isset($_GET['uultra_search']) && !empty($_GET['uultra_search']) ) || count($query['meta_query']) > 1 )
+            {
+                $user_count = $user_count_query->get_results();
+                $total_users = $user_count ? count($user_count) : 1;
+
+            } else {
 
 
-		$this->searched_users = $arr;
+                $result = count_users();
+                $total_users = $result['total_users'];
+            }
+
+            $total_pages = ceil($total_users / $per_page);
+
+        }
+
+
+
+        remove_action( 'pre_user_query', 'uultra_query_search_displayname' );
+        $wp_user_query = new WP_User_Query($query);
+
+
+        if (! empty( $wp_user_query->results ))
+        {
+            $arr['total'] = $total_users;
+            $arr['paginate'] = paginate_links( array(
+                    //'base'         => @add_query_arg('paged','%#%'),
+                    'total'        => $total_pages,
+                    'current'      => $page,
+                    'show_all'     => false,
+                    'end_size'     => 1,
+                    'mid_size'     => 2,
+                    'prev_next'    => true,
+                    'prev_text'    => __('« Previous','xoousers'),
+                    'next_text'    => __('Next »','xoousers'),
+                    'type'         => 'plain',
+                ));
+            $arr['users'] = $wp_user_query->results;
+        }
+
+
+        $this->searched_users = $arr;
 
      }
 
-	 /******************************************
-	Get a cached query
-	******************************************/
-	function get_cached_query($query)
-	{
-		$cached = $this->get_cached_results;
-		$testcache = serialize($query);
-		if ( !isset($cached["$testcache"]) )
-		{
-			$cached["$testcache"] = new WP_User_Query( unserialize($testcache) );
-			update_option('uultra_cached_results', $cached);
-			$query = $cached["$testcache"];
-		} else {
-			$query = $cached["$testcache"];
-		}
+     /******************************************
+    Get a cached query
+    ******************************************/
+    function get_cached_query($query)
+    {
+        $cached = $this->get_cached_results;
+        $testcache = serialize($query);
+        if ( !isset($cached["$testcache"]) )
+        {
+            $cached["$testcache"] = new WP_User_Query( unserialize($testcache) );
+            update_option('uultra_cached_results', $cached);
+            $query = $cached["$testcache"];
+        } else {
+            $query = $cached["$testcache"];
+        }
 
-		return $query;
-	}
+        return $query;
+    }
 
 
 
 
-	/**
-	Display Members List Minified
-	******************************************/
-	public function show_online_users($atts)
-	{
-		global $xoouserultra;
-		extract( shortcode_atts( array(
+    /**
+    Display Members List Minified
+    ******************************************/
+    public function show_online_users($atts)
+    {
+        global $xoouserultra;
+        extract( shortcode_atts( array(
 
-			'template' => 'basic', // basic - mini -list
-			'container_width' => '100%', // this is the main container dimension
-			'item_width' => '20%', // this is the width of each item or user in the directory
-			'item_height' => 'auto', // auto height
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'avatar_rounded', // avatar_rounded
-			'pic_size_type' => 'fixed', // dynamic or fixed
-			'pic_size' => 100, // size in pixels of the user's picture
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_total_found_text' => __('Online Users','xoousers'), // display total found
-		), $atts ) );
+            'template' => 'basic', // basic - mini -list
+            'container_width' => '100%', // this is the main container dimension
+            'item_width' => '20%', // this is the width of each item or user in the directory
+            'item_height' => 'auto', // auto height
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'avatar_rounded', // avatar_rounded
+            'pic_size_type' => 'fixed', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_total_found_text' => __('Online Users','xoousers'), // display total found
+        ), $atts ) );
 
-		$html = '';
+        $html = '';
 
 
-		$search_array = array('list_per_page' => $list_per_page, 'list_order' => $list_order);
-		$users_list = $this->get_online_users($search_array);
+        $search_array = array('list_per_page' => $list_per_page, 'list_order' => $list_order);
+        $users_list = $this->get_online_users($search_array);
 
-		//display pages
-		$disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
+        //display pages
+        $disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
 
-		//echo "template: " . $template;
+        //echo "template: " . $template;
 
-		$html .='<div class="usersultra-front-directory-wrap">';
+        $html .='<div class="usersultra-front-directory-wrap">';
 
-		if(count($users_list)>0)
-		{
+        if(count($users_list)>0)
+        {
 
-			$html .='<ul class="usersultra-online-users-results">';
+            $html .='<ul class="usersultra-online-users-results">';
 
-			foreach($users_list as $user) : $user_id = $user->ID;
+            foreach($users_list as $user) : $user_id = $user->ID;
 
-			   if($pic_boder_type=="rounded")
-			   {
-				   $class_avatar = "avatar";
-				}
+               if($pic_boder_type=="rounded")
+               {
+                   $class_avatar = "avatar";
+                }
 
 
-				if ($template=='' || $template=='basic')
-				{
-					$html .=' <li class="rounded" style="width:'.$item_width.'">';
-					$html .=' <div class="xoousers-prof-photo">
+                if ($template=='' || $template=='basic')
+                {
+                    $html .=' <li class="rounded" style="width:'.$item_width.'">';
+                    $html .=' <div class="xoousers-prof-photo">
 
-						'.$xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
+                        '.$xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
 
-					$html .=' </div>';
+                    $html .=' </div>';
 
-					$html .=' <div class="info-div">';
-					$html .='<p class="uu-direct-name">'. $xoouserultra->userpanel->get_display_name($user_id).'</p>';
+                    $html .=' <div class="info-div">';
+                    $html .='<p class="uu-direct-name">'. $xoouserultra->userpanel->get_display_name($user_id).'</p>';
 
-					$html .=' <div class="social-icon-divider">  </div> ';
+                    $html .=' <div class="social-icon-divider">  </div> ';
 
-					 if ($optional_fields_to_display!="")
-					 {
-						 $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
+                     if ($optional_fields_to_display!="")
+                     {
+                         $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
 
-					 }
+                     }
 
-					 $html .=' </div>';
+                     $html .=' </div>';
 
-					 $html .=' </li>';
+                     $html .=' </li>';
 
 
-				 }elseif($template=='mini'){
+                 }elseif($template=='mini'){
 
 
-						$html .='<li class="avatar_mini " style="width:'.$pic_size.'px">';
-						$html .='<div class="xoousers-prof-photo"> ';
+                        $html .='<li class="avatar_mini " style="width:'.$pic_size.'px">';
+                        $html .='<div class="xoousers-prof-photo"> ';
 
-						$html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
-						 if ($optional_fields_to_display!="")
-					 {
-						 $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
+                        $html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
+                         if ($optional_fields_to_display!="")
+                     {
+                         $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
 
-					 }
+                     }
 
 
-						$html .=' </div>';
-						$html .=' </li>';
+                        $html .=' </div>';
+                        $html .=' </li>';
 
-				 }elseif($template=='list'){
+                 }elseif($template=='list'){
 
 
-				 		$html .=' <li class="list_mini_badges" style="width:'.$item_width.'">';
+                        $html .=' <li class="list_mini_badges" style="width:'.$item_width.'">';
 
-						$html .='<div class="xoousers-prof-photo"> ';
+                        $html .='<div class="xoousers-prof-photo"> ';
 
 
-						$html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
+                        $html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
 
-						$html .='<p class="uu-direct-name-online-mini">'. $xoouserultra->userpanel->get_display_name($user_id).'</p>';
+                        $html .='<p class="uu-direct-name-online-mini">'. $xoouserultra->userpanel->get_display_name($user_id).'</p>';
 
-						 if ($optional_fields_to_display!="")
-						 {
-							 $html .='<span>';
-							 $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
+                         if ($optional_fields_to_display!="")
+                         {
+                             $html .='<span>';
+                             $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display);
 
-							 $html .='</span>';
+                             $html .='</span>';
 
-						 }
+                         }
 
 
-						$html .=' </div>';
+                        $html .=' </div>';
 
-						$html .=' </li>';
+                        $html .=' </li>';
 
 
-				 } //end if
+                 } //end if
 
 
 
 
 
-			endforeach;
+            endforeach;
 
-			$html .='</ul">';
+            $html .='</ul">';
 
-		}else{
+        }else{
 
-			$html .='<p">' . __("There are no online users ",'xoousers').'</p>';
+            $html .='<p">' . __("There are no online users ",'xoousers').'</p>';
 
-		}
-		$html .=' </div>';
+        }
+        $html .=' </div>';
 
-		//get template
+        //get template
 
-		return $html;
+        return $html;
 
-	}
+    }
 
-	/**
-	Display Members List Minified
-	******************************************/
-	public function show_users_directory_mini($atts)
-	{
-		extract( shortcode_atts( array(
+    /**
+    Display Members List Minified
+    ******************************************/
+    public function show_users_directory_mini($atts)
+    {
+        extract( shortcode_atts( array(
 
-			'template' => 'directory_mini', //this is the template file's name
-			'container_width' => '100%', // this is the main container dimension
-			'item_width' => '10%', // this is the width of each item or user in the directory
-			'item_height' => 'auto', // auto height
-			'list_per_page' => 10, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'pic_size' => 100, // size in pixels of the user's picture
-			'optional_fields_to_display' => '', // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_total_found' => 'yes', // display total found
-			'display_total_found_text' => __('Users','xoousers'), // display total found
+            'template' => 'directory_mini', //this is the template file's name
+            'container_width' => '100%', // this is the main container dimension
+            'item_width' => '10%', // this is the width of each item or user in the directory
+            'item_height' => 'auto', // auto height
+            'list_per_page' => 10, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'optional_fields_to_display' => '', // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_total_found' => 'yes', // display total found
+            'display_total_found_text' => __('Users','xoousers'), // display total found
 
-			'list_order' => 'DESC', // asc or desc ordering
-		), $atts ) );
+            'list_order' => 'DESC', // asc or desc ordering
+        ), $atts ) );
 
+        $search_array = array('list_per_page' => $list_per_page, 'list_order' => $list_order);
+        $users_list = $this->users($search_array);
 
-		$search_array = array('list_per_page' => $list_per_page, 'list_order' => $list_order);
-		$users_list = $this->users($search_array);
+        //display pages
+        $disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
 
-		//display pages
-		$disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
+        $total_f = $this->get_total_found($disp_array);
 
-		$total_f = $this->get_total_found($disp_array);
+        //get template
+        require(xoousers_path.'/templates/'.xoousers_template."/".$template.".php");
+    }
 
-		//get template
-		require(xoousers_path.'/templates/'.xoousers_template."/".$template.".php");
+    public function get_current_page()
+    {
+        $page = "";
+        if(isset($_GET["ultra-page"]))
+        {
+            $page = $_GET["ultra-page"];
+        }else{
+            $page = 1;
+        }
 
-	}
+        return $page;
+    }
 
 
-	public function get_current_page()
-	{
-		$page = "";
-		if(isset($_GET["ultra-page"]))
-		{
-			$page = $_GET["ultra-page"];
+    /**
+    Display Members List Masters City
+    ******************************************/
+    public function show_users_mc_directory($atts)
+    {
+        global $xoouserultra;
 
-		}else{
+        extract( shortcode_atts( array(
+            'template' => 'directory_mc', //this is the template file's name
+            'container_width' => '100%', // this is the main container dimension
+            'item_width' => '10%', // this is the width of each item or user in the directory
+            'item_height' => 'auto', // auto height
+            'list_per_page' => 10, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'optional_fields_to_display' => '', //
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_total_found' => 'yes', // display total found
+            'display_total_found_text' => __('Users', 'xoousers'), // display total found
+            'list_order' => 'ASC', // asc or desc ordering
+            'sort_by' => 'ID', //
+            'role' => '', // filter by role
+            'relation' => 'AND', // filter by role
+            'exclude' => '' // exclude by user id
+        ), $atts ) );
 
-			$page = 1;
+        $page = $this->get_current_page();
+        $this->current_users_page = $page;
 
-		}
+//        $search_array = array('list_per_page' => $list_per_page, 'list_order' => $list_order);
+        $search_array= array('per_page' => $list_per_page, 'relation' => $relation, 'role' => $role, 'exclude' => $exclude, 'order' => $list_order, 'sortby' => $sort_by);
 
-		return $page;
+        $this->search_result($search_array);
+        $users_list = $this->searched_users;
+//        $users_list = $this->users($search_array);
+//        print_r($users_list);
+        //display pages
+        $disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
 
+        $total_f = $this->get_total_found($disp_array);
 
-	}
+        //get template
+        require(xoousers_path.'/templates/'.xoousers_template."/".$template.".php");
+    }
 
+    /**
+    Display Members List
+    ******************************************/
+    public function show_users_directory($atts)
+    {
+        global $xoouserultra;
 
+        $atts_temp = $atts;
 
-	/**
-	Display Members List
-	******************************************/
-	public function show_users_directory($atts)
-	{
-		global $xoouserultra;
+        extract( shortcode_atts( array(
+            'template' => 'directory_default', //this is the template file's name
+            'container_width' => '100%', // this is the main container dimension
+            'item_width' => '21%', // this is the width of each item or user in the directory
+            'item_height' => 'auto', // auto height
+            'list_per_page' => 3, // how many items per page
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'optional_fields_to_display' => '', //
+            'display_to_logged_in_only' => '', // yes or null or empy
+            'display_to_logged_in_only_text' => __('Only logged in users can see this page', 'xoousers'),
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_total_found' => 'yes', // display total found
+            'display_total_found_text' => __('Users', 'xoousers'), // display total found
+            'list_order' => 'ASC', // asc or desc ordering
+            'sort_by' => 'ID', //
+            'role' => '', // filter by role
+            'relation' => 'AND', // filter by role
+            'exclude' => '' // exclude by user id
+        ), $atts ) );
 
-		$atts_temp = $atts;
 
-		extract( shortcode_atts( array(
+        $page = $this->get_current_page();
+        $search_array = array('list_per_page' => $list_per_page, 'order' => $list_order, 'sortby' => $sort_by);
+        $args= array('per_page' => $list_per_page, 'relation' => $relation, 'role' => $role, 'exclude' => $exclude, 'order' => $list_order, 'sortby' => $sort_by);
 
-			'template' => 'directory_default', //this is the template file's name
-			'container_width' => '100%', // this is the main container dimension
-			'item_width' => '21%', // this is the width of each item or user in the directory
-			'item_height' => 'auto', // auto height
-			'list_per_page' => 3, // how many items per page
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'pic_size' => 100, // size in pixels of the user's picture
-			'optional_fields_to_display' => '', //
+        $html ='';
+        $html .='<div class="usersultra-front-directory-wrap">
+                <div class="usersultra-searcher">
+                </div>';
 
-			'display_to_logged_in_only' => '', // yes or null or empy
-			'display_to_logged_in_only_text' => __('Only logged in users can see this page', 'xoousers'),
+        //only logged in
+        if($display_to_logged_in_only=='yes' && !is_user_logged_in())
+        {
+            $html .=' <p>'. $display_to_logged_in_only_text.'</p>';
+        }else{
 
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_total_found' => 'yes', // display total found
-			'display_total_found_text' => __('Users', 'xoousers'), // display total found
-			'list_order' => 'ASC', // asc or desc ordering
-			'sort_by' => 'ID', //
-			'role' => '', // filter by role
-			'relation' => 'AND', // filter by role
-			'exclude' => '' // exclude by user id
-		), $atts ) );
+            //display to all users
 
+            $this->current_users_page = $page;
+            $this->search_result($args);
 
-		$page = $this->get_current_page();
-		$search_array = array('list_per_page' => $list_per_page, 'order' => $list_order, 'sortby' => $sort_by);
-		$args= array('per_page' => $list_per_page, 'relation' => $relation, 'role' => $role, 'exclude' => $exclude, 'order' => $list_order, 'sortby' => $sort_by);
+            $users_list = $this->searched_users;
 
+            //display pages
+            $disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
+            $total_f = $this->get_total_found($disp_array);
 
+            if (isset($users_list['paginate'])) {
+                $html .=' <div class="usersultra-paginate top_display">'. $users_list['paginate'].'</div>';
+            }
 
-		$html ='';
-		$html .='<div class="usersultra-front-directory-wrap">
-		       	<div class="usersultra-searcher">
-			    </div>';
+            if ($display_total_found=='yes')
+            {
+                $html .=$total_f;
+            }
 
-		//only logged in
+            $html .= $this->get_directory_template($users_list, $atts_temp);
 
-		if($display_to_logged_in_only=='yes' && !is_user_logged_in())
-		{
-			$html .=' <p>'. $display_to_logged_in_only_text.'</p>';
+            if (isset($users_list['paginate']))
+            {
+                $html .=' <div class="usersultra-paginate bottom_display">'. $users_list['paginate'].'</div>';
+             }
+         } //end if logged in users
 
-		}else{
+        $html .='</div>';
 
-			//display to all users
+        return $html;
+    }
 
-			$this->current_users_page = $page;
-			$this->search_result($args);
 
-			$users_list = $this->searched_users;
+    public function get_directory_template($users_list, $atts)
+    {
 
-			//display pages
-			$disp_array = array('total' => $users_list['total'], 'text' => $display_total_found_text);
-			$total_f = $this->get_total_found($disp_array);
+        global $xoouserultra;
 
+        $html = '';
 
+        extract( shortcode_atts( array(
 
+            'template' => 'directory_default', //this is the template file's name
+            'columns' => '', //  3 options, 1-column name 2-meta 3-visibility  - 4-tootlip
+            'header_tooltips' => 'no',      //no or yes
+            'private_content_text' => __('Private Content Visible Only to Logged In Users','xoousers') ,        //no or yes
+            'private_content_protection_type' => '',  //1-null 2-role
+            'show_to_user_role_list' => '',  // comma separated example; administrator,author
+            'optional_fields_to_display' => '', //
+            'container_width' => '100%', // this is the main container dimension
+            'item_height' => 'auto', // auto height
+            'pic_type' => 'avatar', // display either avatar or main picture of the user
+            'pic_boder_type' => 'none', // rounded
+            'pic_size_type' => 'dynamic', // dynamic or fixed
+            'pic_size' => 100, // size in pixels of the user's picture
+            'display_social' => 'yes', // display social
+            'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
+            'display_total_found' => 'yes', // display total found
+            'display_total_found_text' => 'Users' // display total found
 
-			if (isset($users_list['paginate'])) {
+        ), $atts ) );
 
-			$html .=' <div class="usersultra-paginate top_display">'. $users_list['paginate'].'</div>';
+        print_r($users_list);
 
-			 }
+        if(count($users_list['users'])>0)
+        {
+            if($template == 'directory_default')
+            {
+                $html .='<ul class="usersultra-front-results">';
+                foreach($users_list['users'] as $user)
+                {
 
-			if ($display_total_found=='yes')
-			{
-				$html .=$total_f;
-			}
+                    $user_id = $user->ID;
 
+                   if($pic_boder_type=="rounded")
+                   {
+                       $class_avatar = "avatar";
 
-			$html .= $this->get_directory_template($users_list, $atts_temp);
+                    }
 
-			if (isset($users_list['paginate']))
-			{
-				$html .=' <div class="usersultra-paginate bottom_display">'. $users_list['paginate'].'</div>';
+                    $html .='<li class="rounded" style="width:'.$item_width.'">';
+                    $html .='<div class="xoousers-prof-photo">';
+                    $html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
 
-			 }
+                    $html .=' </div> ';
 
+                    $html .=' <div class="info-div">';
+                    $html .='<p class="uu-direct-name">'.  $xoouserultra->userpanel->get_display_name($user_id).'</p>';
 
 
-	     } //end if logged in users
+                    $html .=' <div class="social-icon-divider">
 
+                          </div> ';
 
+                        if ($optional_fields_to_display!="")
+                        {
 
+                           $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display)  ;
 
- 		$html .='</div>';
+                         }
 
+                        $html .=' </div>
 
-		return $html;
+                          <div class="uultra-view-profile-bar">';
 
+                          $html .='  <a class="uultra-btn-profile" href="'.$xoouserultra->userpanel->get_user_profile_permalink( $user_id).'">'.__("See Profile",'xoousers').'</a>
 
-	}
+                          </div> ';
 
-	public function get_directory_template($users_list, $atts)
-	{
 
-		global $xoouserultra;
+                    $html .='</li>';
 
-		$html = '';
+                }    //end for each
 
-		extract( shortcode_atts( array(
+                 $html .=' </ul>';
 
-			'template' => 'directory_default', //this is the template file's name
-			'columns' => '', //  3 options, 1-column name 2-meta 3-visibility  - 4-tootlip
-			'header_tooltips' => 'no', 		//no or yes
-			'private_content_text' => __('Private Content Visible Only to Logged In Users','xoousers') , 		//no or yes
-			'private_content_protection_type' => '',  //1-null 2-role
-			'show_to_user_role_list' => '',  // comma separated example; administrator,author
-			'optional_fields_to_display' => '', //
+            }elseif($template == 'directory_table'){
 
-			'container_width' => '100%', // this is the main container dimension
-			'item_height' => 'auto', // auto height
-			'pic_type' => 'avatar', // display either avatar or main picture of the user
-			'pic_boder_type' => 'none', // rounded
-			'pic_size_type' => 'dynamic', // dynamic or fixed
-			'pic_size' => 100, // size in pixels of the user's picture
-			'display_social' => 'yes', // display social
-			'display_country_flag' => 'name', // display flag, no,yes,only, both. Only won't display name
-			'display_total_found' => 'yes', // display total found
-			'display_total_found_text' => 'Users' // display total found
+                //columns =
+                $table_columns = array();
+                $table_columns =  explode(",", $columns);
 
-		), $atts ) );
+                $table_headers = array();
+                $table_metas = array();
 
+                print_r($table_columns);
 
+                foreach($table_columns as $col)
+                {
+                    $col_data = explode(":",$col);
+                    $table_headers[] = array('label'=>$col_data[0], 'tooltip'=>$col_data[3]);
+                    $table_metas[] = array('meta'=>$col_data[1] , 'visible'=>$col_data[2]);
 
-		if(count($users_list['users'])>0)
-		{
+                }
 
-			if($template == 'directory_default')
-			{
+                //turn on output buffering to capture script output
+                ob_start();
+                include(xoousers_path."templates/".xoousers_template."/directory_v2.php");
+                $html = ob_get_clean();
+                return  $html;
 
-				$html .='<ul class="usersultra-front-results">';
+            }elseif($template == 'directory_minified'){
 
-				foreach($users_list['users'] as $user)
-				{
+                ob_start();
+                include(xoousers_path."templates/".xoousers_template."/directory_v3.php");
+                $html = ob_get_clean();
+                return  $html;
 
-					$user_id = $user->ID;
-
-				   if($pic_boder_type=="rounded")
-				   {
-					   $class_avatar = "avatar";
-
-					}
-
-					$html .='<li class="rounded" style="width:'.$item_width.'">';
-					$html .='<div class="xoousers-prof-photo">';
-					$html .= $xoouserultra->userpanel->get_user_pic( $user_id, $pic_size, $pic_type, $pic_boder_type, $pic_size_type);
-
-					$html .=' </div> ';
-
-					$html .=' <div class="info-div">';
-					$html .='<p class="uu-direct-name">'.  $xoouserultra->userpanel->get_display_name($user_id).'</p>';
-
-
-					$html .=' <div class="social-icon-divider">
-
-						  </div> ';
-
-						if ($optional_fields_to_display!="")
-						{
-
-						   $html .= $xoouserultra->userpanel->display_optional_fields( $user_id,$display_country_flag, $optional_fields_to_display)  ;
-
-						 }
-
-						$html .=' </div>
-
-						  <div class="uultra-view-profile-bar">';
-
-						  $html .='  <a class="uultra-btn-profile" href="'.$xoouserultra->userpanel->get_user_profile_permalink( $user_id).'">'.__("See Profile",'xoousers').'</a>
-
-						  </div> ';
-
-
-					$html .='</li>';
-
-
-				}    //end for each
-
-				 $html .=' </ul>';
-
-			}elseif($template == 'directory_table'){
-
-				//columns =
-				$table_columns = array();
-				$table_columns =  explode(",", $columns);
-
-				$table_headers = array();
-				$table_metas = array();
-
-				print_r($table_columns);
-
-				foreach($table_columns as $col)
-				{
-					$col_data = explode(":",$col);
-					$table_headers[] = array('label'=>$col_data[0], 'tooltip'=>$col_data[3]);
-					$table_metas[] = array('meta'=>$col_data[1] , 'visible'=>$col_data[2]);
-
-				}
-
-				//turn on output buffering to capture script output
-				ob_start();
-				include(xoousers_path."templates/".xoousers_template."/directory_v2.php");
-				$html = ob_get_clean();
-				return  $html;
-
-			}elseif($template == 'directory_minified'){
-
-				ob_start();
-				include(xoousers_path."templates/".xoousers_template."/directory_v3.php");
-				$html = ob_get_clean();
-				return  $html;
-
-			} //end if
-
+            } //end if
        } // end if
 
+       return $html;
+    }
 
 
-	   return $html;
 
+    public function get_result_pages($reg_count,$page, $list_perpage)
+    {
 
-	}
 
+        $total_pages = ceil($reg_count / $list_perpage);
 
 
-	public function get_result_pages($reg_count,$page, $list_perpage)
-	{
+        $big = 999999999; // need an unlikely integer
+        $arr = paginate_links( array(
+                    'base'         => @add_query_arg('ultra-page','%#%'),
+                    'total'        => $total_pages,
+                    'current'      => $page,
+                    'show_all'     => false,
+                    'end_size'     => 1,
+                    'mid_size'     => 2,
+                    'prev_next'    => true,
+                    'prev_text'    => __('Previous','xoousers'),
+                    'next_text'    => __('Next','xoousers'),
+                    'type'         => 'plain',
+                ));
+    return $arr;
 
+    }
 
-		$total_pages = ceil($reg_count / $list_perpage);
+    public function get_custom_search_fields($fields_list)
+    {
 
+        $display .= '<div class="xoouserultra-field-value">';
 
-		$big = 999999999; // need an unlikely integer
-		$arr = paginate_links( array(
-					'base'         => @add_query_arg('ultra-page','%#%'),
-					'total'        => $total_pages,
-					'current'      => $page,
-					'show_all'     => false,
-					'end_size'     => 1,
-					'mid_size'     => 2,
-					'prev_next'    => true,
-					'prev_text'    => __('Previous','xoousers'),
-					'next_text'    => __('Next','xoousers'),
-					'type'         => 'plain',
-				));
-	return $arr;
+                    switch($field) {
 
-	}
 
-	public function get_custom_search_fields($fields_list)
-	{
+                        case 'text':
+                            $display .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_post_value($meta).'"  title="'.$name.'" />';
+                            break;
 
-		$display .= '<div class="xoouserultra-field-value">';
+                        case 'datetime':
+                            $display .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_post_value($meta).'"  title="'.$name.'" />';
+                            break;
 
-					switch($field) {
+                        case 'select':
 
+                            if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
 
-						case 'text':
-							$display .= '<input type="text" class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_post_value($meta).'"  title="'.$name.'" />';
-							break;
+                            {
+                                $loop = $this->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
 
-						case 'datetime':
-						    $display .= '<input type="text" class="xoouserultra-input'.$required_class.' xoouserultra-datepicker" name="'.$meta.'" id="'.$meta.'" value="'.$this->get_post_value($meta).'"  title="'.$name.'" />';
-						    break;
+                            }elseif (isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
 
-						case 'select':
+                                $loop = explode(PHP_EOL, $choices);
+                            }
 
-							if (isset($array[$key]['predefined_options']) && $array[$key]['predefined_options']!= '' && $array[$key]['predefined_options']!= '0' )
+                            if (isset($loop))
+                            {
+                                $display .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'">';
 
-							{
-								$loop = $this->commmonmethods->get_predifined( $array[$key]['predefined_options'] );
+                                foreach($loop as $option)
+                                {
 
-							}elseif (isset($array[$key]['choices']) && $array[$key]['choices'] != '') {
+                                $option = trim(stripslashes($option));
 
-								$loop = explode(PHP_EOL, $choices);
-							}
+                                $display .= '<option value="'.$option.'" '.selected( $this->get_post_value($meta), $option, 0 ).'>'.$option.'</option>';
+                                }
+                                $display .= '</select>';
+                            }
+                            $display .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-							if (isset($loop))
-							{
-								$display .= '<select class="xoouserultra-input'.$required_class.'" name="'.$meta.'" id="'.$meta.'" title="'.$name.'">';
+                        case 'radio':
 
-								foreach($loop as $option)
-								{
+                            if (isset($array[$key]['choices']))
+                            {
+                                $loop = explode(PHP_EOL, $choices);
+                            }
+                            if (isset($loop) && $loop[0] != '')
+                            {
+                              $counter =0;
 
-								$option = trim(stripslashes($option));
+                                foreach($loop as $option)
+                                {
+                                    if($counter >0)
+                                        $required_class = '';
 
-								$display .= '<option value="'.$option.'" '.selected( $this->get_post_value($meta), $option, 0 ).'>'.$option.'</option>';
-								}
-								$display .= '</select>';
-							}
-							$display .= '<div class="xoouserultra-clear"></div>';
-							break;
+                                    $option = trim(stripslashes($option));
+                                    $display .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_post_value($meta), $option, 0 );
+                                    $display .= '/> '.$option.'</label>';
 
-						case 'radio':
+                                    $counter++;
 
-							if (isset($array[$key]['choices']))
-							{
-								$loop = explode(PHP_EOL, $choices);
-							}
-							if (isset($loop) && $loop[0] != '')
-							{
-							  $counter =0;
+                                }
+                            }
+                            $display .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-								foreach($loop as $option)
-								{
-								    if($counter >0)
-								        $required_class = '';
+                        case 'checkbox':
 
-								    $option = trim(stripslashes($option));
-									$display .= '<label class="xoouserultra-radio"><input type="radio" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'" value="'.$option.'" '.checked( $this->get_post_value($meta), $option, 0 );
-									$display .= '/> '.$option.'</label>';
+                            if (isset($array[$key]['choices']))
+                            {
+                                $loop = explode(PHP_EOL, $choices);
+                            }
 
-									$counter++;
+                            if (isset($loop) && $loop[0] != '')
+                            {
+                              $counter =0;
 
-								}
-							}
-							$display .= '<div class="xoouserultra-clear"></div>';
-							break;
+                                foreach($loop as $option)
+                                {
 
-						case 'checkbox':
+                                   if($counter >0)
+                                        $required_class = '';
 
-							if (isset($array[$key]['choices']))
-							{
-								$loop = explode(PHP_EOL, $choices);
-							}
+                                  $option = trim(stripslashes($option));
+                                    $display .= '<label class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" value="'.$option.'" ';
+                                    if (is_array($this->get_post_value($meta)) && in_array($option, $this->get_post_value($meta) )) {
+                                    $display .= 'checked="checked"';
+                                    }
+                                    $display .= '/> '.$option.'</label>';
 
-							if (isset($loop) && $loop[0] != '')
-							{
-							  $counter =0;
+                                    $counter++;
+                                }
+                            }
+                            $display .= '<div class="xoouserultra-clear"></div>';
+                            break;
 
-								foreach($loop as $option)
-								{
 
-								   if($counter >0)
-								        $required_class = '';
+                    }
 
-								  $option = trim(stripslashes($option));
-									$display .= '<label class="xoouserultra-checkbox"><input type="checkbox" class="'.$required_class.'" title="'.$name.'" name="'.$meta.'[]" value="'.$option.'" ';
-									if (is_array($this->get_post_value($meta)) && in_array($option, $this->get_post_value($meta) )) {
-									$display .= 'checked="checked"';
-									}
-									$display .= '/> '.$option.'</label>';
 
-									$counter++;
-								}
-							}
-							$display .= '<div class="xoouserultra-clear"></div>';
-							break;
+            $display .= '</div>';
 
+            return  $display ;
 
-					}
+    }
 
+    public function get_total_found($users_list)
+    {
+        extract($users_list);
 
-	        $display .= '</div>';
+        if($total=="" ){$total=0;}
 
-			return  $display ;
+        $html = '<div class="uultra-search-results">
+            <h1>'.__('Total found: ','xoousers').''.$total .' '.$text.'</h1>
 
-	}
+            </div>';
 
-	public function get_total_found($users_list)
-	{
-		extract($users_list);
+        return $html;
 
-		if($total=="" ){$total=0;}
 
-		$html = '<div class="uultra-search-results">
-			<h1>'.__('Total found: ','xoousers').''.$total .' '.$text.'</h1>
+    }
 
-			</div>';
+    public  function public_profile_get_album_link ($id, $user_id)
+    {
+        $url ="";
+        $url = $this->get_user_profile_permalink($user_id)."?gal_id=".$id;
 
-		return $html;
+        return $url;
 
+    }
 
-	}
+    public  function public_profile_get_photo_link ($id, $user_id)
+    {
+        $url ="";
+        $url = $this->get_user_profile_permalink($user_id)."?photo_id=".$id;
 
-	public  function public_profile_get_album_link ($id, $user_id)
-	{
-		$url ="";
-		$url = $this->get_user_profile_permalink($user_id)."?gal_id=".$id;
+        return $url;
 
-		return $url;
+    }
 
-	}
 
-	public  function public_profile_get_photo_link ($id, $user_id)
-	{
-		$url ="";
-		$url = $this->get_user_profile_permalink($user_id)."?photo_id=".$id;
+    public  function public_profile_display_social ($user_id)
+    {
+         global  $xoouserultra;
 
-		return $url;
+         $array = get_option('usersultra_profile_fields');
 
-	}
+        $html_social ="<div class='uultra-prof-social-icon'>";
 
 
-	public  function public_profile_display_social ($user_id)
-	{
-		 global  $xoouserultra;
+        foreach($array as $key=>$field)
+        {
 
-		 $array = get_option('usersultra_profile_fields');
+            if($field['social']==1)
+            {
 
-		$html_social ="<div class='uultra-prof-social-icon'>";
+                $icon = $field['icon'];
 
+                //get meta
+                $social_meta = get_user_meta($user_id, $field['meta'], true);
 
-		foreach($array as $key=>$field)
-		{
+                if($social_meta!=""){
 
-			if($field['social']==1)
-			{
+                $html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
 
-				$icon = $field['icon'];
+                }
 
-				//get meta
-				$social_meta = get_user_meta($user_id, $field['meta'], true);
 
-				if($social_meta!=""){
 
-				$html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
+            }
 
-				}
+        }
 
+        $html_social .="</div>";
 
+        return $html_social;
 
-			}
+    }
 
-		}
+    public function get_user_country_flag($user_id)
+    {
+        global  $xoouserultra;
 
-		$html_social .="</div>";
+        $u_meta = get_user_meta($user_id, 'country', true);
 
-		return $html_social;
+        //get country ISO code
+        $img = "";
 
-	}
+        $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
 
-	public function get_user_country_flag($user_id)
-	{
-		global  $xoouserultra;
+        if($isocode!=0)
+        {
 
-		$u_meta = get_user_meta($user_id, 'country', true);
+            $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+            $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
 
-		//get country ISO code
-		$img = "";
+        }
 
-		$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+        return  $img;
 
-		if($isocode!=0)
-		{
 
-			$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-			$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+    }
 
-		}
+    public  function display_optional_fields_pro ($user_id, $display_country_flag, $fields_to_display)
+    {
+         global  $xoouserultra;
 
-		return  $img;
+        $fields = array();
+        $fields_list = "";
+        $fields  = explode(',', $fields_to_display);
 
+        if(is_array($fields) && $fields_to_display!="")
+        {
 
-	}
+            foreach ($fields as $field)
+            {
+                //get meta
 
-	public  function display_optional_fields_pro ($user_id, $display_country_flag, $fields_to_display)
-	{
-		 global  $xoouserultra;
+                $u_meta = get_user_meta($user_id, $field, true);
 
-		$fields = array();
-		$fields_list = "";
-		$fields  = explode(',', $fields_to_display);
+                if( $field =='country')
+                {
+                    //rule applied to country only
 
-		if(is_array($fields) && $fields_to_display!="")
-		{
+                    if($display_country_flag=='only') //only flag
+                    {
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');
 
-			foreach ($fields as $field)
-			{
-				//get meta
+                        }else{
 
-				$u_meta = get_user_meta($user_id, $field, true);
+                        //get country ISO code
 
-				if( $field =='country')
-				{
-					//rule applied to country only
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
 
-					if($display_country_flag=='only') //only flag
-					{
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');
+                            $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                            $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                            $fields_list .= "<p class='country_name uultra-respo-prof-data-hide'>".$img."</p>";
 
-						}else{
 
-						//get country ISO code
+                        }
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                    }elseif($display_country_flag=='both'){
 
-							$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-							$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-							$fields_list .= "<p class='country_name uultra-respo-prof-data-hide'>".$img."</p>";
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');;
 
 
-						}
+                        }else{
 
-					}elseif($display_country_flag=='both'){
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                            if($isocode!="0")
+                            {
+                                $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                                $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                                $fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
 
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');;
+                            }
 
+                        }
 
-						}else{
+                    }elseif($display_country_flag=='name'){
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
-							if($isocode!="0")
-							{
-								$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-								$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-								$fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
+                        $fields_list .= "<p class='country_name'>".$u_meta."</p>";
 
-							}
 
-						}
+                    }
 
-					}elseif($display_country_flag=='name'){
+                }elseif($field =='description'){
 
-						$fields_list .= "<p class='country_name'>".$u_meta."</p>";
+                    if($u_meta=="")
+                    {
+                        $u_meta = __("This user hasn't a description yet", 'xoousers');
 
 
-					}
+                    }else{
 
-				}elseif($field =='description'){
+                        $u_meta = $this->get_user_desc_exerpt($u_meta,15);
 
-					if($u_meta=="")
-					{
-						$u_meta = __("This user hasn't a description yet", 'xoousers');
+                    }
 
+                    $fields_list .= "<p class='desc'>".$u_meta."</p>";
 
-					}else{
 
-						$u_meta = $this->get_user_desc_exerpt($u_meta,15);
+                }elseif($field =='badges'){
 
-					}
+                    $badges = $xoouserultra->badge->uultra_show_badges($user_id);
+                    $fields_list .= $badges;
 
-					$fields_list .= "<p class='desc'>".$u_meta."</p>";
 
 
-				}elseif($field =='badges'){
+                }elseif($field =='social'){ //this rule applies only to social icons
 
-					$badges = $xoouserultra->badge->uultra_show_badges($user_id);
-					$fields_list .= $badges;
 
+                    //get user form
+                    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
+                    if($custom_form!="")
+                    {
+                        $custom_form = 'usersultra_profile_fields_'.$custom_form;
+                        $array = get_option($custom_form);
 
+                    }else{
 
-				}elseif($field =='social'){ //this rule applies only to social icons
+                        $array = get_option('usersultra_profile_fields');
 
+                    }
 
-					//get user form
-				    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
-					if($custom_form!="")
-					{
-						$custom_form = 'usersultra_profile_fields_'.$custom_form;
-						$array = get_option($custom_form);
 
-					}else{
+                    $html_social ="<div class='uultra-social-icons uultra-respo-prof-data-hide'><ul>";
 
-						$array = get_option('usersultra_profile_fields');
 
-					}
+                    foreach($array as $key=>$field)
+                    {
+                        $_fsocial = "";
 
+                        if(isset($field['social']))
+                        {
+                            $_fsocial = $field['social'];
+                        }
 
-					$html_social ="<div class='uultra-social-icons uultra-respo-prof-data-hide'><ul>";
 
+                        if($_fsocial==1)
+                        {
 
-					foreach($array as $key=>$field)
-					{
-						$_fsocial = "";
+                            $icon = $field['icon'];
 
-						if(isset($field['social']))
-						{
-							$_fsocial = $field['social'];
-						}
+                            //get meta
+                            $social_meta = get_user_meta($user_id, $field['meta'], true);
 
+                            //echo "Social meta: " .$field['meta'];
 
-						if($_fsocial==1)
-						{
 
-							$icon = $field['icon'];
+                            if($social_meta!="")
+                            {
+                                $social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
 
-							//get meta
-							$social_meta = get_user_meta($user_id, $field['meta'], true);
+                                $html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
 
-							//echo "Social meta: " .$field['meta'];
+                            }
 
 
-							if($social_meta!="")
-							{
-								$social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
 
-								$html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
+                        }
 
-							}
+                    }
 
+                    $html_social .="</ul></div>";
 
 
-						}
+                    $fields_list .= $html_social;
 
-					}
 
-					$html_social .="</ul></div>";
 
 
-					$fields_list .= $html_social;
+                }elseif($field =='rating'){ //this rule applies only to rating
 
 
+                    $fields_list.= "<div class='ratebox'>";
+                    $fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
+                    $fields_list.= "</div>";
 
 
-				}elseif($field =='rating'){ //this rule applies only to rating
+                }elseif($field =='like'){ //like rules
 
+                    $fields_list.= $xoouserultra->social->get_item_likes_profile($user_id,"user");
 
-					$fields_list.= "<div class='ratebox'>";
-					$fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
-					$fields_list.= "</div>";
+                }elseif($field =='friend'){ //like rules
 
+                    $fields_list.= $xoouserultra->social->get_friends($user_id);
 
-				}elseif($field =='like'){ //like rules
 
-					$fields_list.= $xoouserultra->social->get_item_likes_profile($user_id,"user");
+                }else{
 
-				}elseif($field =='friend'){ //like rules
+                    $fields_list .= "<p>".$u_meta."</p>";
 
-					$fields_list.= $xoouserultra->social->get_friends($user_id);
 
 
-				}else{
+                }
 
-					$fields_list .= "<p>".$u_meta."</p>";
 
 
+            } //end for
 
-				}
+        } //end if
 
+        return $fields_list;
 
 
-			} //end for
 
-		} //end if
 
-		return $fields_list;
+    }
 
+    public  function display_optional_fields_pro_minified ($user_id, $display_country_flag, $fields_to_display)
+    {
+         global  $xoouserultra;
 
+        $fields = array();
+        $fields_list = "";
+        $fields  = explode(',', $fields_to_display);
 
+        if(is_array($fields) && $fields_to_display!="")
+        {
 
-	}
+            foreach ($fields as $field)
+            {
+                //get meta
 
-	public  function display_optional_fields_pro_minified ($user_id, $display_country_flag, $fields_to_display)
-	{
-		 global  $xoouserultra;
+                $u_meta = get_user_meta($user_id, $field, true);
 
-		$fields = array();
-		$fields_list = "";
-		$fields  = explode(',', $fields_to_display);
+                if( $field =='country')
+                {
+                    //rule applied to country only
 
-		if(is_array($fields) && $fields_to_display!="")
-		{
+                    if($display_country_flag=='only') //only flag
+                    {
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');
 
-			foreach ($fields as $field)
-			{
-				//get meta
+                        }else{
 
-				$u_meta = get_user_meta($user_id, $field, true);
+                        //get country ISO code
 
-				if( $field =='country')
-				{
-					//rule applied to country only
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
 
-					if($display_country_flag=='only') //only flag
-					{
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');
+                            $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                            $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                            $fields_list .= "<p class='country_name'>".$img."</p>";
 
-						}else{
 
-						//get country ISO code
+                        }
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                    }elseif($display_country_flag=='both'){
 
-							$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-							$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-							$fields_list .= "<p class='country_name'>".$img."</p>";
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');;
 
 
-						}
+                        }else{
 
-					}elseif($display_country_flag=='both'){
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                            if($isocode!="0")
+                            {
+                                $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                                $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                                $fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
 
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');;
+                            }
 
+                        }
 
-						}else{
+                    }elseif($display_country_flag=='name'){
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
-							if($isocode!="0")
-							{
-								$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-								$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-								$fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
+                        $fields_list .= "<p class='country_name'>".$u_meta."</p>";
 
-							}
 
-						}
+                    }
 
-					}elseif($display_country_flag=='name'){
+                }elseif($field =='description'){
 
-						$fields_list .= "<p class='country_name'>".$u_meta."</p>";
+                    if($u_meta=="")
+                    {
+                        $u_meta = __("This user hasn't a description yet", 'xoousers');
 
 
-					}
+                    }else{
 
-				}elseif($field =='description'){
+                        $u_meta = $this->get_user_desc_exerpt($u_meta,15);
 
-					if($u_meta=="")
-					{
-						$u_meta = __("This user hasn't a description yet", 'xoousers');
+                    }
 
+                    $fields_list .= "<p class='desc'>".$u_meta."</p>";
 
-					}else{
 
-						$u_meta = $this->get_user_desc_exerpt($u_meta,15);
+                }elseif($field =='badges'){
 
-					}
+                    $badges = $xoouserultra->badge->uultra_show_badges($user_id);
+                    $fields_list .= $badges;
 
-					$fields_list .= "<p class='desc'>".$u_meta."</p>";
 
 
-				}elseif($field =='badges'){
+                }elseif($field =='social'){ //this rule applies only to social icons
 
-					$badges = $xoouserultra->badge->uultra_show_badges($user_id);
-					$fields_list .= $badges;
 
+                    //get user form
+                    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
+                    if($custom_form!="")
+                    {
+                        $custom_form = 'usersultra_profile_fields_'.$custom_form;
+                        $array = get_option($custom_form);
 
+                    }else{
 
-				}elseif($field =='social'){ //this rule applies only to social icons
+                        $array = get_option('usersultra_profile_fields');
 
+                    }
 
-					//get user form
-				    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
-					if($custom_form!="")
-					{
-						$custom_form = 'usersultra_profile_fields_'.$custom_form;
-						$array = get_option($custom_form);
 
-					}else{
+                    $html_social ="<div class='uultra-social-icons uultra-respo-prof-data-hide'><ul>";
 
-						$array = get_option('usersultra_profile_fields');
 
-					}
+                    foreach($array as $key=>$field)
+                    {
+                        $_fsocial = "";
 
+                        if(isset($field['social']))
+                        {
+                            $_fsocial = $field['social'];
+                        }
 
-					$html_social ="<div class='uultra-social-icons uultra-respo-prof-data-hide'><ul>";
 
+                        if($_fsocial==1)
+                        {
 
-					foreach($array as $key=>$field)
-					{
-						$_fsocial = "";
+                            $icon = $field['icon'];
 
-						if(isset($field['social']))
-						{
-							$_fsocial = $field['social'];
-						}
+                            //get meta
+                            $social_meta = get_user_meta($user_id, $field['meta'], true);
 
+                            //echo "Social meta: " .$field['meta'];
 
-						if($_fsocial==1)
-						{
 
-							$icon = $field['icon'];
+                            if($social_meta!="")
+                            {
+                                $social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
 
-							//get meta
-							$social_meta = get_user_meta($user_id, $field['meta'], true);
+                                $html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
 
-							//echo "Social meta: " .$field['meta'];
+                            }
 
 
-							if($social_meta!="")
-							{
-								$social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
 
-								$html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
+                        }
 
-							}
+                    }
 
+                    $html_social .="</ul></div>";
 
 
-						}
+                    $fields_list .= $html_social;
 
-					}
 
-					$html_social .="</ul></div>";
 
 
-					$fields_list .= $html_social;
+                }elseif($field =='rating'){ //this rule applies only to rating
 
 
+                    $fields_list.= "<div class='ratebox uultra-respo-prof-data-hide'>";
+                    $fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
+                    $fields_list.= "</div>";
 
 
-				}elseif($field =='rating'){ //this rule applies only to rating
+                }elseif($field =='like'){ //like rules
 
+                    $fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
 
-					$fields_list.= "<div class='ratebox uultra-respo-prof-data-hide'>";
-					$fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
-					$fields_list.= "</div>";
+                }elseif($field =='friend'){ //like rules
 
+                    $fields_list.= $xoouserultra->social->get_friends($user_id);
 
-				}elseif($field =='like'){ //like rules
+                }else{
 
-					$fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
+                    $fields_list .= "<p>".$u_meta."</p>";
 
-				}elseif($field =='friend'){ //like rules
+                }
 
-					$fields_list.= $xoouserultra->social->get_friends($user_id);
 
-				}else{
 
-					$fields_list .= "<p>".$u_meta."</p>";
+            } //end for
 
-				}
+        } //end if
 
+        return $fields_list;
 
 
-			} //end for
 
-		} //end if
 
-		return $fields_list;
+    }
 
+    /*Used for the directory listings*/
+    public  function display_optional_fields ($user_id, $display_country_flag, $fields)
+    {
+         global  $xoouserultra;
 
+        $fields_list = "";
+        $fields  = explode(',', $fields);
 
+        foreach ($fields as $field)
+        {
+            //get meta
 
-	}
+            $u_meta = get_user_meta($user_id, $field, true);
 
-	/*Used for the directory listings*/
-	public  function display_optional_fields ($user_id, $display_country_flag, $fields)
-	{
-		 global  $xoouserultra;
+            if( $field =='country')
+            {
+                //rule applied to country only
 
-		$fields_list = "";
-		$fields  = explode(',', $fields);
+                if($display_country_flag=='only') //only flag
+                {
+                    if($u_meta=="")
+                    {
+                        //$fields_list .= __("Country not available", 'xoousers');
 
-		foreach ($fields as $field)
-		{
-			//get meta
+                    }else{
 
-			$u_meta = get_user_meta($user_id, $field, true);
+                    //get country ISO code
 
-			if( $field =='country')
-			{
-				//rule applied to country only
+                        $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
 
-				if($display_country_flag=='only') //only flag
-				{
-					if($u_meta=="")
-				    {
-						//$fields_list .= __("Country not available", 'xoousers');
+                        $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                        $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                        $fields_list .= "<p class='country_name'>".$img."</p>";
 
-					}else{
 
-					//get country ISO code
+                    }
 
-						$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                }elseif($display_country_flag=='both'){
 
-						$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-						$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-						$fields_list .= "<p class='country_name'>".$img."</p>";
+                    if($u_meta=="")
+                    {
+                        $fields_list .= __("Country not available", 'xoousers');;
 
 
-					}
+                    }else{
 
-				}elseif($display_country_flag=='both'){
+                        $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                        if($isocode!="0")
+                        {
+                            $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                            $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                            $fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
 
-					if($u_meta=="")
-				    {
-						$fields_list .= __("Country not available", 'xoousers');;
+                        }
 
+                    }
 
-					}else{
+                }elseif($display_country_flag=='name'){
 
-						$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
-						if($isocode!="0")
-						{
-							$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-							$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-							$fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
+                    $fields_list .= "<p class='country_name'>".$u_meta."</p>";
 
-						}
 
-					}
+                }
 
-				}elseif($display_country_flag=='name'){
+            }elseif($field =='description'){
 
-					$fields_list .= "<p class='country_name'>".$u_meta."</p>";
+                if($u_meta=="")
+                {
+                    $u_meta = __("This user hasn't a description yet", 'xoousers');
 
 
-				}
+                }else{
 
-			}elseif($field =='description'){
+                    $u_meta = $this->get_user_desc_exerpt($u_meta,15);
 
-				if($u_meta=="")
-				{
-					$u_meta = __("This user hasn't a description yet", 'xoousers');
+                }
 
+                $fields_list .= "<p class='uultra-card-profile-desc'>".$u_meta."</p>";
 
-				}else{
+            }elseif($field =='badges'){
 
-					$u_meta = $this->get_user_desc_exerpt($u_meta,15);
+                    $badges = $xoouserultra->badge->uultra_show_badges($user_id);
+                    $fields_list .= $badges;
 
-				}
+            }elseif($field =='social'){ //this rule applies only to social icons
 
-				$fields_list .= "<p class='uultra-card-profile-desc'>".$u_meta."</p>";
 
-			}elseif($field =='badges'){
+                //get user form
+                $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
+                if($custom_form!="")
+                {
+                    $custom_form = 'usersultra_profile_fields_'.$custom_form;
+                    $array = get_option($custom_form);
 
-					$badges = $xoouserultra->badge->uultra_show_badges($user_id);
-					$fields_list .= $badges;
+                }else{
 
-			}elseif($field =='social'){ //this rule applies only to social icons
+                    $array = get_option('usersultra_profile_fields');
 
+                }
 
-				//get user form
-				$custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
-				if($custom_form!="")
-				{
-					$custom_form = 'usersultra_profile_fields_'.$custom_form;
-					$array = get_option($custom_form);
+                $html_social ="<div class='uultra-prof-social-icon'>";
 
-				}else{
 
-					$array = get_option('usersultra_profile_fields');
+                foreach($array as $key=>$field)
+                {
+                    $_fsocial = "";
 
-				}
+                    if(isset($field['social']))
+                    {
+                        $_fsocial = $field['social'];
+                    }
 
-				$html_social ="<div class='uultra-prof-social-icon'>";
 
+                    if($_fsocial==1)
+                    {
 
-				foreach($array as $key=>$field)
-				{
-					$_fsocial = "";
+                        $icon = $field['icon'];
 
-					if(isset($field['social']))
-					{
-						$_fsocial = $field['social'];
-					}
+                        //get meta
+                        $social_meta = get_user_meta($user_id, $field['meta'], true);
 
+                         if($social_meta!="")
+                         {
+                                $social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
+                                $html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
+                         }
 
-					if($_fsocial==1)
-					{
 
-						$icon = $field['icon'];
 
-						//get meta
-						$social_meta = get_user_meta($user_id, $field['meta'], true);
+                    }
 
-						 if($social_meta!="")
-						 {
-								$social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
-								$html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
-						 }
+                }
 
+                $html_social .="</div>";
 
 
-					}
+                $fields_list .= $html_social;
 
-				}
 
-				$html_social .="</div>";
 
 
-				$fields_list .= $html_social;
+            }elseif($field =='rating'){ //this rule applies only to rating
 
 
+                $fields_list.= "<div class='ratebox'>";
+                $fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
+                $fields_list.= "</div>";
 
 
-			}elseif($field =='rating'){ //this rule applies only to rating
+            }elseif($field =='like'){ //like rules
 
+                $fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
 
-				$fields_list.= "<div class='ratebox'>";
-				$fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
-				$fields_list.= "</div>";
+            }elseif($field =='friend'){ //like rules
 
+                $fields_list.= $xoouserultra->social->get_friends($user_id);
 
-			}elseif($field =='like'){ //like rules
+            }elseif($field =='follow'){ //add follow button
 
-				$fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
+                $fields_list.= $xoouserultra->social->get_follow_button($user_id);
 
-			}elseif($field =='friend'){ //like rules
 
-				$fields_list.= $xoouserultra->social->get_friends($user_id);
+            }else{
 
-			}elseif($field =='follow'){ //add follow button
+                $fields_list .= "<p>".$u_meta."</p>";
 
-				$fields_list.= $xoouserultra->social->get_follow_button($user_id);
 
 
-			}else{
+            }
 
-				$fields_list .= "<p>".$u_meta."</p>";
 
 
+        }
 
-			}
+        return $fields_list;
 
 
 
-		}
 
-		return $fields_list;
+    }
 
+    //this is used for the new directory style which display users in tables
+    public  function display_fields_on_table_directory ($user_id, $pic_size, $display_country_flag, $field)
+    {
+        global  $xoouserultra;
 
-
-
-	}
-
-	//this is used for the new directory style which display users in tables
-	public  function display_fields_on_table_directory ($user_id, $pic_size, $display_country_flag, $field)
-	{
-		global  $xoouserultra;
-
-		//echo "User  : " . $user_id;
-		//get meta
-		$u_meta = get_user_meta($user_id, $field, true);
+        //echo "User  : " . $user_id;
+        //get meta
+        $u_meta = get_user_meta($user_id, $field, true);
 
 //var_dump(" user_id: ");
 //var_dump($user_id);
 //var_dump(" field: ");
 //var_dump($field);
-//var_dump(" meta: ")	;
-//var_dump($u_meta)	;
-				if( $field =='country')
-				{
-					//rule applied to country only
-					if($display_country_flag=='only') //only flag
-					{
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');
+//var_dump(" meta: ")   ;
+//var_dump($u_meta) ;
+                if( $field =='country')
+                {
+                    //rule applied to country only
+                    if($display_country_flag=='only') //only flag
+                    {
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');
 
-						}else{
+                        }else{
 
-						//get country ISO code
+                        //get country ISO code
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
 
-							$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-							$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-							$fields_list .= "<p class='country_name'>".$img."</p>";
+                            $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                            $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                            $fields_list .= "<p class='country_name'>".$img."</p>";
 
 
-						}
+                        }
 
-					}elseif($display_country_flag=='both'){
+                    }elseif($display_country_flag=='both'){
 
-						if($u_meta=="")
-						{
-							//$fields_list .= __("Country not available", 'xoousers');;
+                        if($u_meta=="")
+                        {
+                            //$fields_list .= __("Country not available", 'xoousers');;
 
 
-						}else{
+                        }else{
 
-							$isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
-							if($isocode!="0")
-							{
-								$isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
-								$img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
-								$fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
+                            $isocode = array_search($u_meta, $xoouserultra->commmonmethods->get_predifined('countries'));
+                            if($isocode!="0")
+                            {
+                                $isocode  = xoousers_url."libs/flags/24/".$isocode.".png";
+                                $img = '<img src="'.$isocode.'"  alt="'.$u_meta.'" title="'.$u_meta.'" class="uultra-country-flag"/>';
+                                $fields_list .= "<p class='country_name'>".$img."  ".$u_meta."</p>";
 
-							}
+                            }
 
-						}
+                        }
 
-					}elseif($display_country_flag=='name'){
+                    }elseif($display_country_flag=='name'){
 
-						$fields_list .= $u_meta;
+                        $fields_list .= $u_meta;
 
 
-					}
+                    }
 
-					if($fields_list=='')
-					{
-						$fields_list .= 'n/a';
+                    if($fields_list=='')
+                    {
+                        $fields_list .= 'n/a';
 
-					}
+                    }
 
-				}elseif($field =='description'){
+                }elseif($field =='description'){
 
-					if($u_meta=="")
-					{
-						$u_meta = __("This user hasn't a description yet", 'xoousers');
+                    if($u_meta=="")
+                    {
+                        $u_meta = __("This user hasn't a description yet", 'xoousers');
 
 
-					}else{
+                    }else{
 
-						$u_meta = $this->get_user_desc_exerpt($u_meta,15);
+                        $u_meta = $this->get_user_desc_exerpt($u_meta,15);
 
-					}
+                    }
 
-					$fields_list .= $u_meta;
+                    $fields_list .= $u_meta;
 
 
-				}elseif($field =='badges'){
+                }elseif($field =='badges'){
 
-					$badges = $xoouserultra->badge->uultra_show_badges($user_id);
-					$fields_list .= $badges;
+                    $badges = $xoouserultra->badge->uultra_show_badges($user_id);
+                    $fields_list .= $badges;
 
 
-				}elseif($field =='avatar'){
+                }elseif($field =='avatar'){
 
 
-					$fields_list .= $this->get_user_pic( $user_id, $pic_size, 'avatar', 'rounded', 'fixed');
+                    $fields_list .= $this->get_user_pic( $user_id, $pic_size, 'avatar', 'rounded', 'fixed');
 
-				}elseif($field =='role'){
+                }elseif($field =='role'){
 
-					$fields_list =  $this->get_all_user_roles($user_id);
+                    $fields_list =  $this->get_all_user_roles($user_id);
 
-				}elseif($field =='message'){
+                }elseif($field =='message'){
 
-					$fields_list =  '<a href="#" class="uultra-directory-send-private-message-box" title="' .__('Send Private Message', 'xoousers'). '" '.$qtip_style.' user-id='.$user_id.'><i class="fa fa-envelope-o reg_tooltip"></i></a>';
+                    $fields_list =  '<a href="#" class="uultra-directory-send-private-message-box" title="' .__('Send Private Message', 'xoousers'). '" '.$qtip_style.' user-id='.$user_id.'><i class="fa fa-envelope-o reg_tooltip"></i></a>';
 
-					$fields_list .= $this->contact_me_public_form_directory($user_id);
+                    $fields_list .= $this->contact_me_public_form_directory($user_id);
 
-				}elseif($field =='social'){ //this rule applies only to social icons
+                }elseif($field =='social'){ //this rule applies only to social icons
 
 
-					//get user form
-				    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
-					if($custom_form!="")
-					{
-						$custom_form = 'usersultra_profile_fields_'.$custom_form;
-						$array = get_option($custom_form);
+                    //get user form
+                    $custom_form = get_user_meta($user_id, 'uultra_custom_registration_form', true);
+                    if($custom_form!="")
+                    {
+                        $custom_form = 'usersultra_profile_fields_'.$custom_form;
+                        $array = get_option($custom_form);
 
-					}else{
+                    }else{
 
-						$array = get_option('usersultra_profile_fields');
+                        $array = get_option('usersultra_profile_fields');
 
-					}
+                    }
 
 
-					$html_social ="<div class='uultra-social-icons'><ul>";
+                    $html_social ="<div class='uultra-social-icons'><ul>";
 
 
-					foreach($array as $key=>$field)
-					{
-						$_fsocial = "";
+                    foreach($array as $key=>$field)
+                    {
+                        $_fsocial = "";
 
-						if(isset($field['social']))
-						{
-							$_fsocial = $field['social'];
-						}
+                        if(isset($field['social']))
+                        {
+                            $_fsocial = $field['social'];
+                        }
 
 
-						if($_fsocial==1)
-						{
+                        if($_fsocial==1)
+                        {
 
-							$icon = $field['icon'];
+                            $icon = $field['icon'];
 
-							//get meta
-							$social_meta = get_user_meta($user_id, $field['meta'], true);
+                            //get meta
+                            $social_meta = get_user_meta($user_id, $field['meta'], true);
 
-							//echo "Social meta: " .$field['meta'];
+                            //echo "Social meta: " .$field['meta'];
 
 
-							if($social_meta!="")
-							{
-								$social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
-								$html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
+                            if($social_meta!="")
+                            {
+                                $social_meta = apply_filters('uultra_social_url_' .$field['meta'], $social_meta);
+                                $html_social .="<li><a href='".$social_meta."' target='_blank'><i class='uultra-socialicons fa fa-".$icon." '></i></a></li>";
 
-							}
+                            }
 
-						}
+                        }
 
-					}
+                    }
 
-					$html_social .="</ul></div>";
+                    $html_social .="</ul></div>";
 
-					$fields_list .= $html_social;
+                    $fields_list .= $html_social;
 
 
 
 
-				}elseif($field =='rating'){ //this rule applies only to rating
+                }elseif($field =='rating'){ //this rule applies only to rating
 
 
-					$fields_list.= "<div class='ratebox uultra-ratebox-left'>";
-					$fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
-					$fields_list.= "</div>";
+                    $fields_list.= "<div class='ratebox uultra-ratebox-left'>";
+                    $fields_list.= $xoouserultra->rating->get_rating($user_id,"user_id");
+                    $fields_list.= "</div>";
 
 
-				}elseif($field =='like'){ //like rules
+                }elseif($field =='like'){ //like rules
 
-					$fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
+                    $fields_list.= $xoouserultra->social->get_item_likes($user_id,"user");
 
-				}elseif($field =='friend'){ //like rules
+                }elseif($field =='friend'){ //like rules
 
-					$fields_list.= $xoouserultra->social->get_friends($user_id);
+                    $fields_list.= $xoouserultra->social->get_friends($user_id);
 
 
-				}else{
-				//print_r("=========")		;
-					$fields_list .= $u_meta;
-				//print_r($u_meta);
+                }else{
+                //print_r("=========")      ;
+                    $fields_list .= $u_meta;
+                //print_r($u_meta);
                                 //print_r("=========");
-				}
+                }
 
-				if($fields_list=='')
-				{
-					$fields_list .= __('n/a','xoousers');
+                if($fields_list=='')
+                {
+                    $fields_list .= __('n/a','xoousers');
 
-				}
+                }
 
 
 
-				//var_dump($fields_list)	;
+                //var_dump($fields_list)    ;
 
-		return $fields_list;
+        return $fields_list;
 
 
 
 
-	}
+    }
 
 
 
-	public function get_user_social_icons($user_id)
-	{
+    public function get_user_social_icons($user_id)
+    {
 
 
-		$array = get_option('usersultra_profile_fields');
-		$html_social ="<div class='uultra-prof-social-icon'>";
+        $array = get_option('usersultra_profile_fields');
+        $html_social ="<div class='uultra-prof-social-icon'>";
 
 
-				foreach($array as $key=>$field)
-				{
+                foreach($array as $key=>$field)
+                {
 
 
-					if($field['social']==1)
-					{
+                    if($field['social']==1)
+                    {
 
-						$icon = $field['icon'];
+                        $icon = $field['icon'];
 
-						//get meta
-						$social_meta = get_user_meta($user_id, $field['meta'], true);
+                        //get meta
+                        $social_meta = get_user_meta($user_id, $field['meta'], true);
 
-						$html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
+                        $html_social .="<a href='".$social_meta."' target='_blank'><i class='uultra-social-ico fa fa-".$icon." '></i></a>";
 
 
 
-					}
+                    }
 
-				}
+                }
 
-				$html_social .="</div>";
+                $html_social .="</div>";
 
-				return $html_social;
+                return $html_social;
 
 
-	}
+    }
 
 
-	public function get_user_social_icons_widget($user_id)
-	{
+    public function get_user_social_icons_widget($user_id)
+    {
 
 
-		$array = get_option('usersultra_profile_fields');
-		$html_social =' <div class="uultra-social-icons"><ul>';
+        $array = get_option('usersultra_profile_fields');
+        $html_social =' <div class="uultra-social-icons"><ul>';
 
 
-				foreach($array as $key=>$field)
-				{
+                foreach($array as $key=>$field)
+                {
 
 
-					if($field['social']==1)
-					{
+                    if($field['social']==1)
+                    {
 
-						$icon = $field['icon'];
+                        $icon = $field['icon'];
 
-						//get meta
-						$social_meta = get_user_meta($user_id, $field['meta'], true);
+                        //get meta
+                        $social_meta = get_user_meta($user_id, $field['meta'], true);
 
 
-						if($social_meta!="")
-						{
-							$html_social .="<li><a href='".$social_meta."' target='_blank'> <i class='fa fa-lg uultra-socialicons fa-".$icon."'></i></a></li>";
+                        if($social_meta!="")
+                        {
+                            $html_social .="<li><a href='".$social_meta."' target='_blank'> <i class='fa fa-lg uultra-socialicons fa-".$icon."'></i></a></li>";
 
-						}
+                        }
 
 
 
-					}
+                    }
 
-				}
+                }
 
-				$html_social .="<ul></div>";
+                $html_social .="<ul></div>";
 
-				return $html_social;
+                return $html_social;
 
 
-	}
-	/* Get picture by ID */
-	function refresh_avatar()
-	{
-		$user_id = get_current_user_id();
+    }
+    /* Get picture by ID */
+    function refresh_avatar()
+    {
+        $user_id = get_current_user_id();
 
-		echo $this->get_user_pic( $user_id, $pic_size, 'avatar', 'rounded', 'dynamic');
-		die();
-	}
+        echo $this->get_user_pic( $user_id, $pic_size, 'avatar', 'rounded', 'dynamic');
+        die();
+    }
 
-	/* delete avatar */
-	function delete_user_avatar()
-	{
-		$user_id = get_current_user_id();
+    /* delete avatar */
+    function delete_user_avatar()
+    {
+        $user_id = get_current_user_id();
 
-		update_user_meta($user_id, 'user_pic', '');
-		die();
-	}
+        update_user_meta($user_id, 'user_pic', '');
+        die();
+    }
 
 
-	/* Overrides default get avatar function  */
-	function uultra_get_avatar( $avatar, $id_or_email, $size, $default, $alt='' )
-	{
-		global $xoouserultra;
+    /* Overrides default get avatar function  */
+    function uultra_get_avatar( $avatar, $id_or_email, $size, $default, $alt='' )
+    {
+        global $xoouserultra;
 
 
-		if (isset($id_or_email->user_id))
-		{
-			$id_or_email = $id_or_email->user_id;
+        if (isset($id_or_email->user_id))
+        {
+            $id_or_email = $id_or_email->user_id;
 
-		} elseif (is_email($id_or_email)){
+        } elseif (is_email($id_or_email)){
 
-			$user = get_user_by('email', $id_or_email);
-			$id_or_email = $user->ID;
-		}
+            $user = get_user_by('email', $id_or_email);
+            $id_or_email = $user->ID;
+        }
 
 
-		$site_url = site_url()."/";
+        $site_url = site_url()."/";
 
 
-		$pic_size = "";
+        $pic_size = "";
 
-		$upload_folder = $xoouserultra->get_option('media_uploading_folder');
-		$path = $site_url.$upload_folder."/".$id_or_email."/";
-		$author_pic = get_the_author_meta('user_pic', $id_or_email);
+        $upload_folder = $xoouserultra->get_option('media_uploading_folder');
+        $path = $site_url.$upload_folder."/".$id_or_email."/";
+        $author_pic = get_the_author_meta('user_pic', $id_or_email);
 
-		//get user url
-		$user_url=$this->get_user_profile_permalink($id_or_email);
+        //get user url
+        $user_url=$this->get_user_profile_permalink($id_or_email);
 
-		if($pic_boder_type==NULL)
-		{
-			$pic_boder_type = 'uultra-user-avatar-default-style';
+        if($pic_boder_type==NULL)
+        {
+            $pic_boder_type = 'uultra-user-avatar-default-style';
 
-		}
+        }
 
-		if($xoouserultra->get_option('uultra_force_cache_issue')=='yes')
-		{
-			$cache_by_pass = '?rand_cache='.$cache_rand;
+        if($xoouserultra->get_option('uultra_force_cache_issue')=='yes')
+        {
+            $cache_by_pass = '?rand_cache='.$cache_rand;
 
-		}
+        }
 
-		if($author_pic!='')
-		{
+        if($author_pic!='')
+        {
 
-			//get user's main picture - medium size will be used to be displayed
-			 $avatar_pic = $path.$author_pic;
-			 $avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.''.$cache_by_pass.'" class="'.$pic_boder_type.'"  id="uultra-avatar-img-'.$id.'" style="max-width:64px"/></a>';
+            //get user's main picture - medium size will be used to be displayed
+             $avatar_pic = $path.$author_pic;
+             $avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.''.$cache_by_pass.'" class="'.$pic_boder_type.'"  id="uultra-avatar-img-'.$id.'" style="max-width:64px"/></a>';
 
-			 return $avatar;
+             return $avatar;
+        }else{
+            return $avatar;
+        }
+    }
 
-		}else{
 
+    /* Get picture by ID */
+    function get_user_pic( $id, $size, $pic_type=NULL, $pic_boder_type= NULL, $size_type=NULL )
+    {
 
-			return $avatar;
+         global  $xoouserultra;
 
+         require_once(ABSPATH . 'wp-includes/link-template.php');
 
-		}
 
+        $site_url = site_url()."/";
 
+        //rand_val_cache
+        $cache_rand = time();
 
+        $avatar = "";
+        $pic_size = "";
 
+        $upload_folder = $xoouserultra->get_option('media_uploading_folder');
+        $path = $site_url.$upload_folder."/".$id."/";
+        $author_pic = get_the_author_meta('user_pic', $id);
 
+        //get user url
+        $user_url=$this->get_user_profile_permalink($id);
 
-	}
+        if($pic_boder_type=='none'){$pic_boder_type='uultra-none';}
 
 
-	/* Get picture by ID */
-	function get_user_pic( $id, $size, $pic_type=NULL, $pic_boder_type= NULL, $size_type=NULL )
-	{
+        if($size_type=="fixed" || $size_type=="")
+        {
+            $dimension = "width:";
+            $dimension_2 = "height:";
+        }
 
-		 global  $xoouserultra;
+        if($size_type=="dynamic" )
+        {
+            $dimension = "max-width:";
 
-		 require_once(ABSPATH . 'wp-includes/link-template.php');
+        }
 
+        if($size!="")
+        {
+            $pic_size = $dimension.$size."px".";".$dimension_2.$size."px";
 
-		$site_url = site_url()."/";
+        }
 
-		//rand_val_cache
-		$cache_rand = time();
+        if($xoouserultra->get_option('uultra_force_cache_issue')=='yes')
+        {
+            $cache_by_pass = '?rand_cache='.$cache_rand;
 
-		$avatar = "";
-		$pic_size = "";
+        }
 
-		$upload_folder = $xoouserultra->get_option('media_uploading_folder');
-		$path = $site_url.$upload_folder."/".$id."/";
-		$author_pic = get_the_author_meta('user_pic', $id);
+        if($pic_boder_type==NULL)
+        {
+            $pic_boder_type = 'uultra-user-avatar-default-style';
 
-		//get user url
-		$user_url=$this->get_user_profile_permalink($id);
+        }
 
-		if($pic_boder_type=='none'){$pic_boder_type='uultra-none';}
 
 
-		if($size_type=="fixed" || $size_type=="")
-		{
-			$dimension = "width:";
-			$dimension_2 = "height:";
-		}
+        if($pic_type=='avatar')
+        {
 
-		if($size_type=="dynamic" )
-		{
-			$dimension = "max-width:";
+            if ($author_pic  != '')
+            {
+                $avatar_pic = $path.$author_pic;
+                $avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.''.$cache_by_pass.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'" /></a>';
 
-		}
+            } else {
 
-		if($size!="")
-		{
-			$pic_size = $dimension.$size."px".";".$dimension_2.$size."px";
+                //get gravatar
+                $user = get_user_by( 'id', $id );
+                $has_gravatar = get_user_meta( $id, 'uuultra_has_gravatar', true);
 
-		}
+                //check if facebook is required.
+                $facebook_avatar = $xoouserultra->get_option('uultra_use_facebook_avatar');
+                $facebook_id = get_user_meta( $id, 'xoouser_ultra_facebook_id', true);
 
-		if($xoouserultra->get_option('uultra_force_cache_issue')=='yes')
-		{
-			$cache_by_pass = '?rand_cache='.$cache_rand;
 
-		}
+                if(($has_gravatar==1 && $facebook_avatar=='') || ($has_gravatar==1 && $facebook_avatar=='no'))
+                {
+                    $avatar_pic = "//gravatar.com/avatar/" . md5(strtolower($user->user_email)) . "?d=" . urlencode($default) . "&s=" . $size;
+                }elseif($facebook_avatar=='yes' && $facebook_id!=""){
+                    $avatar_pic = "//graph.facebook.com/".$facebook_id."/picture?type=normal";
+                }else{
+                    //check if admin uploaded a custom picture
 
-		if($pic_boder_type==NULL)
-		{
-			$pic_boder_type = 'uultra-user-avatar-default-style';
+                    $custom_avatar_file = get_option('uultra_default_user_avatar');
+                    if($custom_avatar_file=='')
+                    {
+                        $avatar_pic = "//gravatar.com/avatar/" . md5(strtolower($user->user_email)) . "?d=" . urlencode($default) . "&s=" . $size;
 
-		}
+                    }else{
 
+                        $upload_folder =  $xoouserultra->get_option('media_uploading_folder');
+                        $avatar_pic = $site_url.$upload_folder."/custom_avatar_image/".$custom_avatar_file;
 
+                    }
 
-		if($pic_type=='avatar')
-		{
+                } //end if has gravatar
 
-			if ($author_pic  != '')
-			{
-				$avatar_pic = $path.$author_pic;
-				$avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.''.$cache_by_pass.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'" /></a>';
+                $avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'" title="'.$user->display_name.'" /></a>';
 
-			} else {
 
-				//get gravatar
-				$user = get_user_by( 'id', $id );
-				$has_gravatar = get_user_meta( $id, 'uuultra_has_gravatar', true);
+            }
 
-				//check if facebook is required.
-				$facebook_avatar = $xoouserultra->get_option('uultra_use_facebook_avatar');
-				$facebook_id = get_user_meta( $id, 'xoouser_ultra_facebook_id', true);
+        }elseif($pic_type=='mainpicture'){
 
+                //get user's main picture - medium size will be used to be displayed
+                $avatar_pic = $path.$author_pic;
+                $avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'"/></a>';
 
-				if(($has_gravatar==1 && $facebook_avatar=='') || ($has_gravatar==1 && $facebook_avatar=='no'))
-				{
-					$avatar_pic = "//gravatar.com/avatar/" . md5(strtolower($user->user_email)) . "?d=" . urlencode($default) . "&s=" . $size;
 
+        }
 
-				}elseif($facebook_avatar=='yes' && $facebook_id!=""){
+        return $avatar;
+    }
 
-					$avatar_pic = "//graph.facebook.com/".$facebook_id."/picture?type=normal";
+    function validate_if_user_has_gravatar($user_id)
+    {
 
-				}else{
+        $has_gravatar = get_user_meta( $user_id, 'uuultra_has_gravatar', true);
 
-					//check if admin uploaded a custom picture
+        if($has_gravatar=='' || $has_gravatar=='0')
+        {
+            //check if user has a valid gravatar
+            if($this->uultra_validate_gravatar($user_id))
+            {
+                //has a valid gravatar
+                update_user_meta($user_id, 'uuultra_has_gravatar', 1);
 
-					$custom_avatar_file = get_option('uultra_default_user_avatar');
-					if($custom_avatar_file=='')
-					{
-						$avatar_pic = "//gravatar.com/avatar/" . md5(strtolower($user->user_email)) . "?d=" . urlencode($default) . "&s=" . $size;
+            }else{
 
-					}else{
+                delete_user_meta($user_id, 'uuultra_has_gravatar')  ;
 
-						$upload_folder =  $xoouserultra->get_option('media_uploading_folder');
-						$avatar_pic = $site_url.$upload_folder."/custom_avatar_image/".$custom_avatar_file;
+            }
 
-					}
 
-				} //end if has gravatar
+        }
 
-				$avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'" title="'.$user->display_name.'" /></a>';
+    }
 
 
-			}
+    /**
+     * Utility function to check if a gravatar exists for a given email or id
+     * @param int|string|object $id_or_email A user ID,  email address, or comment object
+     * @return bool if the gravatar exists or not
+     */
 
-		}elseif($pic_type=='mainpicture'){
+    function uultra_validate_gravatar($id_or_email)
+    {
+      //id or email code borrowed from wp-includes/pluggable.php
+        $email = '';
+        if ( is_numeric($id_or_email) ) {
+            $id = (int) $id_or_email;
+            $user = get_userdata($id);
+            if ( $user )
+                $email = $user->user_email;
+        } elseif ( is_object($id_or_email) ) {
+            // No avatar for pingbacks or trackbacks
+            $allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment' ) );
+            if ( ! empty( $id_or_email->comment_type ) && ! in_array( $id_or_email->comment_type, (array) $allowed_comment_types ) )
+                return false;
 
-				//get user's main picture - medium size will be used to be displayed
-			    $avatar_pic = $path.$author_pic;
-				$avatar= '<a href="'.$user_url.'">'. '<img src="'.$avatar_pic.'" class="'.$pic_boder_type.'" style="'.$pic_size.' "   id="uultra-avatar-img-'.$id.'"/></a>';
+            if ( !empty($id_or_email->user_id) ) {
+                $id = (int) $id_or_email->user_id;
+                $user = get_userdata($id);
+                if ( $user)
+                    $email = $user->user_email;
+            } elseif ( !empty($id_or_email->comment_author_email) ) {
+                $email = $id_or_email->comment_author_email;
+            }
+        } else {
+            $email = $id_or_email;
+        }
 
+        $hashkey = md5(strtolower(trim($email)));
+        $uri = 'http://www.gravatar.com/avatar/' . $hashkey . '?d=404';
 
-		}
+        $data = wp_cache_get($hashkey);
+        if (false === $data) {
+            $response = wp_remote_head($uri);
+            if( is_wp_error($response) ) {
+                $data = 'not200';
+            } else {
+                $data = $response['response']['code'];
+            }
+            wp_cache_set($hashkey, $data, $group = '', $expire = 60*5);
 
-		return $avatar;
-	}
+        }
+        if ($data == '200'){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	function validate_if_user_has_gravatar($user_id)
-	{
+    function validate_gravatar($email)
+    {
+        // Craft a potential url and test its headers
+        /*$hash = md5(strtolower(trim($email)));
+        $uri = 'http://www.gravatar.com/avatar/' . $hash . '?d=404';
+        $headers = @get_headers($uri);
+        if (!preg_match("|200|", $headers[0])) {
+            $has_valid_avatar = FALSE;
+        } else {
+            $has_valid_avatar = TRUE;
+        }*/
+        $has_valid_avatar = TRUE;
+        return $has_valid_avatar;
+    }
 
-		$has_gravatar = get_user_meta( $user_id, 'uuultra_has_gravatar', true);
+    function get_avatar_url( $avatar)
+    {
 
-		if($has_gravatar=='' || $has_gravatar=='0')
-		{
-			//check if user has a valid gravatar
-			if($this->uultra_validate_gravatar($user_id))
-			{
-				//has a valid gravatar
-				update_user_meta($user_id, 'uuultra_has_gravatar', 1);
+        preg_match( '#src=["|\'](.+)["|\']#Uuis', $avatar, $matches );
 
-			}else{
+        return ( isset( $matches[1] ) && ! empty( $matches[1]) ) ?
+            (string) $matches[1] : '';
 
-				delete_user_meta($user_id, 'uuultra_has_gravatar')	;
+    }
 
-			}
+    public function avatar_uploader($avatar_is_called=NULL)
+    {
 
-
-		}
-
-	}
-
-
-	/**
-	 * Utility function to check if a gravatar exists for a given email or id
-	 * @param int|string|object $id_or_email A user ID,  email address, or comment object
-	 * @return bool if the gravatar exists or not
-	 */
-
-	function uultra_validate_gravatar($id_or_email)
-	{
-	  //id or email code borrowed from wp-includes/pluggable.php
-		$email = '';
-		if ( is_numeric($id_or_email) ) {
-			$id = (int) $id_or_email;
-			$user = get_userdata($id);
-			if ( $user )
-				$email = $user->user_email;
-		} elseif ( is_object($id_or_email) ) {
-			// No avatar for pingbacks or trackbacks
-			$allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment' ) );
-			if ( ! empty( $id_or_email->comment_type ) && ! in_array( $id_or_email->comment_type, (array) $allowed_comment_types ) )
-				return false;
-
-			if ( !empty($id_or_email->user_id) ) {
-				$id = (int) $id_or_email->user_id;
-				$user = get_userdata($id);
-				if ( $user)
-					$email = $user->user_email;
-			} elseif ( !empty($id_or_email->comment_author_email) ) {
-				$email = $id_or_email->comment_author_email;
-			}
-		} else {
-			$email = $id_or_email;
-		}
-
-		$hashkey = md5(strtolower(trim($email)));
-		$uri = 'http://www.gravatar.com/avatar/' . $hashkey . '?d=404';
-
-		$data = wp_cache_get($hashkey);
-		if (false === $data) {
-			$response = wp_remote_head($uri);
-			if( is_wp_error($response) ) {
-				$data = 'not200';
-			} else {
-				$data = $response['response']['code'];
-			}
-			wp_cache_set($hashkey, $data, $group = '', $expire = 60*5);
-
-		}
-		if ($data == '200'){
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function validate_gravatar($email)
-	{
-		// Craft a potential url and test its headers
-		/*$hash = md5(strtolower(trim($email)));
-		$uri = 'http://www.gravatar.com/avatar/' . $hash . '?d=404';
-		$headers = @get_headers($uri);
-		if (!preg_match("|200|", $headers[0])) {
-			$has_valid_avatar = FALSE;
-		} else {
-			$has_valid_avatar = TRUE;
-		}*/
-		$has_valid_avatar = TRUE;
-		return $has_valid_avatar;
-	}
-
-	function get_avatar_url( $avatar)
-	{
-
-		preg_match( '#src=["|\'](.+)["|\']#Uuis', $avatar, $matches );
-
-		return ( isset( $matches[1] ) && ! empty( $matches[1]) ) ?
-			(string) $matches[1] : '';
-
-	}
-
-	public function avatar_uploader($avatar_is_called=NULL)
-	{
-
-	   // Uploading functionality trigger:
-	  // (Most of the code comes from media.php and handlers.js)
-	      $template_dir = get_template_directory_uri();
+       // Uploading functionality trigger:
+      // (Most of the code comes from media.php and handlers.js)
+          $template_dir = get_template_directory_uri();
 ?>
 
-		<div id="uploadContainer" style="margin-top: 10px;">
+        <div id="uploadContainer" style="margin-top: 10px;">
 
 
-			<!-- Uploader section -->
-			<div id="uploaderSection" style="position: relative;">
-				<div id="plupload-upload-ui-avatar" class="hide-if-no-js">
+            <!-- Uploader section -->
+            <div id="uploaderSection" style="position: relative;">
+                <div id="plupload-upload-ui-avatar" class="hide-if-no-js">
 
-					<div id="drag-drop-area-avatar">
-						<div class="drag-drop-inside">
-							<p class="drag-drop-info"><?php	_e('Drop '.$avatar_is_called.' here', 'xoousers') ; ?></p>
-							<p><?php _ex('or', 'Uploader: Drop files here - or - Select Files'); ?></p>
+                    <div id="drag-drop-area-avatar">
+                        <div class="drag-drop-inside">
+                            <p class="drag-drop-info"><?php _e('Drop '.$avatar_is_called.' here', 'xoousers') ; ?></p>
+                            <p><?php _ex('or', 'Uploader: Drop files here - or - Select Files'); ?></p>
 
 
 <div class="uultra-uploader-buttons" id="plupload-browse-button-avatar">
-                            <?php	_e('Select Image', 'xoousers') ; ?>
+                            <?php   _e('Select Image', 'xoousers') ; ?>
                             </div>
 
                             <div class="uultra-uploader-buttons-delete-cancel" id="btn-delete-user-avatar">
-                            <?php	_e('Remove '.$avatar_is_called.'', 'xoousers') ; ?>
+                            <?php   _e('Remove '.$avatar_is_called.'', 'xoousers') ; ?>
                             </div>
 
 
 
-						</div>
+                        </div>
 
                         <div id="progressbar-avatar"></div>
                          <div id="symposium_filelist_avatar" class="cb"></div>
-					</div>
-				</div>
+                    </div>
+                </div>
 
 
 
-			</div>
+            </div>
 
 
-		</div>
+        </div>
 
          <form id="uultra_frm_img_cropper" name="uultra_frm_img_cropper" method="post">
 
-                	<input type="hidden" name="image_to_crop" value="" id="image_to_crop" />
+                    <input type="hidden" name="image_to_crop" value="" id="image_to_crop" />
                     <input type="hidden" name="crop_image" value="crop_image" id="crop_image" />
 
                 </form>
 
-		<?php
+        <?php
 
-			$plupload_init = array(
-				'runtimes'            => 'html5,silverlight,flash,html4',
-				'browse_button'       => 'plupload-browse-button-avatar',
-				'container'           => 'plupload-upload-ui-avatar',
-				'drop_element'        => 'uultra-drag-avatar-section',
-				'file_data_name'      => 'async-upload',
-				'multiple_queues'     => true,
-				'multi_selection'	  => false,
-				'max_file_size'       => wp_max_upload_size().'b',
-				//'max_file_size'       => get_option('drag-drop-filesize').'b',
-				'url'                 => admin_url('admin-ajax.php'),
-				'flash_swf_url'       => includes_url('js/plupload/plupload.flash.swf'),
-				'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
-				//'filters'             => array(array('title' => __('Allowed Files', $this->text_domain), 'extensions' => "jpg,png,gif,bmp,mp4,avi")),
-				'filters'             => array(array('title' => __('Allowed Files', "xoousers"), 'extensions' => "jpg,png,gif,jpeg")),
-				'multipart'           => true,
-				'urlstream_upload'    => true,
+            $plupload_init = array(
+                'runtimes'            => 'html5,silverlight,flash,html4',
+                'browse_button'       => 'plupload-browse-button-avatar',
+                'container'           => 'plupload-upload-ui-avatar',
+                'drop_element'        => 'uultra-drag-avatar-section',
+                'file_data_name'      => 'async-upload',
+                'multiple_queues'     => true,
+                'multi_selection'     => false,
+                'max_file_size'       => wp_max_upload_size().'b',
+                //'max_file_size'       => get_option('drag-drop-filesize').'b',
+                'url'                 => admin_url('admin-ajax.php'),
+                'flash_swf_url'       => includes_url('js/plupload/plupload.flash.swf'),
+                'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
+                //'filters'             => array(array('title' => __('Allowed Files', $this->text_domain), 'extensions' => "jpg,png,gif,bmp,mp4,avi")),
+                'filters'             => array(array('title' => __('Allowed Files', "xoousers"), 'extensions' => "jpg,png,gif,jpeg")),
+                'multipart'           => true,
+                'urlstream_upload'    => true,
 
-				// Additional parameters:
-				'multipart_params'    => array(
-					'_ajax_nonce' => wp_create_nonce('photo-upload'),
-					'action'      => 'ajax_upload_avatar' // The AJAX action name
+                // Additional parameters:
+                'multipart_params'    => array(
+                    '_ajax_nonce' => wp_create_nonce('photo-upload'),
+                    'action'      => 'ajax_upload_avatar' // The AJAX action name
 
-				),
-			);
+                ),
+            );
 
-			//print_r($plupload_init);
+            //print_r($plupload_init);
 
-			// Apply filters to initiate plupload:
-			$plupload_init = apply_filters('plupload_init', $plupload_init); ?>
+            // Apply filters to initiate plupload:
+            $plupload_init = apply_filters('plupload_init', $plupload_init); ?>
 
-			<script type="text/javascript">
+            <script type="text/javascript">
 
-				jQuery(document).ready(function($){
+                jQuery(document).ready(function($){
 
-					// Create uploader and pass configuration:
-					var uploader_avatar = new plupload.Uploader(<?php echo json_encode($plupload_init); ?>);
+                    // Create uploader and pass configuration:
+                    var uploader_avatar = new plupload.Uploader(<?php echo json_encode($plupload_init); ?>);
 
-					// Check for drag'n'drop functionality:
-					uploader_avatar.bind('Init', function(up){
+                    // Check for drag'n'drop functionality:
+                    uploader_avatar.bind('Init', function(up){
 
-						var uploaddiv_avatar = $('#plupload-upload-ui-avatar');
+                        var uploaddiv_avatar = $('#plupload-upload-ui-avatar');
 
-						// Add classes and bind actions:
-						if(up.features.dragdrop){
-							uploaddiv_avatar.addClass('drag-drop');
+                        // Add classes and bind actions:
+                        if(up.features.dragdrop){
+                            uploaddiv_avatar.addClass('drag-drop');
 
-							$('#drag-drop-area-avatar')
-								.bind('dragover.wp-uploader', function(){ uploaddiv_avatar.addClass('drag-over'); })
-								.bind('dragleave.wp-uploader, drop.wp-uploader', function(){ uploaddiv_avatar.removeClass('drag-over'); });
+                            $('#drag-drop-area-avatar')
+                                .bind('dragover.wp-uploader', function(){ uploaddiv_avatar.addClass('drag-over'); })
+                                .bind('dragleave.wp-uploader, drop.wp-uploader', function(){ uploaddiv_avatar.removeClass('drag-over'); });
 
-						} else{
-							uploaddiv_avatar.removeClass('drag-drop');
-							$('#drag-drop-area').unbind('.wp-uploader');
-						}
+                        } else{
+                            uploaddiv_avatar.removeClass('drag-drop');
+                            $('#drag-drop-area').unbind('.wp-uploader');
+                        }
 
-					});
+                    });
 
 
-					// Init ////////////////////////////////////////////////////
-					uploader_avatar.init();
+                    // Init ////////////////////////////////////////////////////
+                    uploader_avatar.init();
 
-					// Selected Files //////////////////////////////////////////
-					uploader_avatar.bind('FilesAdded', function(up, files) {
+                    // Selected Files //////////////////////////////////////////
+                    uploader_avatar.bind('FilesAdded', function(up, files) {
 
 
-						var hundredmb = 100 * 1024 * 1024, max = parseInt(up.settings.max_file_size, 10);
+                        var hundredmb = 100 * 1024 * 1024, max = parseInt(up.settings.max_file_size, 10);
 
-						// Limit to one limit:
-						if (files.length > 1){
-							alert("<?php _e('You may only upload one image at a time!', 'xoousers'); ?>");
-							return false;
-						}
+                        // Limit to one limit:
+                        if (files.length > 1){
+                            alert("<?php _e('You may only upload one image at a time!', 'xoousers'); ?>");
+                            return false;
+                        }
 
-						// Remove extra files:
-						if (up.files.length > 1){
-							up.removeFile(uploader_avatar.files[0]);
-							up.refresh();
-						}
+                        // Remove extra files:
+                        if (up.files.length > 1){
+                            up.removeFile(uploader_avatar.files[0]);
+                            up.refresh();
+                        }
 
-						// Loop through files:
-						plupload.each(files, function(file){
+                        // Loop through files:
+                        plupload.each(files, function(file){
 
-							// Handle maximum size limit:
-							if (max > hundredmb && file.size > hundredmb && up.runtime != 'html5'){
-								alert("<?php _e('The file you selected exceeds the maximum filesize limit.', 'xoousers'); ?>");
-								return false;
-							}
+                            // Handle maximum size limit:
+                            if (max > hundredmb && file.size > hundredmb && up.runtime != 'html5'){
+                                alert("<?php _e('The file you selected exceeds the maximum filesize limit.', 'xoousers'); ?>");
+                                return false;
+                            }
 
-						});
+                        });
 
-						jQuery.each(files, function(i, file) {
-							jQuery('#symposium_filelist_avatar').append('<div class="addedFile" id="' + file.id + '">' + file.name + '</div>');
-						});
+                        jQuery.each(files, function(i, file) {
+                            jQuery('#symposium_filelist_avatar').append('<div class="addedFile" id="' + file.id + '">' + file.name + '</div>');
+                        });
 
-						up.refresh();
-						uploader_avatar.start();
+                        up.refresh();
+                        uploader_avatar.start();
 
-					});
+                    });
 
-					// A new file was uploaded:
-					uploader_avatar.bind('FileUploaded', function(up, file, response){
+                    // A new file was uploaded:
+                    uploader_avatar.bind('FileUploaded', function(up, file, response){
 
 
 
 
-						var obj = jQuery.parseJSON(response.response);
-						var img_name = obj.image;
+                        var obj = jQuery.parseJSON(response.response);
+                        var img_name = obj.image;
 
-						$("#image_to_crop").val(img_name);
-						$("#uultra_frm_img_cropper").submit();
+                        $("#image_to_crop").val(img_name);
+                        $("#uultra_frm_img_cropper").submit();
 
 
 
 
-						jQuery.ajax({
-							type: 'POST',
-							url: ajaxurl,
-							data: {"action": "refresh_avatar"},
+                        jQuery.ajax({
+                            type: 'POST',
+                            url: ajaxurl,
+                            data: {"action": "refresh_avatar"},
 
-							success: function(data){
+                            success: function(data){
 
-								//$( "#uu-upload-avatar-box" ).slideUp("slow");
-								$("#uu-backend-avatar-section").html(data);
+                                //$( "#uu-upload-avatar-box" ).slideUp("slow");
+                                $("#uu-backend-avatar-section").html(data);
 
-								//jQuery("#uu-message-noti-id").slideDown();
-								//setTimeout("hidde_noti('uu-message-noti-id')", 3000)	;
+                                //jQuery("#uu-message-noti-id").slideDown();
+                                //setTimeout("hidde_noti('uu-message-noti-id')", 3000)  ;
 
 
-								}
-						});
+                                }
+                        });
 
 
 
-					});
+                    });
 
-					// Error Alert /////////////////////////////////////////////
-					uploader_avatar.bind('Error', function(up, err) {
-						alert("Error: " + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
-						up.refresh();
-					});
+                    // Error Alert /////////////////////////////////////////////
+                    uploader_avatar.bind('Error', function(up, err) {
+                        alert("Error: " + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
+                        up.refresh();
+                    });
 
-					// Progress bar ////////////////////////////////////////////
-					uploader_avatar.bind('UploadProgress', function(up, file) {
+                    // Progress bar ////////////////////////////////////////////
+                    uploader_avatar.bind('UploadProgress', function(up, file) {
 
-						var progressBarValue = up.total.percent;
+                        var progressBarValue = up.total.percent;
 
-						jQuery('#progressbar-avatar').fadeIn().progressbar({
-							value: progressBarValue
-						});
+                        jQuery('#progressbar-avatar').fadeIn().progressbar({
+                            value: progressBarValue
+                        });
 
-						jQuery('#progressbar-avatar').html('<span class="progressTooltip">' + up.total.percent + '%</span>');
-					});
+                        jQuery('#progressbar-avatar').html('<span class="progressTooltip">' + up.total.percent + '%</span>');
+                    });
 
-					// Close window after upload ///////////////////////////////
-					uploader_avatar.bind('UploadComplete', function() {
+                    // Close window after upload ///////////////////////////////
+                    uploader_avatar.bind('UploadComplete', function() {
 
-						//jQuery('.uploader').fadeOut('slow');
-						jQuery('#progressbar-avatar').fadeIn().progressbar({
-							value: 0
-						});
+                        //jQuery('.uploader').fadeOut('slow');
+                        jQuery('#progressbar-avatar').fadeIn().progressbar({
+                            value: 0
+                        });
 
 
-					});
+                    });
 
 
 
-				});
+                });
 
 
-			</script>
+            </script>
 
-		<?php
+        <?php
 
 
-	}
+    }
 
-	function get_one_user_with_key($key)
-	{
-		global $wpdb,  $xoouserultra;
+    function get_one_user_with_key($key)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'xoouser_ultra_very_key',
-			'meta_value' => $key,
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'xoouser_ultra_very_key',
+            'meta_value' => $key,
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
 
-		// Get the results//
-		$users = $user_query->get_results();
+        // Get the results//
+        $users = $user_query->get_results();
 
-		if(count($users)>0)
-		{
-			foreach ($users as $user)
-			{
-				return $user;
+        if(count($users)>0)
+        {
+            foreach ($users as $user)
+            {
+                return $user;
 
-			}
+            }
 
 
-		}else{
+        }else{
 
 
 
-		}
+        }
 
 
-	}
+    }
 
-	function get_user_with_key($key)
-	{
-		global $wpdb,  $xoouserultra;
+    function get_user_with_key($key)
+    {
+        global $wpdb,  $xoouserultra;
 
-		$args = array(
+        $args = array(
 
-			'meta_key' => 'xoouser_ultra_very_key',
-			'meta_value' => $key,
-			'meta_compare' => '=',
-			'count_total' => true,
+            'meta_key' => 'xoouser_ultra_very_key',
+            'meta_value' => $key,
+            'meta_compare' => '=',
+            'count_total' => true,
 
 
-			);
+            );
 
-		 // Create the WP_User_Query object
-		$user_query = new WP_User_Query( $args );
+         // Create the WP_User_Query object
+        $user_query = new WP_User_Query( $args );
 
-		// Get the results//
-		$users = $user_query->get_results();
+        // Get the results//
+        $users = $user_query->get_results();
 
-		if(count($users)>0)
-		{
-			return true;
+        if(count($users)>0)
+        {
+            return true;
 
-		}else{
+        }else{
 
-			return false;
+            return false;
 
-		}
+        }
 
 
-	}
+    }
 
-	function users_shortcodes( $args )
-	{
-		global  $wpdb,  $xoouserultra;
+    function users_shortcodes( $args )
+    {
+        global  $wpdb,  $xoouserultra;
 
 
-		extract($args);
+        extract($args);
 
-		$page = (!empty($_GET['ultra-page'])) ? $_GET['ultra-page'] : 1;
-		$offset = ( ($page -1) * $args['list_per_page'] );
+        $page = (!empty($_GET['ultra-page'])) ? $_GET['ultra-page'] : 1;
+        $offset = ( ($page -1) * $args['list_per_page'] );
 
-		/* setup query params */
-		//$query = $this->setup_query( $args );
+        /* setup query params */
+        //$query = $this->setup_query( $args );
 
-		/* pagi stuff */
-		$query['number'] = $args['list_per_page'];
-		$query['offset'] = $offset;
+        /* pagi stuff */
+        $query['number'] = $args['list_per_page'];
+        $query['offset'] = $offset;
 
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
 
 
-		$count_args = array_merge($query, array('number'=>99999999999));
-		unset($count_args['offset']);
+        $count_args = array_merge($query, array('number'=>99999999999));
+        unset($count_args['offset']);
 
-		$user_count_query = new WP_User_Query($count_args);
+        $user_count_query = new WP_User_Query($count_args);
 
-		if ($args['list_per_page']) {
-		$user_count = $user_count_query->get_results();
-		$total_users = $user_count ? count($user_count) : 1;
-		$total_pages = ceil($total_users / $args['list_per_page']);
-		}
+        if ($args['list_per_page']) {
+        $user_count = $user_count_query->get_results();
+        $total_users = $user_count ? count($user_count) : 1;
+        $total_pages = ceil($total_users / $args['list_per_page']);
+        }
 
-		$wp_user_query = new WP_User_Query($query);
+        $wp_user_query = new WP_User_Query($query);
 
-		if (! empty( $wp_user_query->results ))
-			$big = 999999999; // need an unlikely integer
-			$arr['paginate'] = paginate_links( array(
-					'base'         => @add_query_arg('ultra-page','%#%'),
-					'total'        => $total_pages,
-					'current'      => $page,
-					'show_all'     => false,
-					'end_size'     => 1,
-					'mid_size'     => 2,
-					'prev_next'    => true,
-					'prev_text'    => __('Previous','xoousers'),
-					'next_text'    => __('Next','xoousers'),
-					'type'         => 'plain',
-				));
-			$arr['users'] = $wp_user_query->results;
+        if (! empty( $wp_user_query->results ))
+            $big = 999999999; // need an unlikely integer
+            $arr['paginate'] = paginate_links( array(
+                    'base'         => @add_query_arg('ultra-page','%#%'),
+                    'total'        => $total_pages,
+                    'current'      => $page,
+                    'show_all'     => false,
+                    'end_size'     => 1,
+                    'mid_size'     => 2,
+                    'prev_next'    => true,
+                    'prev_text'    => __('Previous','xoousers'),
+                    'next_text'    => __('Next','xoousers'),
+                    'type'         => 'plain',
+                ));
+            $arr['users'] = $wp_user_query->results;
 
-		return $arr;
-	}
+        return $arr;
+    }
 
 
-	function users( $args )
-	{
-		global  $wpdb,  $xoouserultra;
-		$blog_id = get_current_blog_id();
+    function users( $args )
+    {
+        global  $wpdb,  $xoouserultra;
+        $blog_id = get_current_blog_id();
 
-		extract($args);
+        extract($args);
 
 
-		$page = (!empty($_GET['ultra-page'])) ? $_GET['ultra-page'] : 1;
-		$offset = ( ($page -1) * $args['list_per_page'] );
+        $page = (!empty($_GET['ultra-page'])) ? $_GET['ultra-page'] : 1;
+        $offset = ( ($page -1) * $args['list_per_page'] );
 
-		if(isset($_GET["usersultra_searchuser"]) && $_GET["usersultra_searchuser"] !="")
-		{
-			$key = $_GET["usersultra_searchuser"];
+        if(isset($_GET["usersultra_searchuser"]) && $_GET["usersultra_searchuser"] !="")
+        {
+            $key = $_GET["usersultra_searchuser"];
 
-			$query['meta_query'] = array('relation' => 'AND' );
-			$query['meta_query'][] = array(
-				'key' => 'display_name',
-				'value' => $key,
-				'compare' => 'LIKE'
-			);
+            $query['meta_query'] = array('relation' => 'AND' );
+            $query['meta_query'][] = array(
+                'key' => 'display_name',
+                'value' => $key,
+                'compare' => 'LIKE'
+            );
 
-		}
+        }
 
-		$query['meta_query'][] = array(
-				'key' => 'usersultra_account_status',
-				'value' => 'active',
-				'compare' => '='
-			);
+        $query['meta_query'][] = array(
+                'key' => 'usersultra_account_status',
+                'value' => 'active',
+                'compare' => '='
+            );
 
-		$query['number'] = $args['list_per_page'];
-		$query['offset'] = $offset;
-		$query['order' ] = $list_order;
-		$query['orderby' ] = 'ID';
+        $query['number'] = $args['list_per_page'];
+        $query['offset'] = $offset;
+        $query['order' ] = $list_order;
+        $query['orderby' ] = 'ID';
 
 
-		$count_args = array_merge($query, array('number'=>99999999999));
+        $count_args = array_merge($query, array('number'=>99999999999));
 
-		unset($count_args['offset']);
+        unset($count_args['offset']);
 
-		$user_count_query = new WP_User_Query($count_args);
+        $user_count_query = new WP_User_Query($count_args);
 
-		//calculates pages
-		if ($args['list_per_page'])
-		{
-			$user_count = $user_count_query->get_results();
-		    $total_users = $user_count ? count($user_count) : 1;
-		    $total_pages = ceil($total_users / $args['list_per_page']);
-		}
+        //calculates pages
+        if ($args['list_per_page'])
+        {
+            $user_count = $user_count_query->get_results();
+            $total_users = $user_count ? count($user_count) : 1;
+            $total_pages = ceil($total_users / $args['list_per_page']);
+        }
 
 
-		$wp_user_query = new WP_User_Query($query);
+        $wp_user_query = new WP_User_Query($query);
 
-		if (! empty( $wp_user_query->results ))
-			$big = 999999999; // need an unlikely integer
-			$arr['paginate'] = paginate_links( array(
-					'base'         => @add_query_arg('ultra-page','%#%'),
-					'total'        => $total_pages,
-					'current'      => $page,
-					'show_all'     => false,
-					'end_size'     => 1,
-					'mid_size'     => 2,
-					'prev_next'    => true,
-					'prev_text'    => __('Previous','xoousers'),
-					'next_text'    => __('Next','xoousers'),
-					'type'         => 'plain',
-				));
-			$arr['users'] = $wp_user_query->results;
+        if (! empty( $wp_user_query->results ))
+            $big = 999999999; // need an unlikely integer
+            $arr['paginate'] = paginate_links( array(
+                    'base'         => @add_query_arg('ultra-page','%#%'),
+                    'total'        => $total_pages,
+                    'current'      => $page,
+                    'show_all'     => false,
+                    'end_size'     => 1,
+                    'mid_size'     => 2,
+                    'prev_next'    => true,
+                    'prev_text'    => __('Previous','xoousers'),
+                    'next_text'    => __('Next','xoousers'),
+                    'type'         => 'plain',
+                ));
+            $arr['users'] = $wp_user_query->results;
 
-			$arr['total'] =$total_users;
+            $arr['total'] =$total_users;
 
-		return $arr;
-	}
+        return $arr;
+    }
 
 
 
 
-	public function get_members_list($args)
-	{
-		global  $wpdb,  $xoouserultra;
+    public function get_members_list($args)
+    {
+        global  $wpdb,  $xoouserultra;
 
-		extract($args);
+        extract($args);
 
-		$blog_id = get_current_blog_id();
+        $blog_id = get_current_blog_id();
 
-		$query['meta_query'] = array('relation' => strtoupper($list_relation) );
+        $query['meta_query'] = array('relation' => strtoupper($list_relation) );
 
-		$query['meta_query'][] = array(
-				'key' => 'userultra_verified',
-				'value' => 1,
-				'compare' => '='
-			);
+        $query['meta_query'][] = array(
+                'key' => 'userultra_verified',
+                'value' => 1,
+                'compare' => '='
+            );
 
 
-		//$query['orderby'] = $list_sortby;
+        //$query['orderby'] = $list_sortby;
 
-		//$query['order'] = strtoupper($list_order); // asc to ASC
+        //$query['order'] = strtoupper($list_order); // asc to ASC
 
-		$query['number'] = $list_per_page;
+        $query['number'] = $list_per_page;
 
 
-		$wp_user_query = $xoouserultra->get_results($query);
+        $wp_user_query = $xoouserultra->get_results($query);
 
 
 
-		if (! empty( $wp_user_query->results ))
-		{
+        if (! empty( $wp_user_query->results ))
+        {
 
-			$arr['users'] = $wp_user_query->results;
+            $arr['users'] = $wp_user_query->results;
 
 
-		}
-		if (isset($arr)) return $arr;
+        }
+        if (isset($arr)) return $arr;
 
-	}
+    }
 
-	/*---->> Check if user is active before login  ****/
+    /*---->> Check if user is active before login  ****/
 
-	function is_active($user_id)
-	{
-		$checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
+    function is_active($user_id)
+    {
+        $checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
 
-		if ($checkuser == 'active' || $checkuser == '') //this is a tweak for already members
-		{
-			return true;
+        if ($checkuser == 'active' || $checkuser == '') //this is a tweak for already members
+        {
+            return true;
 
-		}else{
+        }else{
 
-			return false;
+            return false;
 
-		}
+        }
 
-	}
+    }
 
-	/*---->> Check if user is pending activation by admin   ****/
-	function get_status($user_id)
-	{
-		$status ="";
-		$checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
+    /*---->> Check if user is pending activation by admin   ****/
+    function get_status($user_id)
+    {
+        $status ="";
+        $checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
 
-		if ($checkuser == 'pending')
-		{
-			$status =  __("Pending","xoousers");
+        if ($checkuser == 'pending')
+        {
+            $status =  __("Pending","xoousers");
 
-		}elseif($checkuser == 'pending_admin'){
+        }elseif($checkuser == 'pending_admin'){
 
-			$status =__("Pending Admin","xoousers");
+            $status =__("Pending Admin","xoousers");
 
-		}elseif($checkuser == 'active' || $checkuser == ''){
+        }elseif($checkuser == 'active' || $checkuser == ''){
 
-			$status =  __("Active","xoousers");
+            $status =  __("Active","xoousers");
 
-		}
+        }
 
 
 
-		return $status;
-	}
+        return $status;
+    }
 
-	/*---->> Check if user is pending activation by admin   ****/
-	function is_pending($user_id)
-	{
-		$checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
-		if ($checkuser == 'pending' || $checkuser == 'pending_admin')
-			return true;
-		return false;
-	}
+    /*---->> Check if user is pending activation by admin   ****/
+    function is_pending($user_id)
+    {
+        $checkuser = get_user_meta($user_id, 'usersultra_account_status', true);
+        if ($checkuser == 'pending' || $checkuser == 'pending_admin')
+            return true;
+        return false;
+    }
 
-	/*---->> Activate user    ****/
-	function activate($user_id, $user_login = null)
-	{
-		if ($user_login != '')
-		{
-			$user = get_user_by('login', $user_login);
-			$user_id = $user->ID;
-		}
-		delete_user_meta($user_id, 'usersultra_account_verify');
-		update_user_meta($user_id, 'usersultra_account_status', 'active');
+    /*---->> Activate user    ****/
+    function activate($user_id, $user_login = null)
+    {
+        if ($user_login != '')
+        {
+            $user = get_user_by('login', $user_login);
+            $user_id = $user->ID;
+        }
+        delete_user_meta($user_id, 'usersultra_account_verify');
+        update_user_meta($user_id, 'usersultra_account_status', 'active');
 
-		$password = get_user_meta($user_id, 'usersultra_pending_pass', true);
-		$form = get_user_meta($user_id, 'usersultra_pending_form', true);
+        $password = get_user_meta($user_id, 'usersultra_pending_pass', true);
+        $form = get_user_meta($user_id, 'usersultra_pending_form', true);
 
-		//notify user by email
+        //notify user by email
 
-		delete_user_meta($user_id, 'usersultra_pending_pass');
-		delete_user_meta($user_id, 'usersultra_pending_form');
-	}
+        delete_user_meta($user_id, 'usersultra_pending_pass');
+        delete_user_meta($user_id, 'usersultra_pending_form');
+    }
 
 
 
 
-	/******************************************
-	Get user ID only by query var
-	******************************************/
-	public function get_member_by_queryvar_from_id()
-	{
-		$arg = get_query_var('uu_username');
-		if ( $arg )
-		{
-			$user = $this->get_member_by( $arg );
-			return $user->ID;
-		}
-	}
+    /******************************************
+    Get user ID only by query var
+    ******************************************/
+    public function get_member_by_queryvar_from_id()
+    {
+        $arg = get_query_var('uu_username');
+        if ( $arg )
+        {
+            $user = $this->get_member_by( $arg );
+            return $user->ID;
+        }
+    }
 
-	public function get_custom_user_meta ($meta, $user_id)
-	{
-		return get_user_meta( $user_id, $meta, true);
+    public function get_custom_user_meta ($meta, $user_id)
+    {
+        return get_user_meta( $user_id, $meta, true);
 
-	}
-	public function  get_profile_info ($user_id)
-	{
+    }
+    public function  get_profile_info ($user_id)
+    {
 
-		$array = get_option('usersultra_profile_fields');
+        $array = get_option('usersultra_profile_fields');
 
-		foreach($array as $key=>$field)
-		{
-		    // Optimized condition and added strict conditions
-		    $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
-		    if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
-		    {
-		        unset($array[$key]);
-		    }
-		}
+        foreach($array as $key=>$field)
+        {
+            // Optimized condition and added strict conditions
+            $exclude_array = array('user_pass', 'user_pass_confirm', 'user_email');
+            if(isset($field['meta']) && in_array($field['meta'], $exclude_array))
+            {
+                unset($array[$key]);
+            }
+        }
 
 
-		$i_array_end = end($array);
+        $i_array_end = end($array);
 
-		if(isset($i_array_end['position']))
-		{
-		    $array_end = $i_array_end['position'];
-		    if ($array[$array_end]['type'] == 'separator') {
-		        unset($array[$array_end]);
-		    }
-		}
+        if(isset($i_array_end['position']))
+        {
+            $array_end = $i_array_end['position'];
+            if ($array[$array_end]['type'] == 'separator') {
+                unset($array[$array_end]);
+            }
+        }
 
 
-		$html .= '';
+        $html .= '';
 
 
-		foreach($array as $key => $field)
-		{
+        foreach($array as $key => $field)
+        {
 
-			extract($field);
+            extract($field);
 
 
-			if(!isset($private))
-			    $private = 0;
+            if(!isset($private))
+                $private = 0;
 
-			if(!isset($show_in_widget))
-			    $show_in_widget = 1;
+            if(!isset($show_in_widget))
+                $show_in_widget = 1;
 
 
 
-			/* Fieldset separator */
-			if ( $type == 'separator' && $deleted == 0 && $private == 0  && isset($array[$key]['show_in_register']) && $array[$key]['show_in_register'] == 1)
-			{
-				$html .= '<div class="uultra-profile-seperator">'.$name.'</div>';
-			}
+            /* Fieldset separator */
+            if ( $type == 'separator' && $deleted == 0 && $private == 0  && isset($array[$key]['show_in_register']) && $array[$key]['show_in_register'] == 1)
+            {
+                $html .= '<div class="uultra-profile-seperator">'.$name.'</div>';
+            }
 
-			if ( $type == 'usermeta' && $deleted == 0 && $private == 0  && isset($array[$key]['show_in_register']) && $array[$key]['show_in_register'] == 1)
-			{
-				/* Show the label */
-				if (isset($array[$key]['name']) && $name)
-				{
-					$html .= ' <span class="data-a">'.$name.':</span><span class="data-b">'.$this->get_custom_user_meta( $meta, $user_id).'</span> ';
-				}
+            if ( $type == 'usermeta' && $deleted == 0 && $private == 0  && isset($array[$key]['show_in_register']) && $array[$key]['show_in_register'] == 1)
+            {
+                /* Show the label */
+                if (isset($array[$key]['name']) && $name)
+                {
+                    $html .= ' <span class="data-a">'.$name.':</span><span class="data-b">'.$this->get_custom_user_meta( $meta, $user_id).'</span> ';
+                }
 
-			}
+            }
 
 
 
-		}
+        }
 
-		$html .= '';
-		return $html;
+        $html .= '';
+        return $html;
 
-	}
+    }
 
 
 
